@@ -13,6 +13,16 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "paths": {
+      "@/*":["./src/*"],
+      "assets/*":["./src/assets/*"],
+      "utils/*":["./src/utils/*"],
+      "hooks/*":["./src/hooks/"],
+      "ui/*":["./src/ui/"],
+      "pages/*":["./src/pages/"],
+      "api/*":["./src/api/"]
+    },
+    "types": ["jest"],
 
     /* Linting */
     "strict": true,
