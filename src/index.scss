@@ -1,5 +1,31 @@
 @import '../node_modules/normalize.css/normalize.css';
 
+:root {
+  --pallete_accent1: #DC3E22;
+  --pallete_accent2: #A6B352;
+  --pallete_bg: #ffffff;
+  --pallete_text: #333333;
+  --pallete_blocks: #c4c4c4;
+
+  --accent1_disabled: hsl(from var(--pallete_accent1) h s 70%);
+  --accent1_hover: hsl(from var(--pallete_accent1) h s 77%);
+  --accent1_click: hsl(from var(--pallete_accent1) h s 39%);
+
+  --accent2_effect: hsl(from var(--pallete_accent2) h 39% 42%);
+
+  --greyE5: hsl(from var(--pallete_blocks) h s 90%);
+  --greyF4: hsl(from var(--pallete_blocks) h s 96%);
+}
+
+[data-theme="inverted"] {
+  --pallete_accent1: #23c1dd;
+  --pallete_accent2: #594cad;
+  --pallete_bg: #000000;
+  --pallete_text: #cccccc;
+  --pallete_blocks: #3b3b3b;
+}
+
+
 html {
   box-sizing: border-box;
 }
@@ -27,7 +53,7 @@ img {
 body {
   font-family: "Noto Sans Display", sans-serif;
   font-weight: 400;
-
+  background-color: var(--pallete_bg);
 }
 
 .mg-reset {
