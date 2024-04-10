@@ -1,0 +1,32 @@
+.timerPage {
+  padding-top: 100px;
+  display: grid;
+  grid-template-columns: 42.734375% 57.265625%;
+}
+
+.descr {
+
+  &__title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.375;
+  }
+
+  &__list {
+    margin: 0;
+    padding-left: 20px;
+    max-width: 508px;
+    box-sizing: border-box;
+  }
+
+  &__item {
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 2.0625;
+
+    &::marker {
+      color: var(--pallete_accent1);
+
+    }
+  }
+}

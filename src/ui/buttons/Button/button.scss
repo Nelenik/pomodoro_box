@@ -1,0 +1,37 @@
+.mainBtn {
+  padding: 19px 50px;
+  font-weight: 500;
+  font-size: 1rem;
+  border: 1px solid;
+  background-color: var(--pallete_bg);
+  transition: color 0.4s ease, background-color 0.4s ease;
+
+  &--green {
+    background-color: var(--pallete_accent2);
+    border-color: var(--pallete_accent2);
+    color: var(--pallete_bg);
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: var(--accent2_effect);
+    }
+  }
+
+  &--red {
+    border-color: var(--pallete_accent1);
+    color: var(--pallete_accent1);
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: var(--pallete_accent1);
+      color: var(--pallete_bg);
+    }
+  }
+
+  &--inactive {
+    border-color: var(--pallete_blocks);
+    color: var(--pallete_blocks);
+  }
+}

@@ -6,6 +6,9 @@ export const Main = () => {
     //change page title
     useDocTitle()
     return (
-        <TomatoMainSvg className='tomatoSvg' />
+        <div className='container homePage'>
+            <TomatoMainSvg className='tomatoSvg' />
+        </div>
+
     )
 }

@@ -4,6 +4,6 @@ import useDocTitle from '@/hooks/useDocTitle';
 export const Statistics = () => {
     useDocTitle()
     return (
-        <div>Statistics</div>
+        <div className='container statsPage'>Statistics</div>
     )
 }

@@ -8,7 +8,7 @@ import {
 
 import { Layout } from './ui/Layout';
 import { Main } from './pages/Main';
-import { Timer } from './pages/Timer';
+import { Timer } from './pages/TimerPage';
 import { Statistics } from './pages/Statistics';
 
 const setDocTitle = (title: string): void => {
