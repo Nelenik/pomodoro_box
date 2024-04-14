@@ -1,29 +1,23 @@
-.taskForm {
+.TaskForm {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 25px;
-}
 
-.field {
-  position: relative;
-  width: 100%;
-
-  &__placeholder {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    translate: 0 -50%;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 1.0625;
-    color: var(--grey99);
-  }
-
-  &__input {
+  &-Field {
     padding: 19px 15px;
+    width: 100%;
     border: none;
     background-color: var(--greyF4);
-    width: 100%;
+    outline: none;
+    transition: box-shadow 0.4s ease, background-color 0.4s ease;
+
+    &:focus {
+      box-shadow: 0px 0px 4px var(--grey99);
+    }
+
+    &:hover {
+      background-color: var(--greyE5);
+    }
   }
 }

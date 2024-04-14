@@ -1,0 +1,30 @@
+.Field {
+  position: relative;
+  width: 100%;
+
+  &-Placeholder {
+    position: absolute;
+    left: 15px;
+    bottom: 50%;
+    translate: 0 50%;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.0625;
+    color: var(--grey99);
+    transition: bottom 0.4s ease;
+
+    &--moved {
+      bottom: 105%;
+      translate: unset
+    }
+
+  }
+
+  &-Error {
+    position: absolute;
+    bottom: 105%;
+    right: 15px;
+    color: var(--pallete_accent1);
+  }
+
+}
