@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
 
-  &-Placeholder {
+  &__Placeholder {
     position: absolute;
     left: 15px;
     bottom: 50%;
@@ -20,7 +20,7 @@
 
   }
 
-  &-Error {
+  &__Error {
     position: absolute;
     bottom: 105%;
     right: 15px;

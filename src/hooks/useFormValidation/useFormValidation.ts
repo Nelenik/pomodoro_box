@@ -4,26 +4,41 @@ export type PartialRecursive<T> = {
   [P in keyof T]?: T[P] extends object ? PartialRecursive<T[P]> : T[P];
 };
 
-interface Rule {
+export interface Rule {
   value?: number | boolean | RegExp;
   message: string;
   validation: (inputValue: string) => boolean | void;
 }
 
-interface Rules {
+export interface Rules {
   [key: string]: Rule;
 }
 
-interface FormData {
-  [key: string]: string;
+export interface FormData {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
 }
-interface Errors {
+export interface Errors {
   [key: string]: string;
 }
 
-type FormState = "valid" | "invalid";
+export type FormState = "valid" | "invalid";
 
-type FieldType = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+export type FieldType =
+  | HTMLInputElement
+  | HTMLTextAreaElement
+  | HTMLSelectElement;
+
+export type Register = (
+  fieldName: string,
+  rules: PartialRecursive<Rules>
+) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
+  name: string;
+  onChange: (e: React.ChangeEvent<FieldType>) => void;
+  onBlur: (e: React.FocusEvent<FieldType>) => void;
+};
 
 function areErrors(errors: Errors) {
   return Object.values(errors).filter(Boolean).length > 0;
@@ -172,13 +187,15 @@ export const useFormValidation = <T>(
       setErrors({ ...errors, ...validateField(name, value) });
   };
   //submit handler
-  const onSubmit = (handler: () => void = () => {}) => {
+  const onSubmit = (
+    handler: (e?: React.FormEvent<HTMLFormElement>) => void = () => {}
+  ) => {
     return function (e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault();
       const newErrors = validateForm();
       setErrors(newErrors);
       if (!areErrors(newErrors)) {
-        handler();
+        handler(e);
         return;
       }
       const errorsKeys = Object.keys(newErrors);
@@ -191,7 +208,7 @@ export const useFormValidation = <T>(
     };
   };
 
-  const register = (fieldName: string, rules: PartialRecursive<Rules> = {}) => {
+  const register: Register = (fieldName, rules = {}) => {
     assignedRulesRef.current[fieldName] = assignRules(rules);
 
     return {

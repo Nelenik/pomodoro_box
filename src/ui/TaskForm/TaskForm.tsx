@@ -1,52 +1,38 @@
-import './taskform.scss';
-import { ChangeEventHandler, FocusEventHandler, useState } from 'react';
+import './taskForm.scss';
+import { FC } from 'react';
 import { Button } from '../buttons/Button';
 import { PlaceholderField } from '../PlaceholderField';
 import { useFormValidation } from '@/hooks/useFormValidation/useFormValidation';
+import { Task } from '@/types';
 
-export const TaskForm = () => {
-    const [taskValue, setTaskValue] = useState('');
-    const [isFocused, setIsFocused] = useState(false);
+interface TaskFormProps {
+    additCssClass?: string
+}
 
-    //validation
-    const { register, onSubmit, errors } = useFormValidation({ task: '' }, 'change');
-    const { value, name, onChange, onBlur } = register("task", { required: { value: true } })
+export const TaskForm: FC<TaskFormProps> = ({ additCssClass = '' }) => {
+    const { register, onSubmit, errors, reset, formData } = useFormValidation<Task>({ task: '', done: false, tomatoes: [] }, 'change');
 
-
-    const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setTaskValue(e.target.value);
-        onChange(e)
-    }
-
-    const handleFocus: FocusEventHandler<HTMLInputElement> = () => {
-        setIsFocused(true)
-    }
-
-    const handleBlur: FocusEventHandler<HTMLInputElement> = (e) => {
-        setIsFocused(false);
-        onBlur(e)
-    }
+    const handleSubmit = onSubmit(() => {
+        console.log('submitted');
+        console.log(formData);
+        reset()
+    })
     return (
         <form
-            className='TaskForm'
+            className={`${additCssClass} TaskForm`}
             autoComplete='off'
-            onSubmit={onSubmit(() => console.log('submitted'))}
+            onSubmit={handleSubmit}
         >
             <PlaceholderField
                 label='Название задачи'
-                toMovePlaceholder={isFocused || taskValue.length > 0}
-                errorMessage={errors.task}
-            >
-                <input
-                    className='TaskForm-Field'
-                    type="text"
-                    value={value}
-                    name={name}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                />
-            </PlaceholderField>
+                errors={errors}
+                inputProps={{
+                    type: 'text',
+                    register,
+                    fieldName: 'task',
+                    rules: { required: { value: true } }
+                }}
+            />
             <Button>
                 Добавить
             </Button>
