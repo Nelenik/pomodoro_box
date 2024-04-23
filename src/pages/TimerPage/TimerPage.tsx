@@ -1,20 +1,19 @@
 import './timerPage.scss';
+// import { FC } from 'react';
 import useDocTitle from '@/hooks/useDocTitle';
 import { TaskForm } from '@/ui/TaskForm';
 import { TasksList } from '@/ui/TasksList';
 import { Timer } from '@/ui/Timer';
 
 import TomatoMainSvg from 'assets/tomato-main.svg?react'
-import { FC } from 'react';
-import { TasksListType } from '@/types';
+import { useOutletContext } from 'react-router-dom';
+import { TasksContextTuple } from '@/types';
 
-interface TimerPageProps {
-    tasksList: TasksListType
-}
 
-export const TimerPage: FC<TimerPageProps> = ({ tasksList }) => {
-    const areTasks = tasksList.length > 0
-    useDocTitle()
+export const TimerPage = () => {
+    useDocTitle();
+    const [tasksList] = useOutletContext<TasksContextTuple>();
+    const areTasks = tasksList.length > 0;
     return (
         <div className='container TimerPage'>
             <div className="TimerPage__Descr Descr">

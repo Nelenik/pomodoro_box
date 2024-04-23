@@ -1,0 +1,11 @@
+.TasksList {
+  width: 100%;
+
+  & li {
+    border-top: 1px solid var(--pallete_blocks);
+
+    &:last-child {
+      border-bottom: 1px solid var(--greyE4);
+    }
+  }
+}

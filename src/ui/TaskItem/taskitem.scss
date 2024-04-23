@@ -1,0 +1,23 @@
+.TaskItem {
+  padding: 15px 10px;
+  display: flex;
+  align-items: center;
+
+  &--active {
+    background-color: var(--greyF4);
+  }
+
+  &__TomatoesCount {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    border-radius: 100%;
+    border: 1px solid var(--pallete_blocks);
+    text-align: center;
+    line-height: 150%;
+  }
+
+  &__Name {
+    margin-right: auto;
+  }
+}
