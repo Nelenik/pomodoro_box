@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { Button } from '../buttons/Button';
 import { PlaceholderField } from '../PlaceholderField';
 import { useFormValidation } from '@/hooks/useFormValidation/useFormValidation';
-import { Task, TasksContextTuple } from '@/types';
+import { Task, TasksContext } from '@/types';
 import generateId from '@/utils/generateId';
 import { useOutletContext } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ interface TaskFormProps {
 
 export const TaskForm: FC<TaskFormProps> = ({ additCssClass = '' }) => {
     const { register, onSubmit, errors, reset, formData } = useFormValidation({ task: '' }, 'change');
-    const [, dispatchTask] = useOutletContext<TasksContextTuple>()
+    const { dispatchTask } = useOutletContext<TasksContext>()
 
     const handleSubmit = onSubmit(() => {
         const toSubmit: Task = {

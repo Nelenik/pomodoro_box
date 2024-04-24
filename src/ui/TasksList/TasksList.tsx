@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import './taskslist.scss';
 import { useOutletContext } from 'react-router-dom';
-import { TasksContextTuple } from '@/types';
-import { TaskItem } from '../TaskItem';
+import { TasksContext } from '@/types';
+import { TaskItem } from './TaskItem';
 
 interface TasksListProps {
     additCssClass?: string
@@ -10,13 +10,12 @@ interface TasksListProps {
 
 
 export const TasksList: FC<TasksListProps> = ({ additCssClass = '' }) => {
-    const [tasksList] = useOutletContext<TasksContextTuple>();
-    console.log(tasksList)
+    const { tasksList } = useOutletContext<TasksContext>();
     return (
         <ul className={`mg-reset ${additCssClass} TasksList`}>
             {tasksList.map(item => (
                 <li key={item.id}>
-                    <TaskItem item={item} />
+                    <TaskItem taskItem={item} />
                 </li>
             ))}
         </ul>

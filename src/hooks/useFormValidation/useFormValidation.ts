@@ -44,6 +44,13 @@ function areErrors(errors: Errors) {
   return Object.values(errors).filter(Boolean).length > 0;
 }
 
+const transformFirstLetter = (string: string): string => {
+  if (string.trim().length) {
+    return `${string.at(0)?.toUpperCase()}${string.slice(1)}`;
+  }
+  return "";
+};
+
 const defRules: Rules = {
   required: {
     value: false,
@@ -177,7 +184,7 @@ export const useFormValidation = <T>(
       setErrors({ ...errors, ...validateField(name, value) });
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: transformFirstLetter(value),
     });
   };
   //blur handler

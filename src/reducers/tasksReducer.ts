@@ -4,6 +4,7 @@ import {
   isAddTaskAction,
   isChangeTaskAction,
   isRemoveTaskAction,
+  isSetTasksAction,
 } from "@/types";
 import { Reducer } from "react";
 
@@ -12,6 +13,9 @@ export const tasksReducer: Reducer<TasksListType, ManageTasksAction> = (
   action
 ): TasksListType => {
   switch (true) {
+    case isSetTasksAction(action) && action.type === "setTasks": {
+      return action.tasks;
+    }
     case isAddTaskAction(action) && action.type === "addTask": {
       return [...tasksList, action.task];
     }

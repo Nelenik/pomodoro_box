@@ -1,0 +1,16 @@
+.Dropdown {
+  position: relative;
+
+  &__Trigger {}
+
+  &__Item {}
+
+  &__Menu {
+    position: absolute;
+    left: 50%;
+    translate: -50%;
+    top: 100%;
+    width: 100%;
+    max-height: 400px;
+  }
+}

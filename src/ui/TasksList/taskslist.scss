@@ -2,10 +2,11 @@
   width: 100%;
 
   & li {
-    border-top: 1px solid var(--pallete_blocks);
+    border: solid var(--greyE5);
+    border-width: 1px 0 0 0;
 
     &:last-child {
-      border-bottom: 1px solid var(--greyE4);
+      border-width: 1px 0 1px 0;
     }
   }
 }

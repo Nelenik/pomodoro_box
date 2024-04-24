@@ -1,4 +1,5 @@
 .TaskItem {
+  position: relative;
   padding: 15px 10px;
   display: flex;
   align-items: center;
@@ -18,6 +19,18 @@
   }
 
   &__Name {
+
     margin-right: auto;
+
+    &:disabled {
+      opacity: 1;
+      border: none;
+      outline: none;
+      background: none;
+    }
+  }
+
+  &__ErrorMessage {
+    color: var(--pallete_accent1);
   }
 }

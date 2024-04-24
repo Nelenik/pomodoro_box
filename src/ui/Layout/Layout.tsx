@@ -3,22 +3,10 @@ import './layout.scss';
 import LogoSvg from 'assets/tomato-logo.svg?react';
 import StatSvg from 'assets/statistics.svg?react';
 import TimerSvg from 'assets/timer.svg?react'
-import { useReducer } from 'react';
-import { tasksReducer } from '@/reducers/tasksReducer';
-// import { TasksContextTuple } from '@/types';
+import { useTasksList } from '@/hooks/useTasksList';
 
 export const Layout = () => {
-    const tasksState = useReducer(tasksReducer, [{
-        id: 'ff',
-        task: 'make smth',
-        done: false,
-        tomatoes: [
-            {
-                id: 'ffffs',
-                time: 25
-            }
-        ]
-    }])
+    const tasksState = useTasksList()
 
     return (
         <>

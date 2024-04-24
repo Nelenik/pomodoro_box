@@ -7,13 +7,25 @@ import { Timer } from '@/ui/Timer';
 
 import TomatoMainSvg from 'assets/tomato-main.svg?react'
 import { useOutletContext } from 'react-router-dom';
-import { TasksContextTuple } from '@/types';
+import { TasksContext } from '@/types';
 
+import { Dropdown } from '@/ui/Dropdown';
+import generateId from '@/utils/generateId';
+
+const list = [
+    {
+        id: generateId(),
+        inner: <button onClick={() => console.log('hello')}>Hello</button>
+    },
+    {
+        id: generateId(),
+        inner: 'second item'
+    }
+]
 
 export const TimerPage = () => {
     useDocTitle();
-    const [tasksList] = useOutletContext<TasksContextTuple>();
-    const areTasks = tasksList.length > 0;
+    const { tasksList } = useOutletContext<TasksContext>();
     return (
         <div className='container TimerPage'>
             <div className="TimerPage__Descr Descr">
@@ -37,10 +49,12 @@ export const TimerPage = () => {
                 </ul>
             </div>
             <div className="TimerPage__Timer">
-                {areTasks ? <Timer /> : <TomatoMainSvg className='SpeakingTomato' />}
+                {(tasksList.length > 0) ? <Timer /> : <TomatoMainSvg className='SpeakingTomato' />}
             </div>
             <TaskForm additCssClass='TimerPage__Form' />
             <TasksList additCssClass='TimerPage__List' />
+
+            <Dropdown buttonInner={'click'} list={list} />
         </div>
 
     )
