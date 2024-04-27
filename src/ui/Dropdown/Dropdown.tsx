@@ -1,5 +1,8 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode } from 'react';
 import './dropdown.scss';
+import { useDropdown } from './useDropdown';
+
+const NOOP = () => { }
 interface DropdownProps {
     additCss?: {
         dropdownCss?: string,
@@ -7,11 +10,16 @@ interface DropdownProps {
         menuCss?: string,
         itemCss?: string
     },
+    index?: number,
+    isActiveDropdown?: boolean,
+    dropdownOnClick?: () => void,
+    As?: 'a' | 'button',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     buttonInner: any,
     list: ({
         id: string,
-        inner: ReactNode
+        inner: ReactNode,
+        itemOnClick?: () => void,
     })[]
 
 }
@@ -23,38 +31,46 @@ const defCss = {
     itemCss: ''
 }
 
-export const Dropdown: FC<DropdownProps> = ({ additCss = {}, buttonInner, list }) => {
+export const Dropdown: FC<DropdownProps> = ({ index = 0, isActiveDropdown = false, dropdownOnClick = NOOP, As = 'button', additCss = {}, buttonInner, list }) => {
     const { dropdownCss, triggerCss, menuCss, itemCss } = { ...defCss, ...additCss }
-    const [isOpen, setIsOpen] = useState(false);
+    const { isOpen, menuRef, triggerRef, dropdownRef, handleTriggerClick, closeMenu } = useDropdown(isActiveDropdown)
+    const manageOpeningClass = isOpen && 'Dropdown__Menu--open' || '';
 
-    const handleClick = () => {
-        setIsOpen(prev => !prev)
-    }
     return (
-        <div className={`${dropdownCss} Dropdown`}>
+        <div className={`${dropdownCss} Dropdown`} onClick={dropdownOnClick} ref={dropdownRef}>
             <button
+                ref={triggerRef}
                 type='button'
                 className={`btn-reset ${triggerCss} Dropdown__Trigger`}
-                onClick={handleClick}
+                onClick={handleTriggerClick}
+                aria-expanded={isOpen}
+                aria-controls={`dropMenu-${index}`}
             >
                 {buttonInner}
             </button>
-            {isOpen &&
-                <ul className={`mg-reset ${menuCss} Dropdown__Menu`}>
-                    {
-                        list.map(item => {
-                            return (
-                                <li
-                                    className={`${itemCss} Dropdown__Item`}
-                                    key={item.id}
-                                >
-                                    {item.inner}
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
-            }
+            <div
+                id={`dropMenu-${index}`}
+                ref={menuRef}
+                className={`${menuCss} Dropdown__Menu ${manageOpeningClass}`}
+            >
+                {
+                    list.map(({ id, inner, itemOnClick = NOOP }) => {
+                        return (
+                            <As
+                                key={id}
+                                className={`${itemCss} Dropdown__MenuItem`}
+                                onClick={() => {
+                                    itemOnClick()
+                                    closeMenu()
+                                    triggerRef.current?.focus()
+                                }}
+                            >
+                                {inner}
+                            </As>
+                        )
+                    })
+                }
+            </div>
         </div>
     )
 }

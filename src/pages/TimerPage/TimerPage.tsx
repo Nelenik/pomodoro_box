@@ -11,11 +11,13 @@ import { TasksContext } from '@/types';
 
 import { Dropdown } from '@/ui/Dropdown';
 import generateId from '@/utils/generateId';
+import { useState } from 'react';
 
 const list = [
     {
         id: generateId(),
-        inner: <button onClick={() => console.log('hello')}>Hello</button>
+        inner: 'first item',
+        itemOnClick: () => console.log('item clicked')
     },
     {
         id: generateId(),
@@ -26,6 +28,7 @@ const list = [
 export const TimerPage = () => {
     useDocTitle();
     const { tasksList } = useOutletContext<TasksContext>();
+    const [activeIndex, setActiveIndex] = useState(-1)
     return (
         <div className='container TimerPage'>
             <div className="TimerPage__Descr Descr">
@@ -54,7 +57,18 @@ export const TimerPage = () => {
             <TaskForm additCssClass='TimerPage__Form' />
             <TasksList additCssClass='TimerPage__List' />
 
-            <Dropdown buttonInner={'click'} list={list} />
+            <Dropdown
+                isActiveDropdown={activeIndex === 0}
+                dropdownOnClick={() => { setActiveIndex(0) }}
+                buttonInner={<span>Span</span>}
+                list={list}
+            />
+            <Dropdown
+                isActiveDropdown={activeIndex === 1}
+                dropdownOnClick={() => { setActiveIndex(1) }}
+                buttonInner={<span>Span</span>}
+                list={list}
+            />
         </div>
 
     )
