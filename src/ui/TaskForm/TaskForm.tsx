@@ -4,7 +4,7 @@ import { Button } from '../buttons/Button';
 import { PlaceholderField } from '../PlaceholderField';
 import { useFormValidation } from '@/hooks/useFormValidation/useFormValidation';
 import { Task, TasksContext } from '@/types';
-import generateId from '@/utils/generateId';
+import { generateId } from '@/utils';
 import { useOutletContext } from 'react-router-dom';
 
 interface TaskFormProps {
@@ -28,7 +28,7 @@ export const TaskForm: FC<TaskFormProps> = ({ additCssClass = '' }) => {
             ]
         }
         dispatchTask({
-            type: 'addTask',
+            type: 'ADD_TASK',
             task: toSubmit
         })
         reset()

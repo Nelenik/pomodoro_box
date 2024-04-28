@@ -13,16 +13,16 @@ export const tasksReducer: Reducer<TasksListType, ManageTasksAction> = (
   action
 ): TasksListType => {
   switch (true) {
-    case isSetTasksAction(action) && action.type === "setTasks": {
+    case isSetTasksAction(action) && action.type === "SET_TASKS": {
       return action.tasks;
     }
-    case isAddTaskAction(action) && action.type === "addTask": {
+    case isAddTaskAction(action) && action.type === "ADD_TASK": {
       return [...tasksList, action.task];
     }
-    case isRemoveTaskAction(action) && action.type === "removeTask": {
+    case isRemoveTaskAction(action) && action.type === "REMOVE_TASK": {
       return tasksList.filter((task) => task.id !== action.id);
     }
-    case isChangeTaskAction(action) && action.type === "changeTask": {
+    case isChangeTaskAction(action) && action.type === "CHANGE_TASK": {
       return tasksList.map((task) =>
         task.id === action.id ? { ...task, ...action.toChange } : task
       );

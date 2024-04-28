@@ -7,7 +7,7 @@ export const useTasksList = () => {
     const storedTasks = localStorage.getItem("pomodoroTasks");
     if (storedTasks) {
       dispatchTask({
-        type: "setTasks",
+        type: "SET_TASKS",
         tasks: JSON.parse(storedTasks),
       });
     }

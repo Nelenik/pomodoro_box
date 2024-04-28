@@ -1,2 +1,1 @@
-const NOOP = () => {};
-export default NOOP;
+export const NOOP = () => {};

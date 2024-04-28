@@ -1,7 +1,12 @@
 .Dropdown {
   position: relative;
 
-  &__Trigger {}
+  &__Trigger {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
 
   &__MenuItem {}
 

@@ -1,6 +1,6 @@
 import './button.scss';
 import { FC, MouseEventHandler, ReactElement } from 'react';
-import NOOP from '@/utils/noop';
+import { NOOP } from '@/utils';
 
 interface IButtonProps {
     children: ReactElement | string,

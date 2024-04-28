@@ -1,4 +1,4 @@
-import NOOP from '@/utils/noop';
+import { NOOP } from '@/utils';
 import './roundbtn.scss';
 import { FC, MouseEventHandler } from 'react';
 

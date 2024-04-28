@@ -9,26 +9,24 @@ import TomatoMainSvg from 'assets/tomato-main.svg?react'
 import { useOutletContext } from 'react-router-dom';
 import { TasksContext } from '@/types';
 
-import { Dropdown } from '@/ui/Dropdown';
-import generateId from '@/utils/generateId';
-import { useState } from 'react';
+// import generateId from '@/utils/generateId';
+// import { useState } from 'react';
 
-const list = [
-    {
-        id: generateId(),
-        inner: 'first item',
-        itemOnClick: () => console.log('item clicked')
-    },
-    {
-        id: generateId(),
-        inner: 'second item'
-    }
-]
+// const list = [
+//     {
+//         id: generateId(),
+//         inner: 'first item',
+//         itemOnClick: () => console.log('item clicked')
+//     },
+//     {
+//         id: generateId(),
+//         inner: 'second item'
+//     }
+// ]
 
 export const TimerPage = () => {
     useDocTitle();
     const { tasksList } = useOutletContext<TasksContext>();
-    const [activeIndex, setActiveIndex] = useState(-1)
     return (
         <div className='container TimerPage'>
             <div className="TimerPage__Descr Descr">
@@ -56,19 +54,6 @@ export const TimerPage = () => {
             </div>
             <TaskForm additCssClass='TimerPage__Form' />
             <TasksList additCssClass='TimerPage__List' />
-
-            <Dropdown
-                isActiveDropdown={activeIndex === 0}
-                dropdownOnClick={() => { setActiveIndex(0) }}
-                buttonInner={<span>Span</span>}
-                list={list}
-            />
-            <Dropdown
-                isActiveDropdown={activeIndex === 1}
-                dropdownOnClick={() => { setActiveIndex(1) }}
-                buttonInner={<span>Span</span>}
-                list={list}
-            />
         </div>
 
     )

@@ -34,3 +34,41 @@
     color: var(--pallete_accent1);
   }
 }
+
+.TaskMenu {
+  &__Trigger {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+
+    span,
+    &::before,
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 100%;
+      background-color: var(--pallete_blocks);
+    }
+  }
+
+
+
+  // &__TriggerInner {
+  //   display: flex;
+  //   gap: 10px;
+  // }
+
+  &__List {}
+
+  &__Item {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+}

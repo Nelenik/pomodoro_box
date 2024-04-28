@@ -1,4 +1,4 @@
-import { checkObjectProps } from "@/utils/checkObjectProps";
+import { checkObjectProps } from "@/utils";
 import { RouteHandle } from "./routes";
 import {
   AddTaskAction,

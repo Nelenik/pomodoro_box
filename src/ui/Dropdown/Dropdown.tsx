@@ -10,12 +10,11 @@ interface DropdownProps {
         menuCss?: string,
         itemCss?: string
     },
-    index?: number,
+    index?: string,
     isActiveDropdown?: boolean,
     dropdownOnClick?: () => void,
     As?: 'a' | 'button',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    buttonInner: any,
+    triggerInner: ReactNode | string,
     list: ({
         id: string,
         inner: ReactNode,
@@ -31,7 +30,7 @@ const defCss = {
     itemCss: ''
 }
 
-export const Dropdown: FC<DropdownProps> = ({ index = 0, isActiveDropdown = false, dropdownOnClick = NOOP, As = 'button', additCss = {}, buttonInner, list }) => {
+export const Dropdown: FC<DropdownProps> = ({ index = '0', isActiveDropdown = false, dropdownOnClick = NOOP, As = 'button', additCss = {}, triggerInner, list }) => {
     const { dropdownCss, triggerCss, menuCss, itemCss } = { ...defCss, ...additCss }
     const { isOpen, menuRef, triggerRef, dropdownRef, handleTriggerClick, closeMenu } = useDropdown(isActiveDropdown)
     const manageOpeningClass = isOpen && 'Dropdown__Menu--open' || '';
@@ -41,12 +40,12 @@ export const Dropdown: FC<DropdownProps> = ({ index = 0, isActiveDropdown = fals
             <button
                 ref={triggerRef}
                 type='button'
-                className={`btn-reset ${triggerCss} Dropdown__Trigger`}
+                className={`${triggerCss} Dropdown__Trigger`}
                 onClick={handleTriggerClick}
                 aria-expanded={isOpen}
                 aria-controls={`dropMenu-${index}`}
             >
-                {buttonInner}
+                {triggerInner}
             </button>
             <div
                 id={`dropMenu-${index}`}
