@@ -1,0 +1,46 @@
+.Modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+
+  &__Content {
+    position: relative;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: min(100%, 350px);
+    min-height: 175px;
+    background-color: var(--pallete_bg);
+  }
+
+  &__CloseBtn {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.Content {
+  &__Chancel {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  &__Text {
+    font-size: 1.5rem;
+    line-height: 141.176471%;
+    /* 24/17 */
+    color: var(--pallete_text);
+    margin-bottom: auto;
+  }
+}

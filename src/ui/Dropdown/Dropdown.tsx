@@ -36,7 +36,7 @@ export const Dropdown: FC<DropdownProps> = ({ index = '0', isActiveDropdown = fa
     const manageOpeningClass = isOpen && 'Dropdown__Menu--open' || '';
 
     return (
-        <div className={`${dropdownCss} Dropdown`} onClick={dropdownOnClick} ref={dropdownRef}>
+        <div className={`${dropdownCss} Dropdown`} onClick={dropdownOnClick} ref={dropdownRef} {...isActiveDropdown && { 'z-index': 10 }}>
             <button
                 ref={triggerRef}
                 type='button'
@@ -58,10 +58,10 @@ export const Dropdown: FC<DropdownProps> = ({ index = '0', isActiveDropdown = fa
                             <As
                                 key={id}
                                 className={`${itemCss} Dropdown__MenuItem`}
-                                onClick={() => {
+                                onClick={(e) => {
+                                    e.preventDefault()
                                     itemOnClick()
                                     closeMenu()
-                                    triggerRef.current?.focus()
                                 }}
                             >
                                 {inner}

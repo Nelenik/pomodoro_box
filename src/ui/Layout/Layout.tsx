@@ -4,6 +4,7 @@ import LogoSvg from 'assets/tomato-logo.svg?react';
 import StatSvg from 'assets/statistics.svg?react';
 import TimerSvg from 'assets/timer.svg?react'
 import { useTasksList } from '@/hooks/useTasksList';
+import { Modal } from '../Modal';
 
 export const Layout = () => {
     const tasksState = useTasksList()
@@ -26,6 +27,7 @@ export const Layout = () => {
             <main className='main'>
                 <Outlet context={tasksState} />
             </main>
+            <Modal />
         </>
 
     )

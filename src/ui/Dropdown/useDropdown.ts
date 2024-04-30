@@ -13,23 +13,23 @@ export const useDropdown = (isActiveDropdown: boolean) => {
 
   const closeMenu = useCallback(() => {
     setIsOpen(false);
-    triggerRef.current?.focus();
     nextIndex.current = -1;
+    triggerRef.current?.focus();
   }, []);
 
   useEffect(() => {
-    if (!isActiveDropdown) {
-      setIsOpen(false);
-      nextIndex.current = -1;
+    if (isOpen && !isActiveDropdown) {
+      closeMenu();
     }
-  }, [isActiveDropdown]);
+  }, [isActiveDropdown, closeMenu, isOpen]);
 
   useEffect(() => {
     const handleClickOutside = (e: Event) => {
       if (
-        !menuRef.current?.contains(e.target as Node) &&
-        !triggerRef.current?.contains(e.target as Node) &&
-        isOpen
+        // !menuRef.current?.contains(e.target as Node) &&
+        // !triggerRef.current?.contains(e.target as Node) &&
+        isOpen &&
+        !dropdownRef.current?.contains(e.target as Node)
       ) {
         closeMenu();
       }

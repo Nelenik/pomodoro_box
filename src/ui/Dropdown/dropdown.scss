@@ -6,21 +6,29 @@
     border: none;
     background: none;
     cursor: pointer;
+    outline: none;
   }
 
-  &__MenuItem {}
+  &__MenuItem {
+    width: 100%;
+    text-align: start;
+    outline: none;
+  }
 
   &__Menu {
+    z-index: 100;
     position: absolute;
     left: 50%;
     translate: -50%;
     top: 100%;
-    width: 100%;
+    width: max-content;
     max-height: 400px;
     transform: scaleY(0);
     visibility: hidden;
     transform-origin: top;
     transition: transform 0.3s linear, visibility 0.5s linear;
+
+
 
     &--open {
       transform: scaleY(1);

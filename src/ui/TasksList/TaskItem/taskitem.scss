@@ -9,6 +9,7 @@
   }
 
   &__TomatoesCount {
+    flex-shrink: 0;
     width: 25px;
     height: 25px;
     margin-right: 10px;
@@ -32,6 +33,10 @@
 
   &__ErrorMessage {
     color: var(--pallete_accent1);
+    font-size: 0.65rem;
+    position: absolute;
+    top: 5px;
+    left: 45px;
   }
 }
 
@@ -39,10 +44,13 @@
   &__Trigger {
     width: 30px;
     height: 30px;
+    padding: 3px;
     border-radius: 100%;
     display: flex;
-    gap: 4px;
+    // gap: 4px;
+    justify-content: space-around;
     align-items: center;
+    transition: box-shadow 0.3s linear, background-color 0.3s linear;
 
     span,
     &::before,
@@ -53,22 +61,80 @@
       height: 6px;
       border-radius: 100%;
       background-color: var(--pallete_blocks);
+      transition: background-color 0.3s linear;
+    }
+
+    &:focus,
+    &[aria-expanded="true"] {
+      box-shadow: 0px 0px 2px 2px var(--pallete_blocks);
+    }
+
+    &:hover:not(:focus) {
+      background-color: var(--pallete_blocks);
+
+      span,
+      &::before,
+      &::after {
+        background-color: var(--pallete_bg);
+      }
     }
   }
 
+  &__List {
+    --border-width: 1px;
+    top: 150%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border: var(--border-width) solid var(--pallete_blocks);
+    background-color: var(--pallete_bg);
 
+    &::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      translate: -50%;
+      width: 12px;
+      height: var(--border-width);
+    }
 
-  // &__TriggerInner {
-  //   display: flex;
-  //   gap: 10px;
-  // }
-
-  &__List {}
+    &::after {
+      content: '';
+      z-index: -1;
+      position: absolute;
+      bottom: 100.5%;
+      left: 50%;
+      translate: -50% 50%;
+      width: 7%;
+      aspect-ratio: 1/1;
+      rotate: 45deg;
+      background-color: var(--pallete_bg);
+      border: solid var(--pallete_blocks);
+      border-width: var(--border-width) 0 0 var(--border-width);
+    }
+  }
 
   &__Item {
     padding: 0;
+    padding: 9px 15px;
+    display: flex;
+    align-items: center;
     border: none;
     background: none;
     cursor: pointer;
+    color: var(--grey99);
+    transition: background-color 0.3s ease;
+
+    svg {
+      margin-right: 10px;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: var(--greyF4);
+    }
   }
 }

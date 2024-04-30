@@ -34,4 +34,15 @@
     border-color: var(--pallete_blocks);
     color: var(--pallete_blocks);
   }
+
+  &--redFull {
+    color: var(--pallete_bg);
+    background-color: var(--pallete_accent1);
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: var(--accent1_hover);
+    }
+  }
 }
