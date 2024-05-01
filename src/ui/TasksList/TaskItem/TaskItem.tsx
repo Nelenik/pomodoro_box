@@ -19,7 +19,7 @@ export const TaskItem: FC<TaskItemProps> = ({ taskItem, isActiveTask = false, ma
     const { value, name, onChange, onBlur } = register('editedTask', { required: { value: true } })
 
     //useTaskItem hook
-    const { editTask, inputRef, rewriteTask, dropdownItems } = useTaskItem(taskItem, formState)
+    const { editTask, inputRef, rewriteTask, dropdownItems, insertModal } = useTaskItem(taskItem, formState)
     //manageDropdowns
     const [activeDropdown, setActiveDropdown] = manageDropdowns
 
@@ -69,6 +69,7 @@ export const TaskItem: FC<TaskItemProps> = ({ taskItem, isActiveTask = false, ma
                     itemCss: 'TaskMenu__Item'
                 }}
             />
+            {insertModal()}
         </div>
     )
 }

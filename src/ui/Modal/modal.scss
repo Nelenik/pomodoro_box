@@ -8,6 +8,16 @@
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  scale: 0;
+  transition: opacity 0.4s ease, visibility 0.4s ease, scale 0.4s ease;
+
+  &--open {
+    opacity: 1;
+    scale: 1;
+    visibility: visible;
+  }
 
   &__Content {
     position: relative;
@@ -16,7 +26,7 @@
     flex-direction: column;
     align-items: center;
     width: min(100%, 350px);
-    min-height: 175px;
+    min-height: 200px;
     background-color: var(--pallete_bg);
   }
 
@@ -27,6 +37,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &:focus {
+      outline: 1px solid var(--pallete_blocks);
+      outline-offset: 3px;
+    }
   }
 }
 
@@ -42,5 +57,9 @@
     /* 24/17 */
     color: var(--pallete_text);
     margin-bottom: auto;
+  }
+
+  &__Delete {
+    margin-bottom: 10px;
   }
 }
