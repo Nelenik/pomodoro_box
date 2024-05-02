@@ -35,7 +35,7 @@ export const TaskItem: FC<TaskItemProps> = ({ taskItem, isActiveTask = false, ma
     return (
         <div className={`TaskItem ${isActiveTask && 'TaskItem--active'}`}>
             <span className='TaskItem__TomatoesCount'>
-                {taskItem.tomatoes.length}
+                {taskItem.tomatoesCount}
             </span>
             <input
                 ref={inputRef}

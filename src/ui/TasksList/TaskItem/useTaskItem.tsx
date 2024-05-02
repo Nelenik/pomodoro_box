@@ -39,11 +39,10 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
   };
 
   const handleLess = () => {
-    const newTomatoes = taskItem.tomatoes.slice(0, taskItem.tomatoes.length - 1)
     dispatchTask({
       type: 'CHANGE_TASK',
       id: taskItem.id,
-      toChange: { tomatoes: newTomatoes }
+      toChange: { tomatoesCount: taskItem.tomatoesCount - 1 }
     })
   }
 
@@ -51,7 +50,7 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
     dispatchTask({
       type: 'CHANGE_TASK',
       id: taskItem.id,
-      toChange: { tomatoes: [...taskItem.tomatoes, { id: generateId(), time: 25 }] }
+      toChange: { tomatoesCount: taskItem.tomatoesCount + 1 }
     })
   }
   //modal functions

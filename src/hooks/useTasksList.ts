@@ -1,4 +1,4 @@
-import { tasksReducer } from "@/reducers/tasksReducer";
+import { tasksReducer } from "@/reducers_providers/tasksReducer";
 import { useReducer, useEffect } from "react";
 
 export const useTasksList = () => {

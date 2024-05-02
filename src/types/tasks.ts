@@ -1,13 +1,8 @@
-export type Tomato = {
-  id: string;
-  time: number;
-};
-
 export type Task = {
   id: string;
   task: string;
   done: boolean;
-  tomatoes: Tomato[];
+  tomatoesCount: number;
 };
 
 export type TasksListType = Task[];

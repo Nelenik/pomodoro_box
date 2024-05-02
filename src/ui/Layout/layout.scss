@@ -1,5 +1,6 @@
 .header {
   padding: 15px 0;
+  background-color: var(--greyF4);
 
   &__container {
     display: flex;
@@ -24,5 +25,6 @@
 }
 
 .main {
-  background-image: linear-gradient(to bottom, var(--greyF4), var(--pallete_bg));
+  // background-image: linear-gradient(to bottom, var(--greyF4), var(--pallete_bg));
+  background-color: var(--pallete_bg);
 }

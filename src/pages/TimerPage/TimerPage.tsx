@@ -8,25 +8,19 @@ import { Timer } from '@/ui/Timer';
 import TomatoMainSvg from 'assets/tomato-main.svg?react'
 import { useOutletContext } from 'react-router-dom';
 import { TasksContext } from '@/types';
-
-// import generateId from '@/utils/generateId';
-// import { useState } from 'react';
-
-// const list = [
-//     {
-//         id: generateId(),
-//         inner: 'first item',
-//         itemOnClick: () => console.log('item clicked')
-//     },
-//     {
-//         id: generateId(),
-//         inner: 'second item'
-//     }
-// ]
+import getTimeString from '@/utils/getTimeString';
+import { SettingsContext } from '@/ui/Layout';
+import { useContext } from 'react';
 
 export const TimerPage = () => {
     useDocTitle();
     const { tasksList } = useOutletContext<TasksContext>();
+    const { tomatoDuration } = useContext(SettingsContext)
+
+
+    const tomatoesTotal = tasksList.reduce((prev, { tomatoesCount }) => prev + tomatoesCount
+        , 0)
+
     return (
         <div className='container TimerPage'>
             <div className="TimerPage__Descr Descr">
@@ -53,7 +47,12 @@ export const TimerPage = () => {
                 {(tasksList.length > 0) ? <Timer /> : <TomatoMainSvg className='SpeakingTomato' />}
             </div>
             <TaskForm additCssClass='TimerPage__Form' />
-            <TasksList additCssClass='TimerPage__List' />
+            <div className="TimerPage__Tasks">
+                <TasksList additCssClass='TimerPage__List' />
+                <div className="TimerPage__TotalSum">
+                    {(tasksList.length > 0) && getTimeString(tomatoesTotal * tomatoDuration)}
+                </div>
+            </div>
         </div>
 
     )

@@ -27,9 +27,21 @@
     grid-column: 1/2;
   }
 
-  &__List {
+  &__Tasks {
     grid-row: 3/4;
     grid-column: 1/2;
+
+  }
+
+  &__List {
+    margin-bottom: 20px;
+  }
+
+  &__TotalSum {
+    font-size: 1rem;
+    line-height: 94.117647%;
+    /* 16/17 */
+    color: var(--grey99);
   }
 }
 
