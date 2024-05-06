@@ -8,14 +8,13 @@ import { Timer } from '@/ui/Timer';
 import TomatoMainSvg from 'assets/tomato-main.svg?react'
 import { useOutletContext } from 'react-router-dom';
 import { TasksContext } from '@/types';
-import getTimeString from '@/utils/getTimeString';
-import { SettingsContext } from '@/ui/Layout';
-import { useContext } from 'react';
+import { getTasksTimeString } from '@/utils/getTimeString';
+import { useSettingsContext } from '@/reducers_providers/SettingsProvider/useSettingsContext';
 
 export const TimerPage = () => {
     useDocTitle();
     const { tasksList } = useOutletContext<TasksContext>();
-    const { tomatoDuration } = useContext(SettingsContext)
+    const { appSettings } = useSettingsContext()
 
 
     const tomatoesTotal = tasksList.reduce((prev, { tomatoesCount }) => prev + tomatoesCount
@@ -50,7 +49,7 @@ export const TimerPage = () => {
             <div className="TimerPage__Tasks">
                 <TasksList additCssClass='TimerPage__List' />
                 <div className="TimerPage__TotalSum">
-                    {(tasksList.length > 0) && getTimeString(tomatoesTotal * tomatoDuration)}
+                    {(tasksList.length > 0) && getTasksTimeString(tomatoesTotal * appSettings.tomatoDuration)}
                 </div>
             </div>
         </div>

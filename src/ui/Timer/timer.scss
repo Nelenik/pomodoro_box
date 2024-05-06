@@ -1,0 +1,74 @@
+.Timer {
+  width: 100%;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--greyF4);
+
+  &__Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 19px 40px;
+    background-color: var(--pallete_blocks);
+    color: var(--pallete_bg);
+    font-size: 1rem;
+    line-height: 100%;
+
+  }
+
+  &__TaskName {
+    font: inherit;
+  }
+
+  &__TomatoCounter {}
+
+  &__TimeBlock {
+    margin-top: auto;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+  }
+
+  &__Time {
+    font-size: 9.375rem;
+    line-height: 150%;
+    font-weight: 200;
+  }
+
+  &__Descr {
+    margin-bottom: 32px;
+
+    span {
+      color: var(--grey99);
+    }
+  }
+
+  &__Controls {
+    margin-bottom: auto;
+    display: inline-flex;
+    gap: 25px;
+  }
+
+  &--working {
+    .Timer__Header {
+      background-color: var(--pallete_accent1);
+    }
+
+    .Timer__Time {
+      color: var(--pallete_accent1);
+    }
+  }
+
+  &--paused {
+    .Timer__Header {
+      background: var(--pallete_accent2);
+    }
+
+    .Timer__Time {
+      color: var(--pallete_accent2);
+    }
+  }
+}

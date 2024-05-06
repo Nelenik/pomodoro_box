@@ -1,11 +1,14 @@
-const getHoursFromMin = (minutes: number): { hours: number; min: number } => {
-  const hours = Math.floor(minutes / 60);
-  const restMin = minutes % 60;
-  return { hours, min: restMin };
+const getTimePartsFromSec = (
+  totalSeconds: number
+): { hours: number; min: number; sec: number } => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const min = Math.floor((totalSeconds % 3600) / 60);
+  const sec = totalSeconds % 60;
+  return { hours, min, sec };
 };
 
-const getTimeString = (minutes: number = 0): string => {
-  const { hours, min } = getHoursFromMin(minutes);
+export const getTasksTimeString = (seconds: number = 0): string => {
+  const { hours, min } = getTimePartsFromSec(seconds);
   let hourDefinition: string;
   switch (true) {
     case hours % 100 !== 11 && hours % 10 === 1: {
@@ -26,4 +29,9 @@ const getTimeString = (minutes: number = 0): string => {
   return `${hours} ${hourDefinition} ${min} мин`;
 };
 
-export default getTimeString;
+export const getTimerTimeString = (seconds: number): string => {
+  const { min, sec } = getTimePartsFromSec(seconds);
+  return `${min.toString().padStart(2, "0")}:${sec
+    .toString()
+    .padStart(2, "0")}`;
+};

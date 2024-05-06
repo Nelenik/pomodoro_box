@@ -9,7 +9,7 @@ import {
 import { Reducer } from "react";
 
 export const tasksReducer: Reducer<TasksListType, ManageTasksAction> = (
-  tasksList = [],
+  tasksList,
   action
 ): TasksListType => {
   switch (true) {

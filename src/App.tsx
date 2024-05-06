@@ -10,6 +10,7 @@ import { Layout } from './ui/Layout';
 import { TimerPage } from './pages/TimerPage';
 import { Statistics } from './pages/Statistics';
 
+import { SettingsProvider } from './reducers_providers/SettingsProvider';
 
 const setDocTitle = (title: string): void => {
   document.title = title
@@ -37,7 +38,10 @@ const router = createBrowserRouter(
 function App() {
 
   return (
-    <RouterProvider router={router} />
+    <SettingsProvider>
+
+      <RouterProvider router={router} />
+    </SettingsProvider>
   )
 }
 

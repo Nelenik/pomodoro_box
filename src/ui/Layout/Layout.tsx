@@ -1,44 +1,38 @@
 import { Outlet, NavLink, Link } from 'react-router-dom';
 import './layout.scss';
+import { useTasksList } from '@/hooks/useTasksList';
+//nav svg-s
 import LogoSvg from 'assets/tomato-logo.svg?react';
 import StatSvg from 'assets/statistics.svg?react';
-import TimerSvg from 'assets/timer.svg?react'
-import { useTasksList } from '@/hooks/useTasksList';
-import { createContext, useState } from 'react';
-import { Settings } from '@/types/settings';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const SettingsContext = createContext<any>(null)
+import TimerSvg from 'assets/timer.svg?react';
+import SettingsSvg from 'assets/settings.svg?react';
 
 export const Layout = () => {
     const tasksState = useTasksList()
-    const [appSettings, setAppSettings] = useState<Settings>({
-        theme: 'default',
-        tomatoDuration: 25,
-        longBreakDuration: 15,
-        shortBreakDuration: 5
-    })
 
     return (
         <>
-            <SettingsContext.Provider value={appSettings}>
-                <header className='header'>
-                    <div className="container header__container">
-                        <Link to={'/'} className='header__logo'><LogoSvg /></Link>
-                        <nav className='nav'>
-                            <NavLink className='nav__link' to={'/'}>
-                                <TimerSvg />Таймер
-                            </NavLink>
-                            <NavLink className='nav__link' to={'statistics'}>
-                                <StatSvg />Статистика
-                            </NavLink>
-                        </nav>
+            <header className='Header'>
+                <div className="container Header__Container">
+                    <Link to={'/'} className='Header__Logo'><LogoSvg /></Link>
+                    <nav className='Nav'>
+                        <NavLink className='Nav__Link' to={'/'}>
+                            <TimerSvg />Таймер
+                        </NavLink>
+                        <NavLink className='Nav__Link' to={'statistics'}>
+                            <StatSvg />Статистика
+                        </NavLink>
+                    </nav>
+                    <div className='AppSettings'>
+                        <button className='btn-reset AppSettings__Trigger' type='button'>
+                            <SettingsSvg />
+                        </button>
                     </div>
-                </header>
-                <main className='main'>
-                    <Outlet context={tasksState} />
-                </main>
-            </SettingsContext.Provider>
+                </div>
+            </header>
+            <main className='Main'>
+                <Outlet context={tasksState} />
+            </main>
 
         </>
 

@@ -1,30 +1,70 @@
-.header {
+.Header {
   padding: 15px 0;
   background-color: var(--greyF4);
 
-  &__container {
+  &__Container {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
   }
 
-  &__logo {
+  &__Logo {
     width: 205px;
     height: 40px;
+    margin-right: auto;
   }
 }
 
-.nav {
+.Nav {
+  margin-right: 60px;
 
-  &__link {
-    color: #DC3E22;
+  &__Link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--pallete_accent1);
+
+    &:not(:last-child) {
+      margin-right: 25px;
+    }
+
+    svg {
+      width: 16px;
+      fill: var(--pallete_accent1);
+    }
 
     &.active {
-      color: blue
+      color: var(--accent1_click);
+
+      svg {
+        fill: var(--accent1_click);
+      }
     }
   }
 }
 
-.main {
+.Main {
   // background-image: linear-gradient(to bottom, var(--greyF4), var(--pallete_bg));
   background-color: var(--pallete_bg);
+}
+
+.AppSettings {
+  &__Trigger {
+    position: relative;
+    width: 30px;
+    height: 30px;
+
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      fill: var(--pallete_accent1);
+    }
+
+    &--active {
+      svg {
+        fill: var(--accent1_click);
+      }
+    }
+  }
 }

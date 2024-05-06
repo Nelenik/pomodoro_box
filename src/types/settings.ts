@@ -1,5 +1,5 @@
 export interface Settings {
-  theme: "inverted" | "default";
+  theme: string;
   tomatoDuration: number;
   longBreakDuration: number;
   shortBreakDuration: number;
