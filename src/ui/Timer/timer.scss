@@ -62,13 +62,19 @@
     }
   }
 
-  &--paused {
+  &--breaking {
     .Timer__Header {
       background: var(--pallete_accent2);
     }
 
     .Timer__Time {
       color: var(--pallete_accent2);
+    }
+  }
+
+  &--paused {
+    .Timer__Time {
+      color: var(--pallete_text);
     }
   }
 }

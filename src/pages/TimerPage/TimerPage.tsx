@@ -43,7 +43,9 @@ export const TimerPage = () => {
                 </ul>
             </div>
             <div className="TimerPage__Timer">
-                {(tasksList.length > 0) ? <Timer /> : <TomatoMainSvg className='SpeakingTomato' />}
+                {(tasksList.length > 0) ?
+                    <Timer /> :
+                    <TomatoMainSvg className='SpeakingTomato' />}
             </div>
             <TaskForm additCssClass='TimerPage__Form' />
             <div className="TimerPage__Tasks">
