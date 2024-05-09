@@ -12,7 +12,7 @@ interface TaskItemProps {
     manageDropdowns?: [number, Dispatch<SetStateAction<number>>],
     itemIndex?: number
 }
-export const TaskItem: FC<TaskItemProps> = ({ taskItem, isActiveTask = false, manageDropdowns = [0, NOOP], itemIndex = 0 }) => {
+export const TaskItem: FC<TaskItemProps> = ({ taskItem, manageDropdowns = [0, NOOP], itemIndex = 0 }) => {
     //task input validation
     const { register, errors, formState } = useFormValidation({ editedTask: transformFirstLetter(taskItem.task) }, 'blur change');
 
@@ -32,8 +32,10 @@ export const TaskItem: FC<TaskItemProps> = ({ taskItem, isActiveTask = false, ma
         rewriteTask(e.currentTarget.value)
     }
 
+    const isActiveTask = itemIndex === 0
+
     return (
-        <div className={`TaskItem ${isActiveTask && 'TaskItem--active'}`}>
+        <div className={`TaskItem ${isActiveTask && 'TaskItem--active' || ''}`}>
             <span className='TaskItem__TomatoesCount'>
                 {taskItem.tomatoesCount}
             </span>

@@ -14,7 +14,7 @@ export const TasksList: FC<TasksListProps> = ({ additCssClass = '' }) => {
     const manageDropdowns: [number, Dispatch<SetStateAction<number>>] = useState(-1)
     return (
         <ul className={`mg-reset ${additCssClass} TasksList`}>
-            {tasksList.map((item, itemIndex) => (
+            {tasksList.filter(item => !item.done).map((item, itemIndex) => (
                 <li key={item.id}>
                     <TaskItem
                         taskItem={item}

@@ -3,6 +3,7 @@ export type Task = {
   task: string;
   done: boolean;
   tomatoesCount: number;
+  timeOnTask?: number;
 };
 
 export type TasksListType = Task[];

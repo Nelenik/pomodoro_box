@@ -4,8 +4,23 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: var(--pallete_blocks);
+  // background-color: var(--pallete_blocks);
   transition: background-color 0.4s ease;
+
+  &--green {
+    background-color: var(--pallete_accent2);
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: var(--accent2_effect);
+    }
+  }
+
+  &--inactive {
+    background-color: var(--pallete_blocks);
+    pointer-events: none;
+  }
 
   &::before,
   &::after {
@@ -23,9 +38,5 @@
     rotate: 90deg;
   }
 
-  &:hover,
-  &:focus,
-  &:active {
-    background-color: var(--accent2_effect);
-  }
+
 }

@@ -1,7 +1,7 @@
 import { getTimerTimeString } from "@/utils/getTimeString";
 import { useState, useRef, useEffect } from "react";
 
-export const useTimer = (initValue: number) => {
+export const useTimerTick = (initValue: number) => {
   const [timerValue, setTimerValue] = useState(initValue);
   const [isFinished, setIsFinished] = useState(false);
   const timeString = getTimerTimeString(timerValue);

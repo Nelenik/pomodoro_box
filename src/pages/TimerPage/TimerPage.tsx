@@ -51,7 +51,10 @@ export const TimerPage = () => {
             <div className="TimerPage__Tasks">
                 <TasksList additCssClass='TimerPage__List' />
                 <div className="TimerPage__TotalSum">
-                    {(tasksList.length > 0) && getTasksTimeString(tomatoesTotal * appSettings.tomatoDuration)}
+                    {
+                        (tasksList.length > 0)
+                        && getTasksTimeString(tomatoesTotal * appSettings.tomatoDuration)
+                    }
                 </div>
             </div>
         </div>

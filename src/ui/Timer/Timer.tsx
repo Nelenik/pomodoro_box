@@ -1,11 +1,9 @@
 import { Button } from '../buttons/Button';
 import { RoundBtn } from '../buttons/RoundBtn';
 import './timer.scss';
-import { useTimer } from '../../hooks/useTimer';
-import { ReactElement, ReactNode, useCallback, useEffect, useState } from 'react';
+import { useTimerTick } from '../../hooks/useTimerTick';
+import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { useSettingsContext } from '@/reducers_providers/SettingsProvider';
-// import { TasksContext } from '@/types';
-// import { useOutletContext } from 'react-router-dom';
 
 //get control buttons depending on the timer state
 interface ButtonSettings {
@@ -32,11 +30,18 @@ interface TimerState {
     isPaused: boolean,
 }
 
-type TimerType = 'workTimer' | 'breakTimer'
+type TimerType = 'workTimer' | 'shortBreakTimer' | 'longBreakTimer'
 
 export const Timer = () => {
-    const { appSettings } = useSettingsContext()
-    const { isFinished, timeString, startTimer, pauseTimer, resetTimer } = useTimer(appSettings.tomatoDuration);
+    const { appSettings } = useSettingsContext();
+    const { tomatoDuration, shortBreakDuration, longBreakDuration } = appSettings;
+    //tomato duration = workDurationRef.current, if it is changed, this value become default for the entire cycle(one cycle ends after a long break)
+    const workDurationRef = useRef(tomatoDuration)
+    const timerCycleRef = useRef<number>(0);
+    console.log(timerCycleRef.current)
+
+    const { isFinished, timeString, startTimer, pauseTimer, resetTimer } = useTimerTick(workDurationRef.current);
+
 
     const [timerType, setTimerType] = useState<TimerType>('workTimer');
 
@@ -45,15 +50,23 @@ export const Timer = () => {
         isPaused: false,
     })
     const isWorkTimer = timerType === 'workTimer'
-    const isBreakTimer = timerType === 'breakTimer'
+    const isShortBreakTimer = timerType === 'shortBreakTimer'
+    const isLongBreakTimer = timerType === 'longBreakTimer'
     const { isStarted, isPaused } = timerState;
 
+
+    //css modificator depending on timer type
     const timerCssModificator =
         (isWorkTimer && isStarted && 'Timer--working')
-        || (isBreakTimer && isStarted && 'Timer--breaking')
+        || ((isShortBreakTimer || isLongBreakTimer) && isStarted && 'Timer--breaking')
         || '';
 
     // manage timer functions
+    const switchTimerType = useCallback((type: TimerType, newTime: number) => {
+        setTimerType(type)
+        resetTimer(newTime);
+    }, [resetTimer])
+
     const start = useCallback(() => {
         startTimer()
         setTimerState({ isStarted: true, isPaused: false })
@@ -64,34 +77,93 @@ export const Timer = () => {
         setTimerState({ isStarted: true, isPaused: true })
     }
 
-    const stop = () => {
-        pauseTimer()
-        resetTimer()
-        setTimerState({ isStarted: false, isPaused: false })
-        setTimerType('workTimer')
+    const skip = () => {
+        pauseTimer();
+        switchTimerType('workTimer', workDurationRef.current);
+        start()
     }
 
+    const resetToDefault = useCallback(() => {
+        pauseTimer()
+        setTimerState({ isStarted: false, isPaused: false })
+        setTimerType('workTimer');
+        resetTimer(tomatoDuration)
+        timerCycleRef.current = 0;
+        workDurationRef.current = tomatoDuration
+
+    }, [resetTimer, tomatoDuration, pauseTimer])
+
     const done = () => {
-        stop()
+        resetToDefault()
 
     }
     //switch timer type
     useEffect(() => {
         if (isFinished && isWorkTimer) {
-            setTimerType('breakTimer')
-            resetTimer(appSettings.shortBreakDuration);
+            ++timerCycleRef.current
+            if (timerCycleRef.current >= 4) {
+                switchTimerType('longBreakTimer', longBreakDuration)
+            } else {
+                switchTimerType('shortBreakTimer', shortBreakDuration)
+            }
             start()
         }
-        if (isFinished && isBreakTimer) {
-            setTimerType('workTimer')
-            resetTimer(appSettings.tomatoDuration);
+        if (isFinished && isShortBreakTimer) {
+            switchTimerType('workTimer', workDurationRef.current)
             start()
 
         }
-    }, [timerType, isFinished, isWorkTimer, isBreakTimer, start, appSettings.shortBreakDuration, appSettings.tomatoDuration, resetTimer])
+        if (isFinished && isLongBreakTimer) {
+            resetToDefault()
+        }
+    }, [timerType, isFinished, isWorkTimer, isLongBreakTimer, isShortBreakTimer, start, shortBreakDuration, longBreakDuration, tomatoDuration, resetTimer, resetToDefault, switchTimerType])
 
-
-
+    const renderControlBtns = () => {
+        switch (true) {
+            case isWorkTimer && isPaused: {
+                return getBtns(
+                    { inner: 'Продолжить', handler: start },
+                    { view: 'red', inner: 'Сделано', handler: done }
+                )
+            }
+            case isWorkTimer && isStarted: {
+                return getBtns(
+                    { inner: 'Пауза', handler: pause },
+                    { view: 'red', inner: "Стоп", handler: resetToDefault }
+                )
+            }
+            case isWorkTimer: {
+                return getBtns(
+                    { inner: 'Старт', handler: start },
+                    { view: 'inactive', inner: 'Стоп' }
+                )
+            }
+            case isShortBreakTimer && isPaused: {
+                return getBtns(
+                    { inner: 'Продолжить', handler: start },
+                    { view: 'red', inner: 'Пропустить', handler: skip }
+                )
+            }
+            case isShortBreakTimer && isStarted: {
+                return getBtns(
+                    { inner: 'Пауза', handler: pause },
+                    { view: 'red', inner: 'Пропустить', handler: skip }
+                )
+            }
+            case isLongBreakTimer && isPaused: {
+                return getBtns(
+                    { inner: 'Продолжить', handler: start },
+                    { view: 'red', inner: 'Пропустить', handler: resetToDefault }
+                )
+            }
+            case isLongBreakTimer && isStarted: {
+                return getBtns(
+                    { inner: 'Пауза', handler: pause },
+                    { view: 'red', inner: 'Пропустить', handler: resetToDefault }
+                )
+            }
+        }
+    }
 
     return (
         <div className={`Timer ${timerCssModificator} ${isPaused && 'Timer--paused' || ''}`}>
@@ -107,66 +179,21 @@ export const Timer = () => {
                 <div className="Timer__Time">
                     {timeString}
                 </div>
-                <RoundBtn />
+                <RoundBtn
+                    {...isStarted && { view: 'inactive' }}
+                    handler={() => {
+                        workDurationRef.current += 5
+                        resetTimer(workDurationRef.current)
+                    }
+                    }
+                />
             </div>
             <p className="Timer__Descr">
                 <span>Задача 1 - </span>
                 Сверстать сайт
             </p>
             <div className="Timer__Controls">
-                {
-
-                    (isWorkTimer && isPaused && getBtns(
-                        {
-                            inner: 'Продолжить',
-                            handler: start
-                        },
-                        {
-                            view: 'red',
-                            inner: 'Сделано',
-                            handler: done
-                        }))
-                    || (isWorkTimer && isStarted && getBtns(
-                        {
-                            inner: 'Пауза',
-                            handler: pause
-                        },
-                        {
-                            view: 'red',
-                            inner: "Стоп",
-                            handler: stop
-                        }))
-                    || (isWorkTimer && getBtns(
-                        {
-                            inner: 'Старт',
-                            handler: start
-                        },
-                        {
-                            view: 'inactive',
-                            inner: 'Стоп'
-                        }))
-                    || (isBreakTimer && isPaused && getBtns(
-                        {
-                            inner: 'Продолжить',
-                            handler: start
-                        },
-                        {
-                            view: 'red',
-                            inner: 'Пропустить',
-                            handler: stop
-                        }))
-                    || (isBreakTimer && isStarted && getBtns(
-                        {
-                            inner: 'Пауза',
-                            handler: pause
-                        },
-                        {
-                            view: 'red',
-                            inner: 'Пропустить',
-                            handler: stop
-                        }))
-
-                }
+                {renderControlBtns()}
             </div>
         </div>
     )
