@@ -19,9 +19,34 @@
     line-height: 150%;
   }
 
+  &__NameLabel {
+    margin-right: auto;
+    position: relative;
+    transition: opacity 1.5s linear;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      translate: 0 -50%;
+      height: 0.5px;
+      background-color: var(--pallete_text);
+    }
+
+    &::after {
+      content: '🖋️';
+      position: absolute;
+      bottom: 100%;
+      translate: 0 50%;
+      left: 0;
+      opacity: 0;
+    }
+  }
+
   &__Name {
 
-    margin-right: auto;
+    // margin-right: auto;
 
     &:disabled {
       opacity: 1;
@@ -37,6 +62,53 @@
     position: absolute;
     top: 5px;
     left: 45px;
+  }
+
+  &--done {
+    .TaskItem__NameLabel {
+      opacity: 0.5;
+
+      &::before {
+
+        animation: line 1.5s linear forwards;
+      }
+
+      &::after {
+        animation: pen 1.5s linear forwards;
+      }
+    }
+  }
+}
+
+// cross out with pen animation
+@keyframes pen {
+  0% {
+    opacity: 0;
+    left: 0;
+  }
+
+  1% {
+    opacity: 1;
+  }
+
+  98% {
+    opacity: 1;
+    left: 100%;
+  }
+
+  100% {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+@keyframes line {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: calc(100%);
   }
 }
 

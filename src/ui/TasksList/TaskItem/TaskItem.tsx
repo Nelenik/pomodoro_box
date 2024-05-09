@@ -5,6 +5,7 @@ import { FieldType, useFormValidation } from '@/hooks/useFormValidation/useFormV
 import { Dropdown } from '@/ui/Dropdown';
 import { useTaskItem } from './useTaskItem';
 import './taskitem.scss';
+import { useActiveTaskContext } from '@/reducers_providers/ActiveTaskProvider';
 
 interface TaskItemProps {
     taskItem: Task,
@@ -13,6 +14,8 @@ interface TaskItemProps {
     itemIndex?: number
 }
 export const TaskItem: FC<TaskItemProps> = ({ taskItem, manageDropdowns = [0, NOOP], itemIndex = 0 }) => {
+    //ref link to active taskElement
+    const activeTaskElRef = useActiveTaskContext()
     //task input validation
     const { register, errors, formState } = useFormValidation({ editedTask: transformFirstLetter(taskItem.task) }, 'blur change');
 
@@ -35,22 +38,27 @@ export const TaskItem: FC<TaskItemProps> = ({ taskItem, manageDropdowns = [0, NO
     const isActiveTask = itemIndex === 0
 
     return (
-        <div className={`TaskItem ${isActiveTask && 'TaskItem--active' || ''}`}>
+        <div
+            className={`TaskItem ${isActiveTask && 'TaskItem--active' || ''}`}
+            {...isActiveTask && { ref: activeTaskElRef }}
+        >
             <span className='TaskItem__TomatoesCount'>
                 {taskItem.tomatoesCount}
             </span>
-            <input
-                ref={inputRef}
-                type="text"
-                className='TaskItem__Name'
-                {...(!editTask && { disabled: true } || {})}
-                onChange={onChange}
-                onBlur={handleBlur}
-                value={value}
-                name={name}
-                onKeyDown={handleEnter}
+            <label className='TaskItem__NameLabel'>
+                <input
+                    ref={inputRef}
+                    type="text"
+                    className='TaskItem__Name'
+                    {...(!editTask && { disabled: true } || {})}
+                    onChange={onChange}
+                    onBlur={handleBlur}
+                    value={value}
+                    name={name}
+                    onKeyDown={handleEnter}
 
-            />
+                />
+            </label>
             {errors.editedTask &&
                 <span className='TaskItem__ErrorMessage'>
                     {errors.editedTask}

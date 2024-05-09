@@ -1,4 +1,5 @@
 import { useTimerTick } from "@/hooks/useTimerTick";
+import { useActiveTaskContext } from "@/reducers_providers/ActiveTaskProvider";
 import { useSettingsContext } from "@/reducers_providers/SettingsProvider";
 import { useRef, useState, useCallback, useEffect } from "react";
 
@@ -27,6 +28,8 @@ export const useTomatoTimer = () => {
     isStarted: false,
     isPaused: false,
   })
+
+  const activeTaskElRef = useActiveTaskContext()
 
   const isWorkTimer = timerType === 'workTimer'
   const isShortBreakTimer = timerType === 'shortBreakTimer'
@@ -68,6 +71,7 @@ export const useTomatoTimer = () => {
 
   const handleDone = () => {
     handleResetToDefault()
+    activeTaskElRef.current?.classList.add('TaskItem--done')
   }
 
   const handleIncreaseTime = () => {
