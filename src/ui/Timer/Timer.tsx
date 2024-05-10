@@ -1,8 +1,9 @@
 import { Button } from '../buttons/Button';
 import { RoundBtn } from '../buttons/RoundBtn';
 import './timer.scss';
-import { ReactElement, ReactNode } from 'react';
+import { FC, ReactElement, ReactNode } from 'react';
 import { useTomatoTimer } from './useTomatoTimer';
+import { Task } from '@/types';
 
 //get control buttons depending on the timer state
 interface ButtonSettings {
@@ -23,8 +24,11 @@ const getBtns = (startBtn: ButtonSettings, stopBtn: ButtonSettings): ReactNode =
     )
 }
 
+interface TimerProps {
+    currentTask: Task;
+}
 
-export const Timer = () => {
+export const Timer: FC<TimerProps> = ({ currentTask }) => {
 
     const {
         timeString,

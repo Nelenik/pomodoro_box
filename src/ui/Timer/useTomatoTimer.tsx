@@ -14,7 +14,7 @@ interface TimerState {
 type TimerType = 'workTimer' | 'shortBreakTimer' | 'longBreakTimer'
 
 export const useTomatoTimer = () => {
-  const { tasksList, dispatchTask } = useOutletContext<TasksContext>();
+  const { dispatchTask } = useOutletContext<TasksContext>();
 
   const { appSettings } = useSettingsContext();
   const { tomatoDuration, shortBreakDuration, longBreakDuration } = appSettings;

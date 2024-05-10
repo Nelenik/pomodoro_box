@@ -4,10 +4,11 @@ import { Button } from '../buttons/Button';
 import './confirmdelete.scss';
 
 interface ConfirmDeleteProps {
-    onConfirmDelete: () => void
+    onConfirmDelete: () => void;
+    onClose?: () => void;
 }
 
-export const ConfirmDelete: FC<ConfirmDeleteProps> = ({ onConfirmDelete }) => {
+export const ConfirmDelete: FC<ConfirmDeleteProps> = ({ onConfirmDelete, onClose = () => { } }) => {
     const modalRef = useModalContext()
     return (
         <div className="ConfirmDelete">
@@ -22,7 +23,10 @@ export const ConfirmDelete: FC<ConfirmDeleteProps> = ({ onConfirmDelete }) => {
             >
                 Удалить
             </Button>
-            <button className='btn-reset ConfirmDelete__Chancel' onClick={() => modalRef.current?.click()}>Отмена</button>
+            <button className='btn-reset ConfirmDelete__Chancel' onClick={() => {
+                modalRef.current?.classList.remove('Modal--open');
+                setTimeout(onClose, 500)
+            }}>Отмена</button>
         </div>
     )
 }

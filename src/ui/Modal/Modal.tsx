@@ -60,12 +60,15 @@ export const Modal: FC<ModalProps> = ({ children, isOpen = false, onClose }) => 
         isOpen && <ModalContext.Provider value={modalRef}>
             <div
                 className={`Modal`}
-                onClick={handleModalClose}
+                onClick={(e) => {
+                    if ((e.target as HTMLElement)?.closest('.Modal__Content')) return
+                    handleModalClose()
+                }}
                 ref={modalRef}
                 role='dialog'
                 aria-modal="true"
             >
-                <div className="Modal__Content Content">
+                <div className="Modal__Content">
                     <button
                         className='Modal__CloseBtn btn-reset'
                         onClick={handleModalClose}

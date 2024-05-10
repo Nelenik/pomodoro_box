@@ -66,13 +66,20 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
     })
   }
 
+  const handleCloseModal = () => {
+    setIsOpenModal(false)
+  }
+
   const insertModal = () => {
     return createPortal(
       <Modal
         isOpen={isOpenModal}
-        // onDelete={handleComfirmDelete}
-        onClose={() => setIsOpenModal(false)}>
-        <ConfirmDelete onConfirmDelete={handleComfirmDelete} />
+        onClose={handleCloseModal}
+      >
+        <ConfirmDelete
+          onConfirmDelete={handleComfirmDelete}
+          onClose={handleCloseModal}
+        />
       </Modal>,
       document.body)
   }
