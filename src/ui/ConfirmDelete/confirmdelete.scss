@@ -1,0 +1,25 @@
+.ConfirmDelete {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+
+  &__Chancel {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: var(--pallete_text);
+  }
+
+  &__Text {
+    font-size: 1.5rem;
+    line-height: 141.176471%;
+    /* 24/17 */
+    color: var(--pallete_text);
+    margin-bottom: auto;
+  }
+
+  &__Delete {
+    margin-bottom: 10px;
+  }
+}

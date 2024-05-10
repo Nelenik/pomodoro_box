@@ -1,15 +1,17 @@
-import { Button } from '../buttons/Button';
+// import { Button } from '../buttons/Button';
 import './modal.scss';
 import CloseBtnSvg from 'assets/close-btn.svg?react'
-import { FC, useCallback, useEffect, useRef } from 'react';
+import { FC, ReactNode, RefObject, createContext, useCallback, useEffect, useRef } from 'react';
 
 interface ModalProps {
+    children: ReactNode;
     onClose: () => void;
-    onDelete: () => void;
     isOpen: boolean,
 }
 
-export const Modal: FC<ModalProps> = ({ isOpen = false, onClose, onDelete }) => {
+export const ModalContext = createContext<RefObject<HTMLDivElement> | null>(null)
+
+export const Modal: FC<ModalProps> = ({ children, isOpen = false, onClose }) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const modalCloseBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -55,34 +57,25 @@ export const Modal: FC<ModalProps> = ({ isOpen = false, onClose, onDelete }) => 
     }, [isOpen, handleModalClose])
 
     return (
-        isOpen && <div
-            className={`Modal`}
-            onClick={handleModalClose}
-            ref={modalRef}
-            role='dialog'
-            aria-modal="true"
-        >
-            <div className="Modal__Content Content">
-                <button
-                    className='Modal__CloseBtn btn-reset'
-                    onClick={handleModalClose}
-                    ref={modalCloseBtnRef}
-                >
-                    <CloseBtnSvg />
-                </button>
-                <p className='Content__Text'>Удалить задачу?</p>
-                <Button
-                    view='redFull'
-                    type='button' additCssClass='Content__Delete'
-                    handler={() => {
-                        modalRef.current?.classList.remove('Modal--open');
-                        setTimeout(onDelete, 500)
-                    }}
-                >
-                    Удалить
-                </Button>
-                <button className='btn-reset Content__Chancel' onClick={handleModalClose}>Отмена</button>
+        isOpen && <ModalContext.Provider value={modalRef}>
+            <div
+                className={`Modal`}
+                onClick={handleModalClose}
+                ref={modalRef}
+                role='dialog'
+                aria-modal="true"
+            >
+                <div className="Modal__Content Content">
+                    <button
+                        className='Modal__CloseBtn btn-reset'
+                        onClick={handleModalClose}
+                        ref={modalCloseBtnRef}
+                    >
+                        <CloseBtnSvg />
+                    </button>
+                    {children}
+                </div>
             </div>
-        </div> || null
+        </ModalContext.Provider> || null
     )
 }

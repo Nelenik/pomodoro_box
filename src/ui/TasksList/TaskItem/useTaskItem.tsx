@@ -10,6 +10,7 @@ import DropMoreSvg from "assets/drop-more.svg?react";
 import { generateId } from "@/utils";
 import { createPortal } from "react-dom";
 import { Modal } from "@/ui/Modal";
+import { ConfirmDelete } from "@/ui/ConfirmDelete";
 
 export const useTaskItem = (taskItem: Task, formState: FormState) => {
   const { dispatchTask } = useOutletContext<TasksContext>();
@@ -69,9 +70,11 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
     return createPortal(
       <Modal
         isOpen={isOpenModal}
-        onDelete={handleComfirmDelete}
-        onClose={() => setIsOpenModal(false)}
-      />, document.body)
+        // onDelete={handleComfirmDelete}
+        onClose={() => setIsOpenModal(false)}>
+        <ConfirmDelete onConfirmDelete={handleComfirmDelete} />
+      </Modal>,
+      document.body)
   }
 
   //dropdown items list
