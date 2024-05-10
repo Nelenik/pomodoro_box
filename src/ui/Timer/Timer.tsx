@@ -23,7 +23,9 @@ const getBtns = (startBtn: ButtonSettings, stopBtn: ButtonSettings): ReactNode =
     )
 }
 
+
 export const Timer = () => {
+
     const {
         timeString,
         isWorkTimer,
@@ -38,7 +40,6 @@ export const Timer = () => {
         handleSkip,
         handleStart
     } = useTomatoTimer()
-
 
     //css modificator depending on timer type
     const timerCssModificator =

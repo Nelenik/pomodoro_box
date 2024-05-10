@@ -1,7 +1,9 @@
 import { useTimerTick } from "@/hooks/useTimerTick";
 import { useActiveTaskContext } from "@/reducers_providers/ActiveTaskProvider";
 import { useSettingsContext } from "@/reducers_providers/SettingsProvider";
+import { TasksContext } from "@/types";
 import { useRef, useState, useCallback, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 
 //timer component
 interface TimerState {
@@ -12,6 +14,8 @@ interface TimerState {
 type TimerType = 'workTimer' | 'shortBreakTimer' | 'longBreakTimer'
 
 export const useTomatoTimer = () => {
+  const { tasksList, dispatchTask } = useOutletContext<TasksContext>();
+
   const { appSettings } = useSettingsContext();
   const { tomatoDuration, shortBreakDuration, longBreakDuration } = appSettings;
 

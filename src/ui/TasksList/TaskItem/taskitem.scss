@@ -3,6 +3,7 @@
   padding: 15px 10px;
   display: flex;
   align-items: center;
+  transition: translate 0.4s ease 1.5s;
 
   &--active {
     background-color: var(--greyF4);
@@ -65,6 +66,9 @@
   }
 
   &--done {
+    pointer-events: none;
+    translate: -100vw;
+
     .TaskItem__NameLabel {
       opacity: 0.5;
 
