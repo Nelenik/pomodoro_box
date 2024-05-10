@@ -17,8 +17,8 @@ export const TimerPage = () => {
     const { tasksList } = useOutletContext<TasksContext>();
     const { appSettings } = useSettingsContext()
 
-
-    const tomatoesTotal = tasksList.reduce((prev, { tomatoesCount }) => prev + tomatoesCount
+    const filteredList = tasksList.filter(item => !item.done)
+    const tomatoesTotal = filteredList.reduce((prev, { tomatoesCount }) => prev + tomatoesCount
         , 0)
 
     return (
@@ -45,16 +45,16 @@ export const TimerPage = () => {
                     </ul>
                 </div>
                 <div className="TimerPage__Timer">
-                    {(tasksList.length > 0) ?
-                        <Timer /> :
+                    {(filteredList.length > 0) ?
+                        <Timer currentTask={filteredList[0]} /> :
                         <TomatoMainSvg className='SpeakingTomato' />}
                 </div>
                 <TaskForm additCssClass='TimerPage__Form' />
                 <div className="TimerPage__Tasks">
-                    <TasksList additCssClass='TimerPage__List' />
+                    <TasksList additCssClass='TimerPage__List' tasksList={filteredList} />
                     <div className="TimerPage__TotalSum">
                         {
-                            (tasksList.length > 0)
+                            (filteredList.length > 0)
                             && getTasksTimeString(tomatoesTotal * appSettings.tomatoDuration)
                         }
                     </div>
