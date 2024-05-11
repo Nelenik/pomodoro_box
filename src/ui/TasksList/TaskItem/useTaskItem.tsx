@@ -1,7 +1,6 @@
 import { FormState } from "@/hooks/useFormValidation/useFormValidation";
-import { Task, TasksContext } from "@/types";
+import { Task } from "@/types";
 import { useState, useRef, useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
 //menu svg
 import DropDeleteSvg from "assets/drop-delete.svg?react";
 import DropEditSvg from "assets/drop-edit.svg?react";
@@ -11,9 +10,10 @@ import { generateId } from "@/utils";
 import { createPortal } from "react-dom";
 import { Modal } from "@/ui/Modal";
 import { ConfirmDelete } from "@/ui/ConfirmDelete";
+import { useDispatchTasks } from "@/reducers_providers/TasksListProvider";
 
 export const useTaskItem = (taskItem: Task, formState: FormState) => {
-  const { dispatchTask } = useOutletContext<TasksContext>();
+  const dispatchTasks = useDispatchTasks()
 
   const [editTask, setEditTask] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -30,7 +30,7 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
 
   const rewriteTask = (value: string) => {
     if (formState === "valid") {
-      dispatchTask({
+      dispatchTasks({
         type: "CHANGE_TASK",
         id: taskItem.id,
         toChange: { task: value },
@@ -40,7 +40,7 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
   };
 
   const handleLess = () => {
-    dispatchTask({
+    dispatchTasks({
       type: 'CHANGE_TASK',
       id: taskItem.id,
       toChange: { tomatoesCount: taskItem.tomatoesCount - 1 }
@@ -48,7 +48,7 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
   }
 
   const handleMore = () => {
-    dispatchTask({
+    dispatchTasks({
       type: 'CHANGE_TASK',
       id: taskItem.id,
       toChange: { tomatoesCount: taskItem.tomatoesCount + 1 }
@@ -60,7 +60,7 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
   }
 
   const handleComfirmDelete = () => {
-    dispatchTask({
+    dispatchTasks({
       type: 'REMOVE_TASK',
       id: taskItem.id
     })

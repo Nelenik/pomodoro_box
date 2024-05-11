@@ -6,15 +6,14 @@ import { TasksList } from '@/ui/TasksList';
 import { Timer } from '@/ui/Timer';
 
 import TomatoMainSvg from 'assets/tomato-main.svg?react'
-import { useOutletContext } from 'react-router-dom';
-import { TasksContext } from '@/types';
 import { getTasksTimeString } from '@/utils/getTimeString';
 import { useSettingsContext } from '@/reducers_providers/SettingsProvider/useSettingsContext';
 import { ActiveTaskProvider } from '@/reducers_providers/ActiveTaskProvider';
+import { useTasksList } from '@/reducers_providers/TasksListProvider';
 
 export const TimerPage = () => {
     useDocTitle();
-    const { tasksList } = useOutletContext<TasksContext>();
+    const tasksList = useTasksList()
     const { appSettings } = useSettingsContext()
 
     const filteredList = tasksList.filter(item => !item.done)
@@ -61,7 +60,5 @@ export const TimerPage = () => {
                 </div>
             </div>
         </ActiveTaskProvider>
-
-
     )
 }

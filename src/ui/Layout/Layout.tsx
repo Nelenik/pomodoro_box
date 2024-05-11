@@ -1,6 +1,5 @@
 import { Outlet, NavLink, Link } from 'react-router-dom';
 import './layout.scss';
-import { useTasksList } from '@/hooks/useTasksList';
 //nav svg-s
 import LogoSvg from 'assets/tomato-logo.svg?react';
 import StatSvg from 'assets/statistics.svg?react';
@@ -8,7 +7,6 @@ import TimerSvg from 'assets/timer.svg?react';
 import SettingsSvg from 'assets/settings.svg?react';
 
 export const Layout = () => {
-    const tasksState = useTasksList()
 
     return (
         <>
@@ -31,7 +29,7 @@ export const Layout = () => {
                 </div>
             </header>
             <main className='Main'>
-                <Outlet context={tasksState} />
+                <Outlet />
             </main>
 
         </>

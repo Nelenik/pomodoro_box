@@ -1,8 +1,9 @@
 interface OneDay {
-  finishedTomatoes: number;
+  completedTomatoes: number;
   breaksCount: number;
   timeOnPause: number;
   totalTime: number;
+  completedTasks: number;
 }
 
 export interface PomodoroMetriks {

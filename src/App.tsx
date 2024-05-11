@@ -11,6 +11,7 @@ import { TimerPage } from './pages/TimerPage';
 import { Statistics } from './pages/Statistics';
 
 import { SettingsProvider } from './reducers_providers/SettingsProvider';
+import { TasksListProvider } from './reducers_providers/TasksListProvider';
 
 const setDocTitle = (title: string): void => {
   document.title = title
@@ -21,7 +22,9 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Layout />} path='/'>
       <Route
-        element={<TimerPage />}
+        element={<TasksListProvider>
+          <TimerPage />
+        </TasksListProvider>}
         index
         handle={{ docTitle: () => setDocTitle('Pomodoro timer') }}
       />

@@ -3,9 +3,9 @@ import { FC } from 'react';
 import { Button } from '../buttons/Button';
 import { PlaceholderField } from '../PlaceholderField';
 import { useFormValidation } from '@/hooks/useFormValidation/useFormValidation';
-import { Task, TasksContext } from '@/types';
+import { Task } from '@/types';
 import { generateId } from '@/utils';
-import { useOutletContext } from 'react-router-dom';
+import { useDispatchTasks } from '@/reducers_providers/TasksListProvider';
 
 interface TaskFormProps {
     additCssClass?: string
@@ -13,7 +13,7 @@ interface TaskFormProps {
 
 export const TaskForm: FC<TaskFormProps> = ({ additCssClass = '' }) => {
     const { register, onSubmit, errors, reset, formData } = useFormValidation({ task: '' }, 'change');
-    const { dispatchTask } = useOutletContext<TasksContext>()
+    const dispatchTasks = useDispatchTasks()
 
     const handleSubmit = onSubmit(() => {
         const toSubmit: Task = {
@@ -22,7 +22,7 @@ export const TaskForm: FC<TaskFormProps> = ({ additCssClass = '' }) => {
             done: false,
             tomatoesCount: 1
         }
-        dispatchTask({
+        dispatchTasks({
             type: 'ADD_TASK',
             task: toSubmit
         })
