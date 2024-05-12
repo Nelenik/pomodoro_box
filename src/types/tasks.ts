@@ -1,7 +1,7 @@
 export type Task = {
   id: string;
   task: string;
-  done: boolean;
+  // done: boolean;
   tomatoesCount: number;
   timeOnTask: number;
 };

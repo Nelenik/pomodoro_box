@@ -8,7 +8,7 @@ export const useTimerTick = (initValue: number) => {
   const intervalRef = useRef(0);
 
   useEffect(() => {
-    if (timerValue < 0) {
+    if (timerValue <= 0) {
       clearInterval(intervalRef.current);
       setIsFinished(true);
     }

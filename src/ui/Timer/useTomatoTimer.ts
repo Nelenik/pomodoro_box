@@ -3,7 +3,8 @@ import { useActiveTaskContext } from "@/reducers_providers/ActiveTaskProvider";
 import { useSettingsContext } from "@/reducers_providers/SettingsProvider";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { useTomatoMetriks } from "./useTomatoMetriks";
-import { ManageTasksAction, Task } from "@/types";
+import { useDispatchTasks } from "@/reducers_providers/TasksListProvider";
+import { Task } from "@/types";
 
 //timer component
 interface TimerState {
@@ -14,19 +15,20 @@ interface TimerState {
 type TimerType = "workTimer" | "shortBreakTimer" | "longBreakTimer";
 
 const INCREASE_VALUE = 5;
+const WORKING_PERIODS_COUNT = 4;
+const ONDONE_ANIM_TIME = 2200;
 
-export const useTomatoTimer = (
-  currentTask: Task,
-  dispatchTasks: React.Dispatch<ManageTasksAction>
-) => {
+export const useTomatoTimer = (currentTask: Task) => {
   const { todayMetriks, setTodayMetriks } = useTomatoMetriks();
-
+  const dispatchTasks = useDispatchTasks();
   const { appSettings } = useSettingsContext();
   const { tomatoDuration, shortBreakDuration, longBreakDuration } = appSettings;
 
   //tomato duration = workDurationRef.current, if it is changed, this value become default for the entire cycle(one cycle ends after a long break)
   const workDurationRef = useRef(tomatoDuration);
   const timerCycleRef = useRef<number>(0);
+  //link to active task element
+  const activeTaskElRef = useActiveTaskContext();
 
   const { isFinished, timeString, startTimer, pauseTimer, resetTimer } =
     useTimerTick(workDurationRef.current);
@@ -38,11 +40,6 @@ export const useTomatoTimer = (
     isPaused: false,
   });
 
-  const activeTaskElRef = useActiveTaskContext();
-
-  const isWorkTimer = timerType === "workTimer";
-  const isShortBreakTimer = timerType === "shortBreakTimer";
-  const isLongBreakTimer = timerType === "longBreakTimer";
   const { isStarted, isPaused } = timerState;
 
   // manage timer functions
@@ -86,30 +83,31 @@ export const useTomatoTimer = (
 
   //mark a task as done, handler
   const handleDone = useCallback(() => {
-    handleResetToDefault();
+    //set animation
     activeTaskElRef.current?.classList.add("TaskItem--done");
-    setTodayMetriks({
-      ...todayMetriks,
-      completedTomatoes: ++todayMetriks.completedTomatoes,
-      completedTasks: ++todayMetriks.completedTasks,
-    });
     setTimeout(() => {
+      handleResetToDefault();
+      setTodayMetriks({
+        ...todayMetriks,
+        completedTomatoes: ++todayMetriks.completedTomatoes,
+        completedTasks: ++todayMetriks.completedTasks,
+      });
       dispatchTasks({
         type: "CHANGE_TASK",
         id: currentTask.id,
         toChange: {
-          done: true,
+          tomatoesCount: 0,
           timeOnTask: currentTask.timeOnTask + workDurationRef.current,
         },
       });
-    }, 1700);
+    }, ONDONE_ANIM_TIME);
   }, [
     handleResetToDefault,
     activeTaskElRef,
-    dispatchTasks,
-    currentTask,
     todayMetriks,
     setTodayMetriks,
+    currentTask,
+    dispatchTasks,
   ]);
 
   //handle timer stop
@@ -131,29 +129,36 @@ export const useTomatoTimer = (
       switch (timerType) {
         case "workTimer":
           {
-            // set completed tomatoes
-            setTodayMetriks({
-              ...todayMetriks,
-              completedTomatoes: ++todayMetriks.completedTomatoes,
-            });
-            //rewrite tasks list
-            dispatchTasks({
-              type: "CHANGE_TASK",
-              id: currentTask.id,
-              toChange: {
-                tomatoesCount: --currentTask.tomatoesCount,
-                timeOnTask: currentTask.timeOnTask + workDurationRef.current,
-              },
-            });
-
-            //switch break timer depending on timer cycle
-            ++timerCycleRef.current;
-            if (timerCycleRef.current >= 4) {
-              switchTimerType("longBreakTimer", longBreakDuration);
+            const newTomatoesCount = currentTask.tomatoesCount - 1;
+            const actualTomatoesCount =
+              newTomatoesCount <= 0 ? 0 : newTomatoesCount;
+            if (actualTomatoesCount === 0) {
+              handleDone();
             } else {
-              switchTimerType("shortBreakTimer", shortBreakDuration);
+              // set completed tomatoes
+              setTodayMetriks({
+                ...todayMetriks,
+                completedTomatoes: ++todayMetriks.completedTomatoes,
+              });
+
+              //rewrite tasks list
+              dispatchTasks({
+                type: "CHANGE_TASK",
+                id: currentTask.id,
+                toChange: {
+                  tomatoesCount: actualTomatoesCount,
+                  timeOnTask: currentTask.timeOnTask + workDurationRef.current,
+                },
+              });
+              //switch break timer depending on timer cycle
+              ++timerCycleRef.current;
+              if (timerCycleRef.current >= WORKING_PERIODS_COUNT) {
+                switchTimerType("longBreakTimer", longBreakDuration);
+              } else {
+                switchTimerType("shortBreakTimer", shortBreakDuration);
+              }
+              handleStart();
             }
-            handleStart();
           }
           break;
         case "shortBreakTimer":
@@ -173,9 +178,7 @@ export const useTomatoTimer = (
 
   return {
     timeString,
-    isWorkTimer,
-    isShortBreakTimer,
-    isLongBreakTimer,
+    timerType,
     isStarted,
     isPaused,
     handleDone,

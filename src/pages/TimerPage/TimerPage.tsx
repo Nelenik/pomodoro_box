@@ -12,11 +12,11 @@ import { ActiveTaskProvider } from '@/reducers_providers/ActiveTaskProvider';
 import { useTasksList } from '@/reducers_providers/TasksListProvider';
 
 export const TimerPage = () => {
+    console.log('render page')
     useDocTitle();
-    const tasksList = useTasksList()
+    const filteredList = useTasksList()
     const { appSettings } = useSettingsContext()
 
-    const filteredList = tasksList.filter(item => !item.done)
     const tomatoesTotal = filteredList.reduce((prev, { tomatoesCount }) => prev + tomatoesCount
         , 0)
 

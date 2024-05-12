@@ -82,6 +82,12 @@
   }
 }
 
+//delete task anim
+li:has(> .TaskItem--done) {
+  translate: -100vw;
+  transition: translate 0.5s linear 1.7s;
+}
+
 // cross out with pen animation
 @keyframes pen {
   0% {

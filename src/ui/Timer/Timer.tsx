@@ -4,7 +4,6 @@ import './timer.scss';
 import { FC, ReactElement, ReactNode } from 'react';
 import { useTomatoTimer } from '.';
 import { Task } from '@/types';
-import { useDispatchTasks } from '@/reducers_providers/TasksListProvider';
 
 //get control buttons depending on the timer state
 interface ButtonSettings {
@@ -30,12 +29,9 @@ interface TimerProps {
 }
 
 export const Timer: FC<TimerProps> = ({ currentTask }) => {
-    const dispatchTasks = useDispatchTasks();
     const {
         timeString,
-        isWorkTimer,
-        isShortBreakTimer,
-        isLongBreakTimer,
+        timerType,
         isStarted,
         isPaused,
         handleDone,
@@ -45,9 +41,11 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
         handleSkip,
         handleStart,
         handleStop
-    } = useTomatoTimer(currentTask, dispatchTasks)
+    } = useTomatoTimer(currentTask)
 
-
+    const isWorkTimer = timerType === "workTimer";
+    const isShortBreakTimer = timerType === "shortBreakTimer";
+    const isLongBreakTimer = timerType === "longBreakTimer";
 
     //css modificator depending on timer type
     const timerCssModificator =
