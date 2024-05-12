@@ -6,7 +6,9 @@ export const useTomatoMetriks = () => {
     localStorage.getItem("pomodoroMetriks") || "{}"
   );
   const now: Date = new Date();
+
   const todayString: string = now.toDateString();
+
   const defaultDay: OneDay = {
     completedTomatoes: 0,
     stopCount: 0,

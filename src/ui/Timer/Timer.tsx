@@ -30,6 +30,8 @@ interface TimerProps {
 
 export const Timer: FC<TimerProps> = ({ currentTask }) => {
     const {
+        todayTaskNumber,
+        todayTomatoNumber,
         timeString,
         timerType,
         isStarted,
@@ -52,6 +54,7 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
         (isWorkTimer && isStarted && 'Timer--working')
         || ((isShortBreakTimer || isLongBreakTimer) && isStarted && 'Timer--breaking')
         || '';
+
 
     const renderControlBtns = () => {
         switch (true) {
@@ -100,6 +103,13 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
         }
     }
 
+    //calculate which tomato or task we are performing (for drawing on the screen)
+    const getExecActionNumber = (action: number): number => {
+        if (isLongBreakTimer || isShortBreakTimer) return action;
+        else if (isWorkTimer) return action + 1;
+        else return 0;
+    }
+
     return (
         <div className={`Timer ${timerCssModificator} ${isPaused && 'Timer--paused' || ''}`}>
             <div className="Timer__Header">
@@ -107,7 +117,7 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
                     {currentTask.task}
                 </h2>
                 <span className="Timer__TomatoCounter">
-                    Помидор 1
+                    Помидор {getExecActionNumber(todayTomatoNumber)}
                 </span>
             </div>
             <div className="Timer__TimeBlock">
@@ -120,7 +130,7 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
                 />
             </div>
             <p className="Timer__Descr">
-                <span>Задача 1 - </span>
+                <span>Задача {getExecActionNumber(todayTaskNumber)} - </span>
                 {currentTask.task}
             </p>
             <div className="Timer__Controls">

@@ -16,7 +16,7 @@ type TimerType = "workTimer" | "shortBreakTimer" | "longBreakTimer";
 
 const INCREASE_VALUE = 5;
 const WORKING_PERIODS_COUNT = 4;
-const ONDONE_ANIM_TIME = 2200;
+const ONDONE_ANIM_TIME = 1600;
 
 export const useTomatoTimer = (currentTask: Task) => {
   const { todayMetriks, setTodayMetriks } = useTomatoMetriks();
@@ -83,15 +83,15 @@ export const useTomatoTimer = (currentTask: Task) => {
 
   //mark a task as done, handler
   const handleDone = useCallback(() => {
+    handleResetToDefault();
+    setTodayMetriks({
+      ...todayMetriks,
+      completedTomatoes: ++todayMetriks.completedTomatoes,
+      completedTasks: ++todayMetriks.completedTasks,
+    });
     //set animation
     activeTaskElRef.current?.classList.add("TaskItem--done");
     setTimeout(() => {
-      handleResetToDefault();
-      setTodayMetriks({
-        ...todayMetriks,
-        completedTomatoes: ++todayMetriks.completedTomatoes,
-        completedTasks: ++todayMetriks.completedTasks,
-      });
       dispatchTasks({
         type: "CHANGE_TASK",
         id: currentTask.id,
@@ -177,6 +177,8 @@ export const useTomatoTimer = (currentTask: Task) => {
   });
 
   return {
+    todayTaskNumber: todayMetriks.completedTasks,
+    todayTomatoNumber: todayMetriks.completedTomatoes,
     timeString,
     timerType,
     isStarted,

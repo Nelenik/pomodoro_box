@@ -12,7 +12,6 @@ import { ActiveTaskProvider } from '@/reducers_providers/ActiveTaskProvider';
 import { useTasksList } from '@/reducers_providers/TasksListProvider';
 
 export const TimerPage = () => {
-    console.log('render page')
     useDocTitle();
     const filteredList = useTasksList()
     const { appSettings } = useSettingsContext()

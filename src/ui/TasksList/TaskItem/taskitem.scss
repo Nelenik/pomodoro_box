@@ -72,11 +72,11 @@
 
       &::before {
 
-        animation: line 1.5s linear forwards;
+        animation: line 1s linear forwards;
       }
 
       &::after {
-        animation: pen 1.5s linear forwards;
+        animation: pen 1s linear forwards;
       }
     }
   }
@@ -85,7 +85,7 @@
 //delete task anim
 li:has(> .TaskItem--done) {
   translate: -100vw;
-  transition: translate 0.5s linear 1.7s;
+  transition: translate 0.5s linear 1s;
 }
 
 // cross out with pen animation

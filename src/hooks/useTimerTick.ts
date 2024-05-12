@@ -1,24 +1,19 @@
 import { getTimerTimeString } from "@/utils/getTimeString";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 export const useTimerTick = (initValue: number) => {
   const [timerValue, setTimerValue] = useState(initValue);
-  const [isFinished, setIsFinished] = useState(false);
   const timeString = getTimerTimeString(timerValue);
   const intervalRef = useRef(0);
 
-  useEffect(() => {
-    if (timerValue <= 0) {
-      clearInterval(intervalRef.current);
-      setIsFinished(true);
-    }
-  }, [timerValue]);
+  if (timerValue < 0) {
+    clearInterval(intervalRef.current);
+  }
 
   const startTimer = () => {
-    isFinished && setIsFinished(false);
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      setTimerValue((prev) => --prev);
+      setTimerValue((prev) => prev - 1);
     }, 1000);
   };
 
@@ -28,11 +23,10 @@ export const useTimerTick = (initValue: number) => {
 
   const resetTimer = (valueInSec: number = initValue): void => {
     setTimerValue(valueInSec);
-    isFinished && setIsFinished(false);
   };
 
   return {
-    isFinished,
+    isFinished: timerValue < 0,
     timeString,
     startTimer,
     pauseTimer,
