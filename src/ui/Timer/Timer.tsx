@@ -2,8 +2,9 @@ import { Button } from '../buttons/Button';
 import { RoundBtn } from '../buttons/RoundBtn';
 import './timer.scss';
 import { FC, ReactElement, ReactNode } from 'react';
-import { useTomatoTimer } from './useTomatoTimer';
+import { useTomatoTimer } from '.';
 import { Task } from '@/types';
+import { useDispatchTasks } from '@/reducers_providers/TasksListProvider';
 
 //get control buttons depending on the timer state
 interface ButtonSettings {
@@ -29,7 +30,7 @@ interface TimerProps {
 }
 
 export const Timer: FC<TimerProps> = ({ currentTask }) => {
-
+    const dispatchTasks = useDispatchTasks();
     const {
         timeString,
         isWorkTimer,
@@ -42,8 +43,11 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
         handlePause,
         handleResetToDefault,
         handleSkip,
-        handleStart
-    } = useTomatoTimer()
+        handleStart,
+        handleStop
+    } = useTomatoTimer(currentTask, dispatchTasks)
+
+
 
     //css modificator depending on timer type
     const timerCssModificator =
@@ -62,7 +66,7 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
             case isWorkTimer && isStarted: {
                 return getBtns(
                     { inner: 'Пауза', handler: handlePause },
-                    { view: 'red', inner: "Стоп", handler: handleResetToDefault }
+                    { view: 'red', inner: "Стоп", handler: handleStop }
                 )
             }
             case isWorkTimer: {
@@ -102,7 +106,7 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
         <div className={`Timer ${timerCssModificator} ${isPaused && 'Timer--paused' || ''}`}>
             <div className="Timer__Header">
                 <h2 className="mg-reset Timer__TaskName">
-                    Сверсать сайт
+                    {currentTask.task}
                 </h2>
                 <span className="Timer__TomatoCounter">
                     Помидор 1
@@ -119,7 +123,7 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
             </div>
             <p className="Timer__Descr">
                 <span>Задача 1 - </span>
-                Сверстать сайт
+                {currentTask.task}
             </p>
             <div className="Timer__Controls">
                 {renderControlBtns()}

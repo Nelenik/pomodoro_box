@@ -20,7 +20,8 @@ export const TaskForm: FC<TaskFormProps> = ({ additCssClass = '' }) => {
             ...formData,
             id: generateId(),
             done: false,
-            tomatoesCount: 1
+            tomatoesCount: 1,
+            timeOnTask: 0
         }
         dispatchTasks({
             type: 'ADD_TASK',

@@ -3,15 +3,15 @@ export type Task = {
   task: string;
   done: boolean;
   tomatoesCount: number;
-  timeOnTask?: number;
+  timeOnTask: number;
 };
 
 export type TasksListType = Task[];
 
-export type TasksContext = {
-  tasksList: TasksListType;
-  dispatchTask: (action: ManageTasksAction) => void;
-};
+// export type TasksContext = {
+//   tasksList: TasksListType;
+//   dispatchTask: (action: ManageTasksAction) => void;
+// };
 
 //tasksReducer action's types
 export interface TasksAction {

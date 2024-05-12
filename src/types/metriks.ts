@@ -1,6 +1,6 @@
-interface OneDay {
+export interface OneDay {
   completedTomatoes: number;
-  breaksCount: number;
+  stopCount: number;
   timeOnPause: number;
   totalTime: number;
   completedTasks: number;
