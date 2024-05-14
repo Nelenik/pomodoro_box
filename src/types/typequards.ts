@@ -6,6 +6,7 @@ import {
   ChangeTaskAction,
   SetTasksAction,
 } from "./tasks";
+import { RewriteAction, TimeMeasuresAction } from "./metriks";
 
 //type guards for route handle
 export function isRouteHandle(prop: unknown): prop is RouteHandle {
@@ -31,4 +32,16 @@ export const isChangeTaskAction = (
   action: unknown
 ): action is ChangeTaskAction => {
   return checkObjectProps(action, ["type", "id", "toChange"]);
+};
+
+//type guards for timer metriks
+
+export const isRewriteAction = (action: unknown): action is RewriteAction => {
+  return checkObjectProps(action, ["type", "toChange"]);
+};
+
+export const isTimeMeasuresAction = (
+  action: unknown
+): action is TimeMeasuresAction => {
+  return checkObjectProps(action, ["type", "fieldName", "initTimestamp"]);
 };

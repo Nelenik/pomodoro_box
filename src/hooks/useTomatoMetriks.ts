@@ -1,5 +1,6 @@
+import { metriksReducer } from "@/reducers_providers/metriksReducer";
 import { OneDay, PomodoroMetriks } from "@/types/metriks";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 
 export const useTomatoMetriks = () => {
   const pomodoroMetriks: PomodoroMetriks = JSON.parse(
@@ -18,7 +19,9 @@ export const useTomatoMetriks = () => {
   };
   const initValue = pomodoroMetriks[todayString] || defaultDay;
 
-  const [todayMetriks, setTodayMetriks] = useState(initValue);
+  const [todayMetriks, dispatchMetriks] = useReducer(metriksReducer, initValue);
+
+  // const [todayMetriks, setTodayMetriks] = useState(initValue);
 
   useEffect(() => {
     if (pomodoroMetriks[todayString]) {
@@ -31,6 +34,6 @@ export const useTomatoMetriks = () => {
 
   return {
     todayMetriks,
-    setTodayMetriks,
+    dispatchMetriks,
   };
 };

@@ -2,7 +2,7 @@ import { useTimerTick } from "@/hooks/useTimerTick";
 import { useActiveTaskContext } from "@/reducers_providers/ActiveTaskProvider";
 import { useSettingsContext } from "@/reducers_providers/SettingsProvider";
 import { useRef, useState, useCallback, useEffect } from "react";
-import { useTomatoMetriks } from "./useTomatoMetriks";
+import { useTomatoMetriks } from "../../hooks/useTomatoMetriks";
 import { useDispatchTasks } from "@/reducers_providers/TasksListProvider";
 import { Task } from "@/types";
 
@@ -19,7 +19,7 @@ const WORKING_PERIODS_COUNT = 4;
 const ONDONE_ANIM_TIME = 1600;
 
 export const useTomatoTimer = (currentTask: Task) => {
-  const { todayMetriks, setTodayMetriks } = useTomatoMetriks();
+  const { todayMetriks, dispatchMetriks } = useTomatoMetriks();
   const dispatchTasks = useDispatchTasks();
   const { appSettings } = useSettingsContext();
   const { tomatoDuration, shortBreakDuration, longBreakDuration } = appSettings;
@@ -40,6 +40,9 @@ export const useTomatoTimer = (currentTask: Task) => {
     isPaused: false,
   });
 
+  const pauseInitTimestamp = useRef(0);
+  const workInitTimestamp = useRef(0);
+
   const { isStarted, isPaused } = timerState;
 
   // manage timer functions
@@ -55,12 +58,24 @@ export const useTomatoTimer = (currentTask: Task) => {
 
   //handle timer start
   const handleStart = useCallback(() => {
+    if (!isStarted && !isPaused) {
+      workInitTimestamp.current = performance.now();
+    }
+    if (isStarted && isPaused) {
+      dispatchMetriks({
+        type: "RENEW_TIME_MEASURES",
+        fieldName: "timeOnPause",
+        initTimestamp: pauseInitTimestamp.current,
+      });
+      pauseInitTimestamp.current = 0;
+    }
     startTimer();
     setTimerState({ isStarted: true, isPaused: false });
-  }, [startTimer]);
+  }, [startTimer, isPaused, isStarted, dispatchMetriks]);
 
   //handle timer pause
   const handlePause = () => {
+    pauseInitTimestamp.current = performance.now();
     pauseTimer();
     setTimerState({ isStarted: true, isPaused: true });
   };
@@ -76,19 +91,27 @@ export const useTomatoTimer = (currentTask: Task) => {
   const handleResetToDefault = useCallback(() => {
     pauseTimer();
     setTimerState({ isStarted: false, isPaused: false });
+    dispatchMetriks({
+      type: "RENEW_TIME_MEASURES",
+      fieldName: "totalTime",
+      initTimestamp: workInitTimestamp.current,
+    });
     switchTimerType("workTimer", tomatoDuration);
     timerCycleRef.current = 0;
     workDurationRef.current = tomatoDuration;
-  }, [switchTimerType, tomatoDuration, pauseTimer]);
+  }, [switchTimerType, tomatoDuration, pauseTimer, dispatchMetriks]);
 
   //mark a task as done, handler
   const handleDone = useCallback(() => {
     handleResetToDefault();
-    setTodayMetriks({
-      ...todayMetriks,
-      completedTomatoes: ++todayMetriks.completedTomatoes,
-      completedTasks: ++todayMetriks.completedTasks,
+    dispatchMetriks({
+      type: "REWRITE_METRIKS",
+      toChange: {
+        completedTomatoes: ++todayMetriks.completedTomatoes,
+        completedTasks: ++todayMetriks.completedTasks,
+      },
     });
+
     //set animation
     activeTaskElRef.current?.classList.add("TaskItem--done");
     setTimeout(() => {
@@ -105,7 +128,7 @@ export const useTomatoTimer = (currentTask: Task) => {
     handleResetToDefault,
     activeTaskElRef,
     todayMetriks,
-    setTodayMetriks,
+    dispatchMetriks,
     currentTask,
     dispatchTasks,
   ]);
@@ -113,8 +136,10 @@ export const useTomatoTimer = (currentTask: Task) => {
   //handle timer stop
   const handleStop = () => {
     handleResetToDefault();
-
-    setTodayMetriks({ ...todayMetriks, stopCount: ++todayMetriks.stopCount });
+    dispatchMetriks({
+      type: "REWRITE_METRIKS",
+      toChange: { stopCount: ++todayMetriks.stopCount },
+    });
   };
 
   //handle  work time increasing
@@ -136,9 +161,11 @@ export const useTomatoTimer = (currentTask: Task) => {
               handleDone();
             } else {
               // set completed tomatoes
-              setTodayMetriks({
-                ...todayMetriks,
-                completedTomatoes: ++todayMetriks.completedTomatoes,
+              dispatchMetriks({
+                type: "REWRITE_METRIKS",
+                toChange: {
+                  completedTomatoes: ++todayMetriks.completedTomatoes,
+                },
               });
 
               //rewrite tasks list

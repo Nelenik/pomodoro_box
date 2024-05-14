@@ -103,7 +103,7 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
         }
     }
 
-    //calculate which tomato or task we are performing (for drawing on the screen)
+    //calculate which tomato or task number is currently running (for drawing on the screen)
     const getExecActionNumber = (action: number): number => {
         if (isLongBreakTimer || isShortBreakTimer) return action;
         else if (isWorkTimer) return action + 1;

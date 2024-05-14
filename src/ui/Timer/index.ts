@@ -1,3 +1,3 @@
 export * from "./Timer";
-export * from "./useTomatoMetriks";
+export * from "../../hooks/useTomatoMetriks";
 export * from "./useTomatoTimer";

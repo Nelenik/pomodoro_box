@@ -9,3 +9,19 @@ export interface OneDay {
 export interface PomodoroMetriks {
   [key: string]: OneDay;
 }
+
+//metriks reducer typing
+export interface MetriksAction {
+  type: string;
+}
+
+export type RewriteAction = MetriksAction & {
+  toChange: { [key: string]: unknown };
+};
+
+export type TimeMeasuresAction = MetriksAction & {
+  fieldName: "timeOnPause" | "totalTime";
+  initTimestamp: number;
+};
+
+export type ManageMetriksAction = RewriteAction | TimeMeasuresAction;
