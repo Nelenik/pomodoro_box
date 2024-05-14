@@ -6,7 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import { Layout } from './ui/Layout';
+import { Layout } from './components/Layout';
 import { TimerPage } from './pages/TimerPage';
 import { Statistics } from './pages/Statistics';
 

@@ -1,9 +1,9 @@
 import './timerPage.scss';
 // import { FC } from 'react';
 import useDocTitle from '@/hooks/useDocTitle';
-import { TaskForm } from '@/ui/TaskForm';
-import { TasksList } from '@/ui/TasksList';
-import { Timer } from '@/ui/Timer';
+import { TaskForm } from '@/components/TaskForm';
+import { TasksList } from '@/components/TasksList';
+import { Timer } from '@/components/Timer';
 
 import TomatoMainSvg from 'assets/tomato-main.svg?react'
 import { getTasksTimeString } from '@/utils/getTimeString';

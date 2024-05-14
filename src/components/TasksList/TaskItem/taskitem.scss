@@ -82,6 +82,22 @@
   }
 }
 
+//appear task anim
+li:has(> .TaskItem) {
+  opacity: 0;
+  animation: appearTask 0.4s linear forwards;
+}
+
+@keyframes appearTask {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 //delete task anim
 li:has(> .TaskItem--done) {
   translate: -100vw;

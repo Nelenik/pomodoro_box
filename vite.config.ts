@@ -13,7 +13,7 @@ export default defineConfig({
       utils: `${path.resolve(__dirname, "./src/utils/")}`,
       hooks: `${path.resolve(__dirname, "./src/hooks/")}`,
       pages: `${path.resolve(__dirname, "./src/pages/")}`,
-      ui: `${path.resolve(__dirname, "./src/ui/")}`,
+      components: `${path.resolve(__dirname, "./src/components/")}`,
       api: `${path.resolve(__dirname, "./src/api/")}`,
     },
   },
