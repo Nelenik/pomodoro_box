@@ -8,8 +8,8 @@ import DropLessSvg from "assets/drop-less.svg?react";
 import DropMoreSvg from "assets/drop-more.svg?react";
 import { generateId } from "@/utils";
 import { createPortal } from "react-dom";
-import { Modal } from "@/ui/Modal";
-import { ConfirmDelete } from "@/ui/ConfirmDelete";
+import { Modal } from "@/components/Modal";
+import { ConfirmDelete } from "@/components/ConfirmDelete";
 import { useDispatchTasks } from "@/reducers_providers/TasksListProvider";
 
 export const useTaskItem = (taskItem: Task, formState: FormState) => {

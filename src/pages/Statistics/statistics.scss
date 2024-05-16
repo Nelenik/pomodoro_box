@@ -1,0 +1,52 @@
+.StatisticPage {
+  padding-top: 88px;
+  padding-bottom: 99px;
+
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 32px;
+
+  &__Top {
+    grid-column: span 12;
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    align-items: center;
+  }
+
+  &__Select {
+    width: min(100%, 370px);
+  }
+
+  &__Title {
+    font-size: var(--font24);
+    line-height: 1.375;
+  }
+
+  &__TotalTime {
+    grid-column: 1/4;
+    grid-row: 2/3;
+  }
+
+  &__Chart {
+    grid-column: 4/13;
+    grid-row: 2/4
+  }
+
+  &__TomatoesCount {
+    grid-column: 1/4;
+    grid-row: 3/4;
+  }
+
+  &__Bottom {
+    grid-column: span 12;
+    grid-row: 5/6;
+    display: flex;
+    gap: 32px;
+
+    .Metrik {
+      flex-grow: 1;
+      width: calc(100%/3);
+    }
+  }
+}

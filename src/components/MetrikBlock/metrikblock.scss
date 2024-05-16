@@ -1,0 +1,54 @@
+.Metrik {
+  --_metrik-icon: var(--metrik-icon, #000000);
+  --_metrik-bg: var(--metrik-bg, #eaeaea);
+
+  display: flex;
+  gap: 25px;
+  justify-content: space-between;
+  padding: 25px;
+  background-color: var(--_metrik-bg);
+  box-shadow: 5px 5px 10px 3px hsl(from var(--_metrik-icon) h s l / 0.5);
+
+  &__Svg {
+    flex-shrink: 0;
+    width: 32%;
+    height: auto;
+    stroke: var(--_metrik-icon);
+    justify-self: center;
+
+  }
+
+  &__Left {
+    flex-grow: 1;
+  }
+
+  &__Value {
+    font-size: var(--font64);
+    line-height: 100%;
+  }
+
+  &__Name {
+    margin-bottom: 20px;
+    font-size: var(--font24);
+    line-height: 137.5%;
+    /* 33/24 */
+
+  }
+
+  &--focus {
+    --metrik-icon: var(--focus_svg_stroke);
+    --metrik-bg: var(--focus_block_bg);
+  }
+
+  &--pause {
+    --metrik-icon: var(--pause_svg_stroke);
+    --metrik-bg: var(--pause_block_bg);
+  }
+
+  &--stop {
+    --metrik-icon: var(--stop_svg_stroke);
+    --metrik-bg: var(--stop_block_bg);
+  }
+
+
+}

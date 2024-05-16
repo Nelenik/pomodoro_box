@@ -3,6 +3,14 @@ import './dropdown.scss';
 import { useDropdown } from './useDropdown';
 
 const NOOP = () => { }
+export interface AnOptionsSets {
+    id: string,
+    optionProps?: {
+        [key: string]: unknown
+    },
+    inner: ReactNode,
+    itemOnClick?: (e?: React.SyntheticEvent) => void,
+}
 interface DropdownProps {
     additCss?: {
         dropdownCss?: string,
@@ -15,11 +23,7 @@ interface DropdownProps {
     dropdownOnClick?: () => void,
     As?: 'a' | 'button',
     triggerInner: ReactNode | string,
-    list: ({
-        id: string,
-        inner: ReactNode,
-        itemOnClick?: () => void,
-    })[]
+    optionsSettings: AnOptionsSets[]
 
 }
 
@@ -30,17 +34,17 @@ const defCss = {
     itemCss: ''
 }
 
-export const Dropdown: FC<DropdownProps> = ({ index = '0', isActiveDropdown = false, dropdownOnClick = NOOP, As = 'button', additCss = {}, triggerInner, list }) => {
+export const Dropdown: FC<DropdownProps> = ({ index = '0', isActiveDropdown = true, dropdownOnClick = NOOP, As = 'button', additCss = {}, triggerInner, optionsSettings }) => {
     const { dropdownCss, triggerCss, menuCss, itemCss } = { ...defCss, ...additCss }
     const { isOpen, menuRef, triggerRef, dropdownRef, handleTriggerClick, closeMenu } = useDropdown(isActiveDropdown)
     const manageOpeningClass = isOpen && 'Dropdown__Menu--open' || '';
 
     return (
-        <div className={`${dropdownCss} Dropdown`} onClick={dropdownOnClick} ref={dropdownRef} {...isActiveDropdown && { 'z-index': 10 }}>
+        <div className={` Dropdown ${dropdownCss}`} onClick={dropdownOnClick} ref={dropdownRef} {...isActiveDropdown && { 'z-index': 10 }}>
             <button
                 ref={triggerRef}
                 type='button'
-                className={`${triggerCss} Dropdown__Trigger`}
+                className={` Dropdown__Trigger ${triggerCss}`}
                 onClick={handleTriggerClick}
                 aria-expanded={isOpen}
                 aria-controls={`dropMenu-${index}`}
@@ -50,17 +54,19 @@ export const Dropdown: FC<DropdownProps> = ({ index = '0', isActiveDropdown = fa
             <div
                 id={`dropMenu-${index}`}
                 ref={menuRef}
-                className={`${menuCss} Dropdown__Menu ${manageOpeningClass}`}
+                className={` Dropdown__Menu ${manageOpeningClass} ${menuCss}`}
             >
                 {
-                    list.map(({ id, inner, itemOnClick = NOOP }) => {
+                    optionsSettings.map(({ id, inner, optionProps = {}, itemOnClick = NOOP }) => {
                         return (
                             <As
                                 key={id}
-                                className={`${itemCss} Dropdown__MenuItem`}
+                                {...optionProps}
+                                className={`Dropdown__MenuItem ${itemCss}`}
                                 onClick={(e) => {
+                                    if (!(e.target as HTMLElement).closest('.Dropdown__MenuItem')) return;
                                     e.preventDefault()
-                                    itemOnClick()
+                                    itemOnClick(e)
                                     closeMenu()
                                 }}
                             >

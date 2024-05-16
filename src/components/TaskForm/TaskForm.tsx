@@ -19,7 +19,6 @@ export const TaskForm: FC<TaskFormProps> = ({ additCssClass = '' }) => {
         const toSubmit: Task = {
             ...formData,
             id: generateId(),
-            // done: false,
             tomatoesCount: 1,
             timeOnTask: 0
         }

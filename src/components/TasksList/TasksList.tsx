@@ -1,8 +1,7 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react';
-import './taskslist.scss';
 import { TasksListType } from '@/types';
 import { TaskItem } from './TaskItem';
-// import { useActiveTaskContext } from '@/reducers_providers/ActiveTaskProvider';
+import './taskslist.scss';
 
 interface TasksListProps {
     additCssClass?: string

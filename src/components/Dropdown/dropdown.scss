@@ -13,6 +13,7 @@
     width: 100%;
     text-align: start;
     outline: none;
+
   }
 
   &__Menu {
@@ -26,7 +27,7 @@
     transform: scaleY(0);
     visibility: hidden;
     transform-origin: top;
-    transition: transform 0.3s linear, visibility 0.5s linear;
+    transition: transform 0.2s linear, visibility 0.3s linear;
 
 
 

@@ -7,7 +7,7 @@ interface ConfirmDeleteProps {
     onConfirmDelete: () => void;
     onClose?: () => void;
 }
-
+//modal inner
 export const ConfirmDelete: FC<ConfirmDeleteProps> = ({ onConfirmDelete, onClose = () => { } }) => {
     const modalRef = useModalContext()
     return (

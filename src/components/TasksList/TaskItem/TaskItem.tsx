@@ -2,10 +2,10 @@ import { Dispatch, FC, FocusEventHandler, KeyboardEventHandler, SetStateAction }
 import { Task } from '@/types';
 import { transformFirstLetter, NOOP } from '@/utils';
 import { FieldType, useFormValidation } from '@/hooks/useFormValidation/useFormValidation';
-import { Dropdown } from '@/ui/Dropdown';
+import { Dropdown } from '@/components/Dropdown';
 import { useTaskItem } from './useTaskItem';
-import './taskitem.scss';
 import { useActiveTaskContext } from '@/reducers_providers/ActiveTaskProvider';
+import './taskitem.scss';
 
 interface TaskItemProps {
     taskItem: Task,
@@ -65,7 +65,7 @@ export const TaskItem: FC<TaskItemProps> = ({ taskItem, manageDropdowns = [0, NO
                 </span>
             }
             <Dropdown
-                list={dropdownItems}
+                optionsSettings={dropdownItems}
                 index={itemIndex?.toString()}
                 isActiveDropdown={activeDropdown === itemIndex}
                 dropdownOnClick={() => { setActiveDropdown(itemIndex) }}

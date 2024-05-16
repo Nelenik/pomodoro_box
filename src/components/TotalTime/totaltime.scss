@@ -1,0 +1,22 @@
+.TotalTime {
+  padding: 25px;
+  min-height: 260px;
+  background-color: var(--greyF4);
+
+  &__Title {
+    margin-bottom: 14px;
+    font-size: var(--font24);
+    line-height: 1.375;
+  }
+
+  &__Descr {
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.75;
+
+    span {
+      color: var(--pallete_accent1);
+      font-weight: 700;
+    }
+  }
+}

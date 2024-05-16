@@ -1,3 +1,5 @@
+import { getWordEndigs } from "./getWordEnding";
+
 const getTimePartsFromSec = (
   totalSeconds: number
 ): { hours: number; min: number; sec: number } => {
@@ -9,23 +11,7 @@ const getTimePartsFromSec = (
 
 export const getTasksTimeString = (seconds: number = 0): string => {
   const { hours, min } = getTimePartsFromSec(seconds);
-  let hourDefinition: string;
-  switch (true) {
-    case hours % 100 !== 11 && hours % 10 === 1: {
-      hourDefinition = "час";
-      break;
-    }
-    case hours % 100 !== 12 && hours % 10 === 2:
-    case hours % 100 !== 13 && hours % 10 === 3:
-    case hours % 100 !== 14 && hours % 10 === 4: {
-      hourDefinition = "часа";
-      break;
-    }
-    default: {
-      hourDefinition = "часов";
-      break;
-    }
-  }
+  const hourDefinition: string = getWordEndigs(hours, ["час", "часа", "часов"]);
   return `${hours} ${hourDefinition} ${min} мин`;
 };
 
@@ -34,4 +20,19 @@ export const getTimerTimeString = (seconds: number): string => {
   return `${min.toString().padStart(2, "0")}:${sec
     .toString()
     .padStart(2, "0")}`;
+};
+//statistic page
+export const getTotalTimeString = (seconds: number): string => {
+  const { hours, min } = getTimePartsFromSec(seconds);
+  const areHours = hours > 0;
+  const hoursPart = areHours
+    ? `${hours} ${getWordEndigs(hours, ["часа", "часов", "часов"])}`
+    : "";
+  const minPart = `${min} ${getWordEndigs(min, ["минуты", "минут", "минут"])}`;
+  return hoursPart + " " + minPart;
+};
+
+export const getPauseTimeString = (seconds: number): string => {
+  const { hours, min } = getTimePartsFromSec(seconds);
+  return `${hours > 0 ? `${hours}ч ` : ""}${min}м`;
 };

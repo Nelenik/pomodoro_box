@@ -16,6 +16,17 @@
   --greyE5: hsl(from var(--pallete_blocks) h s 90%);
   --greyF4: hsl(from var(--pallete_blocks) h s 96%);
   --grey99: hsl(from var(--pallete_blocks) h s 60%);
+
+
+  --focus_block_bg: #FFDDA9;
+  --focus_svg_stroke: #FFAE35;
+  --pause_block_bg: #DFDCFE;
+  --pause_svg_stroke: #9C97D7;
+  --stop_block_bg: #C5F1FF;
+  --stop_svg_stroke: #7FC2D7;
+
+  --font24: clamp(1rem, 2.8vw - 0.7rem, 1.5rem);
+  --font64: clamp(2rem, 11.1vw - 4.9rem, 4rem);
 }
 
 [data-theme="inverted"] {
@@ -24,6 +35,13 @@
   --pallete_bg: #000000;
   --pallete_text: #cccccc;
   --pallete_blocks: #3b3b3b;
+
+  --focus_block_bg: #002256;
+  --focus_svg_stroke: #0051ca;
+  --pause_block_bg: #202311;
+  --pause_svg_stroke: #636828;
+  --stop_block_bg: #3aee00;
+  --stop_svg_stroke: #803d28;
 }
 
 
