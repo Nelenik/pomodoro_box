@@ -7,13 +7,14 @@
     background: none;
     cursor: pointer;
     outline: none;
+    color: inherit;
   }
 
   &__MenuItem {
     width: 100%;
     text-align: start;
     outline: none;
-
+    color: inherit;
   }
 
   &__Menu {

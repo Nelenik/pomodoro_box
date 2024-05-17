@@ -13,9 +13,9 @@
 
   --accent2_effect: hsl(from var(--pallete_accent2) h 39% 42%);
 
-  --greyE5: hsl(from var(--pallete_blocks) h s 90%);
-  --greyF4: hsl(from var(--pallete_blocks) h s 96%);
-  --grey99: hsl(from var(--pallete_blocks) h s 60%);
+  --greyE5: #E5E5E5;
+  --greyF4: #F4F4F4;
+  --grey99: #999999;
 
 
   --focus_block_bg: #FFDDA9;
@@ -33,8 +33,12 @@
   --pallete_accent1: #23c1dd;
   --pallete_accent2: #594cad;
   --pallete_bg: #000000;
-  --pallete_text: #cccccc;
+  --pallete_text: #ffffff;
   --pallete_blocks: #3b3b3b;
+
+  --greyE5: #1a1a1a;
+  --greyF4: #bbbbbb;
+  --grey99: #666666;
 
   --focus_block_bg: #002256;
   --focus_svg_stroke: #0051ca;

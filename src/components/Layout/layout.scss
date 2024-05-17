@@ -1,6 +1,9 @@
 .Header {
+  position: relative;
   padding: 15px 0;
-  background-color: var(--greyF4);
+  background-color: var(--pallete_bg);
+  box-shadow: 0px 5px 35px 0px #969595ae;
+  // box-shadow: 0px 13px 43px 0px rgba(0, 0, 0, 0.75);
 
   &__Container {
     display: flex;
