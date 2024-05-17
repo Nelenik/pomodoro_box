@@ -8,9 +8,45 @@ import PauseSvg from 'assets/pause-svg.svg?react';
 import StopSvg from 'assets/stop-svg.svg?react';
 import { TotalTime } from '@/components/TotalTime';
 import { getPauseTimeString, getTotalTimeString } from '@/utils/getTimeString';
+import { useEffect, useMemo, useState } from 'react';
+import { filterByWeek } from '@/utils/WeeksInterval';
+import { OneDay } from '@/types/metriks';
+
+type Metriks = {
+    [key: string]: OneDay;
+};
+
+type EntryMetriks = [string, OneDay][]
+type WeekData = {
+    [key: string]: [string, OneDay][];
+};
+
 
 export const Statistics = () => {
     useDocTitle()
+    const metriks: Metriks = JSON.parse(
+        localStorage.getItem("pomodoroMetriks") || "{}")
+
+    const weeks: WeekData = useMemo(() => {
+        const entriesFromMetriks: EntryMetriks = Object.entries(metriks);
+        return {
+            weekAgo0: entriesFromMetriks.filter(filterByWeek('weekAgo0')),
+            weekAgo1: entriesFromMetriks.filter(filterByWeek('weekAgo1')),
+            weekAgo2: entriesFromMetriks.filter(filterByWeek('weekAgo2')),
+        }
+    }, [])
+
+    const [activeWeek, setActiveWeek] = useState('weekAgo0');
+
+    const now = new Date()
+    const [activeDay, setActiveDay] = useState(now.toDateString())
+
+    const activeDayData = weeks[activeWeek].find(el => el[0] === activeDay)
+    console.log(activeDayData)
+
+    const handleSelect = (value: string) => {
+        setActiveWeek(value)
+    }
 
     return (
         <div className='container StatisticPage'>
@@ -19,7 +55,7 @@ export const Statistics = () => {
                     Ваша активность
                 </h1>
                 <div className="StatisticPage__Select">
-                    <StatisitcSelect />
+                    <StatisitcSelect onSelect={handleSelect} />
                 </div>
             </div>
             <div className="StatisticPage__TotalTime">

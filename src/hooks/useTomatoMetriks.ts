@@ -21,8 +21,6 @@ export const useTomatoMetriks = () => {
 
   const [todayMetriks, dispatchMetriks] = useReducer(metriksReducer, initValue);
 
-  // const [todayMetriks, setTodayMetriks] = useState(initValue);
-
   useEffect(() => {
     if (pomodoroMetriks[todayString]) {
       Object.assign(pomodoroMetriks[todayString], todayMetriks);

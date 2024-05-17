@@ -1,27 +1,33 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { AnOptionsSets, Dropdown } from '../Dropdown';
 import './statisitcselect.scss';
+import { NOOP } from '@/utils';
 
-export const StatisitcSelect = () => {
-    const [selectedValue, setSelectedValue] = useState('current')
+interface StatisitcSelectProps {
+    onSelect?: (newValue: string) => void
+}
+
+export const StatisitcSelect: FC<StatisitcSelectProps> = ({ onSelect = NOOP }) => {
+    const [selectedValue, setSelectedValue] = useState('weekAgo0')
 
     const handleChange = (e?: React.SyntheticEvent) => {
         const target = e?.currentTarget;
         if (target instanceof HTMLElement && target.dataset && target.dataset.selectvalue) {
-            const newState = target.dataset.selectvalue
+            const newValue = target.dataset.selectvalue
             setTimeout(() => {
-                setSelectedValue(newState)
+                setSelectedValue(newValue)
+                onSelect(newValue)
             }, 200)
         }
     }
 
     const getTriggerInner = (): string => {
         switch (selectedValue) {
-            case 'current':
+            case 'weekAgo0':
                 return 'Эта неделя';
-            case 'one ago':
+            case 'weekAgo1':
                 return 'Прошедшая неделя';
-            case 'two ago':
+            case 'weekAgo2':
                 return '2 недели назад';
             default:
                 return ''
@@ -32,8 +38,8 @@ export const StatisitcSelect = () => {
         {
             id: 'first',
             optionProps: {
-                'data-selectvalue': 'current',
-                'data-selected': selectedValue === 'current'
+                'data-selectvalue': 'weekAgo0',
+                'data-selected': selectedValue === 'weekAgo0'
             },
             inner: <span>Эта неделя</span>,
             itemOnClick: handleChange
@@ -41,8 +47,8 @@ export const StatisitcSelect = () => {
         {
             id: 'second',
             optionProps: {
-                'data-selectvalue': 'one ago',
-                'data-selected': selectedValue === 'one ago'
+                'data-selectvalue': 'weekAgo1',
+                'data-selected': selectedValue === 'weekAgo1'
             },
             inner: <span>Прошедшая неделя</span>,
             itemOnClick: handleChange
@@ -50,8 +56,8 @@ export const StatisitcSelect = () => {
         {
             id: 'third',
             optionProps: {
-                'data-selectvalue': 'two ago',
-                'data-selected': selectedValue === 'two ago'
+                'data-selectvalue': 'weekAgo2',
+                'data-selected': selectedValue === 'weekAgo2'
             },
             inner: <span>2 недели назад</span>,
             itemOnClick: handleChange
