@@ -40,16 +40,25 @@ export const filterByWeek = (weekId: string) => (el: [string, OneDay]) => {
   }
 };
 
+export const fillMissedDays = (week) => {
+  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  return days.map((el) => {
+    return (
+      week.find((weekEl: [string, OneDay]) => weekEl[0].includes(el)) || null
+    );
+  });
+};
+
 export const getDayName = (day: number): string => {
   if (day === 0) day = 7;
   const days = [
-    "понедельник",
-    "вторник",
-    "среда",
-    "четверг",
-    "пятница",
-    "суббота",
-    "воскресенье",
+    "Понедельник",
+    "Вторник",
+    "Среда",
+    "Четверг",
+    "Пятница",
+    "Суббота",
+    "Воскресенье",
   ];
   return days[day - 1];
 };

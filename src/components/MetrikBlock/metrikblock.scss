@@ -35,6 +35,11 @@
 
   }
 
+  &--no-data {
+    --metrik-icon: var(--pallete_blocks);
+    --metrik-bg: var(--greyF4);
+  }
+
   &--focus {
     --metrik-icon: var(--focus_svg_stroke);
     --metrik-bg: var(--focus_block_bg);
