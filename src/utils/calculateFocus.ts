@@ -4,5 +4,5 @@ export const calculateFocus = (
   tomatoDuration: number
 ): number => {
   if (tomatoesCount === 0) return 0;
-  return (totalTime / (tomatoesCount * tomatoDuration)) * 100;
+  return Math.trunc(totalTime / (tomatoesCount * tomatoDuration) / 100);
 };

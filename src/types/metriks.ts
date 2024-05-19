@@ -29,6 +29,7 @@ export type ManageMetriksAction = RewriteAction | TimeMeasuresAction;
 //metriks grouped by week
 export type EntryMetriks = [string, OneDay][];
 
-export type WeekData = {
-  [key: string]: EntryMetriks;
+export type WeekData = [string, OneDay | null][];
+export type Week = {
+  [key: string]: WeekData;
 };

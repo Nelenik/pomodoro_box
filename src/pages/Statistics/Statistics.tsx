@@ -9,37 +9,44 @@ import StopSvg from 'assets/stop-svg.svg?react';
 import { TotalTime } from '@/components/TotalTime';
 import { getPauseTimeString, getTotalTimeString } from '@/utils/getTimeString';
 import { useMemo, useState } from 'react';
-import { filterByWeek, getDayName } from '@/utils/WeeksInterval';
-import { EntryMetriks, PomodoroMetriks, WeekData } from '@/types/metriks';
+import { BreakIntoWeeks, getDayName } from '@/utils/BreakIntoWeeks';
+import { EntryMetriks, PomodoroMetriks, Week } from '@/types/metriks';
 import { useSettingsContext } from '@/reducers_providers/SettingsProvider';
 import { calculateFocus } from '@/utils/calculateFocus';
+import { useChart } from '@/hooks/useChart';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS } from 'chart.js/auto';
 
+
+const WEEKS_COUNT: number = 3;
+ChartJS.register();
 
 export const Statistics = () => {
+
     useDocTitle()
     const { appSettings } = useSettingsContext()
-    const weeks: WeekData = useMemo(() => {
+    const weeks: Week = useMemo(() => {
         const metriks: PomodoroMetriks = JSON.parse(
             localStorage.getItem("pomodoroMetriks") || "{}")
         const entriesFromMetriks: EntryMetriks = Object.entries(metriks);
+        const getWeek = new BreakIntoWeeks(WEEKS_COUNT)
         return {
-            weekAgo0: entriesFromMetriks.filter(filterByWeek('weekAgo0')),
-            weekAgo1: entriesFromMetriks.filter(filterByWeek('weekAgo1')),
-            weekAgo2: entriesFromMetriks.filter(filterByWeek('weekAgo2')),
+            weekAgo0: getWeek.breakIntoWeeks(entriesFromMetriks, 'weekAgo0'),
+            weekAgo1: getWeek.breakIntoWeeks(entriesFromMetriks, 'weekAgo1'),
+            weekAgo2: getWeek.breakIntoWeeks(entriesFromMetriks, 'weekAgo2'),
         }
     }, [])
 
     const [activeWeek, setActiveWeek] = useState('weekAgo0');
     const now = new Date()
     const [activeDay, setActiveDay] = useState(now.getDay())
-    console.log(weeks[activeWeek])
 
     const [, activeDayData] = weeks[activeWeek].find(el => {
         const dateFromEl = new Date(el[0])
         return dateFromEl.getDay() === activeDay
     }) || []
 
-
+    console.log(weeks[activeWeek])
     const handleSelect = (value: string) => {
         setActiveWeek(value)
     }
@@ -49,6 +56,9 @@ export const Statistics = () => {
         const { totalTime, completedTomatoes } = activeDayData
         return `${calculateFocus(totalTime, completedTomatoes, appSettings.tomatoDuration)}%`
     }
+
+
+    const { chartData, options } = useChart(weeks[activeWeek], activeDay, setActiveDay)
 
     return (
         <div className='container StatisticPage'>
@@ -69,7 +79,7 @@ export const Statistics = () => {
                 />
             </div>
             <div className="StatisticPage__Chart" style={{ backgroundColor: '#F4F4F4' }}>
-                Chart
+                <Bar data={chartData} options={options} redraw={true} />
             </div>
             <div className="StatisticPage__TomatoesCount">
                 <TomatoesCount tomatoesCount={
