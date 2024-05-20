@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { SettingsContext } from ".";
 
-export const useSettingsContext = () => {
+export const useSettings = () => {
   const context = useContext(SettingsContext);
   if (!context) {
     throw new Error(

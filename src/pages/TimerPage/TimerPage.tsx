@@ -7,14 +7,14 @@ import { Timer } from '@/components/Timer';
 
 import TomatoMainSvg from 'assets/tomato-main.svg?react'
 import { getTasksTimeString } from '@/utils/getTimeString';
-import { useSettingsContext } from '@/reducers_providers/SettingsProvider/useSettingsContext';
+import { useSettings } from '@/reducers_providers/SettingsProvider/useSettings';
 import { ActiveTaskProvider } from '@/reducers_providers/ActiveTaskProvider';
 import { useTasksList } from '@/reducers_providers/TasksListProvider';
 
 export const TimerPage = () => {
     useDocTitle();
     const filteredList = useTasksList()
-    const { appSettings } = useSettingsContext()
+    const { appSettings } = useSettings()
 
     const tomatoesTotal = filteredList.reduce((prev, { tomatoesCount }) => prev + tomatoesCount
         , 0)

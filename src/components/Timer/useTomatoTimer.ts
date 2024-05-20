@@ -1,6 +1,6 @@
 import { useTimerTick } from "@/hooks/useTimerTick";
 import { useActiveTaskContext } from "@/reducers_providers/ActiveTaskProvider";
-import { useSettingsContext } from "@/reducers_providers/SettingsProvider";
+import { useSettings } from "@/reducers_providers/SettingsProvider";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { useTomatoMetriks } from "../../hooks/useTomatoMetriks";
 import { useDispatchTasks } from "@/reducers_providers/TasksListProvider";
@@ -21,7 +21,7 @@ const ONDONE_ANIM_TIME = 1600;
 export const useTomatoTimer = (currentTask: Task) => {
   const { todayMetriks, dispatchMetriks } = useTomatoMetriks();
   const dispatchTasks = useDispatchTasks();
-  const { appSettings } = useSettingsContext();
+  const { appSettings } = useSettings();
   const { tomatoDuration, shortBreakDuration, longBreakDuration } = appSettings;
 
   //tomato duration = workDurationRef.current, if it is changed, this value become default for the entire cycle(one cycle ends after a long break)

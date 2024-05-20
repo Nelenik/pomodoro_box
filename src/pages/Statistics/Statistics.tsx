@@ -54,7 +54,6 @@ export const Statistics = () => {
         return `${calculateFocus(totalTime, timeOnPause)}%`
     }
 
-
     const { chartData, options } = useChart(weeks[activeWeek], activeDay, setActiveDay)
 
     return (
