@@ -51,23 +51,23 @@
 }
 
 .AppSettings {
-  &__Trigger {
-    position: relative;
-    width: 30px;
-    height: 30px;
+  // &__Trigger {
+  //   position: relative;
+  //   width: 30px;
+  //   height: 30px;
 
-    svg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      translate: -50% -50%;
-      fill: var(--pallete_accent1);
-    }
+  //   svg {
+  //     position: absolute;
+  //     top: 50%;
+  //     left: 50%;
+  //     translate: -50% -50%;
+  //     fill: var(--pallete_accent1);
+  //   }
 
-    &--active {
-      svg {
-        fill: var(--accent1_click);
-      }
-    }
-  }
+  //   &--active {
+  //     svg {
+  //       fill: var(--accent1_click);
+  //     }
+  //   }
+  // }
 }

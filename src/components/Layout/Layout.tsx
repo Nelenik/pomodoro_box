@@ -1,10 +1,10 @@
 import { Outlet, NavLink, Link } from 'react-router-dom';
 import './layout.scss';
+import { Settings } from '../Settings';
 //nav svg-s
 import LogoSvg from 'assets/tomato-logo.svg?react';
 import StatSvg from 'assets/statistics.svg?react';
 import TimerSvg from 'assets/timer.svg?react';
-import SettingsSvg from 'assets/settings.svg?react';
 
 export const Layout = () => {
 
@@ -22,9 +22,7 @@ export const Layout = () => {
                         </NavLink>
                     </nav>
                     <div className='AppSettings'>
-                        <button className='btn-reset AppSettings__Trigger' type='button'>
-                            <SettingsSvg />
-                        </button>
+                        <Settings />
                     </div>
                 </div>
             </header>

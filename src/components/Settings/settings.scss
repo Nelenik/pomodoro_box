@@ -1,0 +1,62 @@
+.SetsTrigger {
+  position: relative;
+  width: 30px;
+  height: 30px;
+
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    fill: var(--pallete_accent1);
+  }
+
+  &--active {
+    svg {
+      fill: var(--accent1_click);
+    }
+  }
+}
+
+.SetsModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  &--closed {
+    visibility: hidden;
+    transition: visibility 0.5s linear;
+
+    .SetsModal__Content {
+      translate: 100vw;
+      transition: translate 0.5s linear;
+    }
+  }
+
+  &--open {
+    visibility: visible;
+
+    .SetsModal__Content {
+      translate: 0;
+    }
+  }
+
+  &__Content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(100%, 500px);
+    background-color: var(--pallete_bg);
+
+  }
+
+  &__CloseBtn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+
+  }
+}

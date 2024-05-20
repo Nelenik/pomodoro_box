@@ -7,21 +7,31 @@ interface ModalProps {
     children: ReactNode;
     onClose: () => void;
     isOpen: boolean,
+    blockClassName?: string,
+    animTime?: number
 }
 
 export const ModalContext = createContext<RefObject<HTMLDivElement> | null>(null)
 
-export const Modal: FC<ModalProps> = ({ children, isOpen = false, onClose }) => {
+export const Modal: FC<ModalProps> = ({ children, isOpen = false, onClose, blockClassName = "Modal", animTime = 500 }) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const modalCloseBtnRef = useRef<HTMLButtonElement>(null);
+
+    const classes = {
+        main: blockClassName,
+        closed: `${blockClassName}--closed`,
+        open: `${blockClassName}--open`,
+        content: `${blockClassName}__Content`,
+        closeBtn: `${blockClassName}__CloseBtn`
+    }
 
     //add open class for animation
     useEffect(() => {
         let timeout: number;
         if (isOpen) {
             timeout = setTimeout(() => {
-                modalRef.current?.classList.add('Modal--open');
-            }, 500)
+                modalRef.current?.classList.add(classes.open);
+            }, animTime)
         }
         return () => {
             clearTimeout(timeout)
@@ -32,15 +42,19 @@ export const Modal: FC<ModalProps> = ({ children, isOpen = false, onClose }) => 
     useEffect(() => {
         isOpen && modalCloseBtnRef.current?.focus();
         const rootEl = document.getElementById('root')
-        isOpen && rootEl && rootEl.setAttribute('inert', '')
+        if (isOpen && rootEl) {
+            rootEl.setAttribute('inert', '')
+        }
         return () => {
-            rootEl?.removeAttribute('inert')
+            if (rootEl) {
+                rootEl.removeAttribute('inert')
+            }
         }
     }, [isOpen])
 
     const handleModalClose = useCallback(() => {
-        modalRef.current?.classList.remove('Modal--open');
-        setTimeout(onClose, 500)
+        modalRef.current?.classList.remove(classes.open);
+        setTimeout(onClose, animTime)
     }, [onClose])
 
     //close on escape
@@ -59,18 +73,18 @@ export const Modal: FC<ModalProps> = ({ children, isOpen = false, onClose }) => 
     return (
         isOpen && <ModalContext.Provider value={modalRef}>
             <div
-                className={`Modal`}
+                className={`${classes.main} ${classes.closed}`}
                 onClick={(e) => {
-                    if ((e.target as HTMLElement)?.closest('.Modal__Content')) return
+                    if ((e.target as HTMLElement)?.closest(`.${classes.content}`)) return
                     handleModalClose()
                 }}
                 ref={modalRef}
                 role='dialog'
                 aria-modal="true"
             >
-                <div className="Modal__Content">
+                <div className={classes.content}>
                     <button
-                        className='Modal__CloseBtn btn-reset'
+                        className={`${classes.closeBtn} btn-reset`}
                         onClick={handleModalClose}
                         ref={modalCloseBtnRef}
                     >
