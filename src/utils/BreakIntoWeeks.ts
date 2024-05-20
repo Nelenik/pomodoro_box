@@ -2,6 +2,17 @@ import { EntryMetriks, OneDay } from "@/types/metriks";
 
 type Collection = Map<string, [number, number]>;
 
+//return number of the week day and month day using date string or timstamp. if argument is absent returns values for current day
+export const getDayNum = (dateFormat?: string | number) => {
+  const date = dateFormat ? new Date(dateFormat) : new Date();
+  const weekDay = date.getDay();
+  const monthDay = date.getDate();
+  return {
+    weekDay,
+    monthDay,
+  };
+};
+
 /*
 The WeeksInterval class provides utility methods for working with weekly intervals. It includes:
 

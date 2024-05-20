@@ -1,6 +1,11 @@
 import { WeekData } from "@/types/metriks";
+import { getDayNum } from "@/utils/BreakIntoWeeks";
 import { getPauseTimeString } from "@/utils/getTimeString";
-import { ChartOptions } from "chart.js";
+import { ChartData, ChartOptions } from "chart.js";
+import clockImg from "assets/clock.svg";
+
+const customPoint = new Image();
+customPoint.src = clockImg;
 
 export const useChart = (
   activeWeek: WeekData,
@@ -10,16 +15,14 @@ export const useChart = (
   const labels = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
   const colors = activeWeek.map(([day, dayData]) => {
-    const dayDate = new Date(day);
-    const weekDay: number = dayDate.getDay();
+    const { weekDay } = getDayNum(day);
     if (dayData === null) return "#C4C4C4";
     else if (weekDay === activeDay) return "#DC3E22";
     else return "#EA8A79";
   });
 
   const xAxisTextColor = activeWeek.map(([day]) => {
-    const dayDate = new Date(day);
-    const weekDay: number = dayDate.getDay();
+    const { weekDay } = getDayNum(day);
     if (weekDay === activeDay) return "#DC3E22";
     return "#999999";
   });
@@ -28,13 +31,9 @@ export const useChart = (
     if (!dayData) return 0;
     else return Math.floor(dayData.totalTime / 60);
   });
-  console.log(data);
-  // const min = Math.min(...data);
   const max = Math.max(...data);
 
-  console.log(Math.trunc(max / 25) + 1);
-
-  const chartData = {
+  const chartData: ChartData<"bar"> = {
     labels,
     datasets: [
       {
@@ -42,6 +41,7 @@ export const useChart = (
         barPercentage: 0.8,
         data: data,
         backgroundColor: colors,
+        pointStyle: customPoint,
       },
     ],
   };
@@ -56,6 +56,29 @@ export const useChart = (
     maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
+      tooltip: {
+        usePointStyle: true,
+        callbacks: {
+          title: (context) => {
+            const barIndex = context[0].dataIndex;
+            const targetDay = barIndex === 6 ? 0 : barIndex + 1;
+            const targetDayData = activeWeek.find(([day]) => {
+              const { weekDay } = getDayNum(day);
+              return weekDay === targetDay;
+            });
+            if (targetDayData) {
+              const dateFromTargetData = new Date(targetDayData[0]);
+              return `${
+                context[0].label
+              } ${dateFromTargetData.toLocaleDateString()}`;
+            }
+          },
+          label: (context) => {
+            if (typeof context.raw !== "number") return;
+            return `  ${getPauseTimeString(context.raw * 60)}`;
+          },
+        },
+      },
     },
     scales: {
       x: {
@@ -67,7 +90,7 @@ export const useChart = (
         ticks: {
           color: xAxisTextColor,
           padding: 20,
-          font: { weight: "normal" as const, size: 24 },
+          font: { weight: "normal", size: 24 },
         },
       },
       y: {
@@ -86,7 +109,7 @@ export const useChart = (
             if (value === 0) return "0";
             return getPauseTimeString(value * 60);
           },
-          font: { weight: "normal" as const, size: 12 },
+          font: { weight: "normal", size: 12 },
         },
       },
     },

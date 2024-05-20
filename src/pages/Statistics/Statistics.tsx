@@ -11,7 +11,6 @@ import { getPauseTimeString, getTotalTimeString } from '@/utils/getTimeString';
 import { useMemo, useState } from 'react';
 import { BreakIntoWeeks, getDayName } from '@/utils/BreakIntoWeeks';
 import { EntryMetriks, PomodoroMetriks, Week } from '@/types/metriks';
-import { useSettingsContext } from '@/reducers_providers/SettingsProvider';
 import { calculateFocus } from '@/utils/calculateFocus';
 import { useChart } from '@/hooks/useChart';
 import { Bar } from 'react-chartjs-2';
@@ -24,7 +23,6 @@ ChartJS.register();
 export const Statistics = () => {
 
     useDocTitle()
-    const { appSettings } = useSettingsContext()
     const weeks: Week = useMemo(() => {
         const metriks: PomodoroMetriks = JSON.parse(
             localStorage.getItem("pomodoroMetriks") || "{}")
@@ -46,15 +44,14 @@ export const Statistics = () => {
         return dateFromEl.getDay() === activeDay
     }) || []
 
-    console.log(weeks[activeWeek])
     const handleSelect = (value: string) => {
         setActiveWeek(value)
     }
 
     const getFocusString = (): string => {
         if (!activeDayData) return '0%';
-        const { totalTime, completedTomatoes } = activeDayData
-        return `${calculateFocus(totalTime, completedTomatoes, appSettings.tomatoDuration)}%`
+        const { totalTime, timeOnPause } = activeDayData
+        return `${calculateFocus(totalTime, timeOnPause)}%`
     }
 
 
