@@ -10,7 +10,6 @@ import { Layout } from './components/Layout';
 import { TimerPage } from './pages/TimerPage';
 import { Statistics } from './pages/Statistics';
 
-import { SettingsProvider } from './reducers_providers/SettingsProvider';
 import { TasksListProvider } from './reducers_providers/TasksListProvider';
 
 const setDocTitle = (title: string): void => {
@@ -41,10 +40,7 @@ const router = createBrowserRouter(
 function App() {
 
   return (
-    <SettingsProvider>
-
-      <RouterProvider router={router} />
-    </SettingsProvider>
+    <RouterProvider router={router} />
   )
 }
 
