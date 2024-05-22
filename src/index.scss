@@ -1,6 +1,11 @@
 @import '../node_modules/normalize.css/normalize.css';
 
 :root {
+  --font24: clamp(1rem, 2.8vw - 0.7rem, 1.5rem);
+  --font64: clamp(2rem, 11.1vw - 4.9rem, 4rem);
+}
+
+:root[data-theme="default"] {
   --pallete_accent1: #DC3E22;
   --pallete_accent2: #A6B352;
   --pallete_bg: #ffffff;
@@ -25,11 +30,10 @@
   --stop_block_bg: #C5F1FF;
   --stop_svg_stroke: #7FC2D7;
 
-  --font24: clamp(1rem, 2.8vw - 0.7rem, 1.5rem);
-  --font64: clamp(2rem, 11.1vw - 4.9rem, 4rem);
+
 }
 
-[data-theme="inverted"] {
+:root[data-theme="inverted"] {
   --pallete_accent1: #23c1dd;
   --pallete_accent2: #594cad;
   --pallete_bg: #000000;

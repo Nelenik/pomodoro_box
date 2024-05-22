@@ -1,5 +1,5 @@
 import { Settings } from "@/types/settings";
-import { Dispatch, FC, ReactNode, createContext, useState } from "react";
+import { Dispatch, FC, ReactNode, createContext, useEffect, useState } from "react";
 
 export const SettingsContext = createContext<SettingsContext | null>(null)
 interface SettingsContext {
@@ -10,13 +10,23 @@ interface SettingsProviderProps {
   children: ReactNode,
 }
 
+const defaultSettings = {
+  theme: 'default',
+  tomatoDuration: 10 * 60,
+  longBreak: 2 * 60,
+  shortBreak: 1 * 60
+}
+
+const jsonFromDefSets = JSON.stringify(defaultSettings)
+
 export const SettingsProvider: FC<SettingsProviderProps> = ({ children }) => {
-  const [appSettings, setAppSettings] = useState<Settings>({
-    theme: 'default',
-    tomatoDuration: 10 * 60,
-    longBreakDuration: 2 * 60,
-    shortBreakDuration: 1 * 60
-  })
+  const initSettings = JSON.parse(localStorage.getItem('pomodoroSettings') || jsonFromDefSets)
+  const [appSettings, setAppSettings] = useState<Settings>(initSettings)
+
+  useEffect(() => {
+    localStorage.setItem('pomodoroSettings', JSON.stringify(appSettings))
+  }, [appSettings])
+
   return (
     <SettingsContext.Provider value={{ appSettings, setAppSettings }}>
       {children}

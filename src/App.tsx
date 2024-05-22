@@ -11,6 +11,8 @@ import { TimerPage } from './pages/TimerPage';
 import { Statistics } from './pages/Statistics';
 
 import { TasksListProvider } from './reducers_providers/TasksListProvider';
+import { useSettings } from './reducers_providers/SettingsProvider';
+import { useEffect } from 'react';
 
 const setDocTitle = (title: string): void => {
   document.title = title
@@ -38,6 +40,11 @@ const router = createBrowserRouter(
 
 
 function App() {
+  const { appSettings } = useSettings()
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = appSettings.theme
+  }, [appSettings])
 
   return (
     <RouterProvider router={router} />

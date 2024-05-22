@@ -179,12 +179,16 @@ export const useFormValidation = <T>(
 
   //change handler
   const onChange = (e: React.ChangeEvent<FieldType>) => {
-    const { name, value } = e.target;
-    (validateOnArray.includes("change") || validateOn.includes("all")) &&
+    const { name, value, type } = e.target;
+
+    if (validateOnArray.includes("change") || validateOn.includes("all")) {
       setErrors({ ...errors, ...validateField(name, value) });
+    }
+    const isRadio = type === "radio" || type === "checkbox";
+
     setFormData({
       ...formData,
-      [name]: transformFirstLetter(value),
+      [name]: isRadio ? value : transformFirstLetter(value),
     });
   };
   //blur handler
@@ -217,7 +221,6 @@ export const useFormValidation = <T>(
 
   const register: Register = (fieldName, rules = {}) => {
     assignedRulesRef.current[fieldName] = assignRules(rules);
-
     return {
       value: formData[fieldName],
       name: fieldName,

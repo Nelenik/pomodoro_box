@@ -22,10 +22,11 @@ export const useTomatoTimer = (currentTask: Task) => {
   const { todayMetriks, dispatchMetriks } = useTomatoMetriks();
   const dispatchTasks = useDispatchTasks();
   const { appSettings } = useSettings();
-  const { tomatoDuration, shortBreakDuration, longBreakDuration } = appSettings;
+  const { tomatoDuration, shortBreak, longBreak } = appSettings;
 
   //tomato duration = workDurationRef.current, if it is changed, this value become default for the entire cycle(one cycle ends after a long break)
   const workDurationRef = useRef(tomatoDuration);
+
   const timerCycleRef = useRef<number>(0);
   //link to active task element
   const activeTaskElRef = useActiveTaskContext();
@@ -39,13 +40,21 @@ export const useTomatoTimer = (currentTask: Task) => {
     isStarted: false,
     isPaused: false,
   });
+  // rewrite workDurationRef if settings changes
+  useEffect(() => {
+    workDurationRef.current = tomatoDuration;
+    if (timerType === "workTimer") {
+      resetTimer(workDurationRef.current);
+    }
+  }, [tomatoDuration, resetTimer, timerType]);
 
+  //initial timestamps for time measuring
   const pauseInitTimestamp = useRef(0);
   const workInitTimestamp = useRef(0);
 
   const { isStarted, isPaused } = timerState;
 
-  // manage timer functions
+  /* manage timer functions*/
 
   //switch timer type func
   const switchTimerType = useCallback(
@@ -180,9 +189,9 @@ export const useTomatoTimer = (currentTask: Task) => {
               //switch break timer depending on timer cycle
               ++timerCycleRef.current;
               if (timerCycleRef.current >= WORKING_PERIODS_COUNT) {
-                switchTimerType("longBreakTimer", longBreakDuration);
+                switchTimerType("longBreakTimer", longBreak);
               } else {
-                switchTimerType("shortBreakTimer", shortBreakDuration);
+                switchTimerType("shortBreakTimer", shortBreak);
               }
               handleStart();
             }
