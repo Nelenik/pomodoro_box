@@ -1,10 +1,11 @@
 import { useTimerTick } from "@/hooks/useTimerTick";
 import { useActiveTaskContext } from "@/reducers_providers/ActiveTaskProvider";
 import { useSettings } from "@/reducers_providers/SettingsProvider";
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback, useEffect, useReducer } from "react";
 import { useTomatoMetriks } from "../../hooks/useTomatoMetriks";
 import { useDispatchTasks } from "@/reducers_providers/TasksListProvider";
 import { Task } from "@/types";
+import { getTimerTimeString } from "@/utils/getTimeString";
 
 //timer component
 interface TimerState {
@@ -17,6 +18,22 @@ type TimerType = "workTimer" | "shortBreakTimer" | "longBreakTimer";
 const INCREASE_VALUE = 5;
 const WORKING_PERIODS_COUNT = 4;
 const ONDONE_ANIM_TIME = 1600;
+
+const timerReducer = (
+  state: TimerState,
+  action: { type: "START" | "PAUSE" | "RESET" }
+): TimerState => {
+  switch (action.type) {
+    case "START":
+      return { ...state, isStarted: true, isPaused: false };
+    case "PAUSE":
+      return { ...state, isStarted: true, isPaused: true };
+    case "RESET":
+      return { isStarted: false, isPaused: false };
+    default:
+      return state;
+  }
+};
 
 export const useTomatoTimer = (currentTask: Task) => {
   const { todayMetriks, dispatchMetriks } = useTomatoMetriks();
@@ -31,15 +48,16 @@ export const useTomatoTimer = (currentTask: Task) => {
   //link to active task element
   const activeTaskElRef = useActiveTaskContext();
 
-  const { isFinished, timeString, startTimer, pauseTimer, resetTimer } =
+  const { isFinished, timerValue, startTimer, pauseTimer, resetTimer } =
     useTimerTick(workDurationRef.current);
 
   const [timerType, setTimerType] = useState<TimerType>("workTimer");
 
-  const [timerState, setTimerState] = useState<TimerState>({
+  const [timerState, dispatchTimer] = useReducer(timerReducer, {
     isStarted: false,
     isPaused: false,
   });
+
   // rewrite workDurationRef if settings changes
   useEffect(() => {
     workDurationRef.current = tomatoDuration;
@@ -79,14 +97,14 @@ export const useTomatoTimer = (currentTask: Task) => {
       pauseInitTimestamp.current = 0;
     }
     startTimer();
-    setTimerState({ isStarted: true, isPaused: false });
+    dispatchTimer({ type: "START" });
   }, [startTimer, isPaused, isStarted, dispatchMetriks]);
 
   //handle timer pause
   const handlePause = () => {
     pauseInitTimestamp.current = performance.now();
     pauseTimer();
-    setTimerState({ isStarted: true, isPaused: true });
+    dispatchTimer({ type: "PAUSE" });
   };
 
   //handle skipping the break
@@ -99,7 +117,7 @@ export const useTomatoTimer = (currentTask: Task) => {
   //reset timer to default state
   const handleResetToDefault = useCallback(() => {
     pauseTimer();
-    setTimerState({ isStarted: false, isPaused: false });
+    dispatchTimer({ type: "RESET" });
     dispatchMetriks({
       type: "RENEW_TIME_MEASURES",
       fieldName: "totalTime",
@@ -215,7 +233,7 @@ export const useTomatoTimer = (currentTask: Task) => {
   return {
     todayTaskNumber: todayMetriks.completedTasks,
     todayTomatoNumber: todayMetriks.completedTomatoes,
-    timeString,
+    timeString: getTimerTimeString(timerValue),
     timerType,
     isStarted,
     isPaused,

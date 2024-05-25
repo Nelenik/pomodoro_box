@@ -1,4 +1,4 @@
-import { getTimerTimeString } from "@/utils/getTimeString";
+// import { getTimerTimeString } from "@/utils/getTimeString";
 import { useState, useEffect, useCallback } from "react";
 import { useInterval } from "./useInterval/useInterval";
 
@@ -38,7 +38,7 @@ export const useTimerTick = (initValue: number) => {
 
   return {
     isFinished: timerValue < 0,
-    timeString: getTimerTimeString(timerValue),
+    timerValue: timerValue,
     startTimer,
     pauseTimer,
     resetTimer,
