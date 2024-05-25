@@ -10,6 +10,7 @@ import { getTasksTimeString } from '@/utils/getTimeString';
 import { useSettings } from '@/reducers_providers/SettingsProvider/useSettings';
 import { ActiveTaskProvider } from '@/reducers_providers/ActiveTaskProvider';
 import { useTasksList } from '@/reducers_providers/TasksListProvider';
+// import { TimerComponent } from '@/components/TimerComponent';
 
 export const TimerPage = () => {
     useDocTitle();

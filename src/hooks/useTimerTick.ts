@@ -1,36 +1,46 @@
 import { getTimerTimeString } from "@/utils/getTimeString";
-import { useState, useRef, useCallback } from "react";
+import { useState, useEffect } from "react";
+import { useInterval } from "./useInterval/useInterval";
 
 export const useTimerTick = (initValue: number) => {
   const [timerValue, setTimerValue] = useState(initValue);
+
+  const [isRunning, setIsRunning] = useState(false);
+  const delay = isRunning ? 1000 : null;
+  console.log(delay);
+
+  const tickFunc = () => {
+    console.log("tick");
+    setTimerValue((prev) => prev - 1);
+  };
+
+  useInterval(tickFunc, delay, "worker");
+
+  useEffect(() => {
+    if (timerValue < 0) {
+      setTimerValue(0);
+      setIsRunning(false);
+    }
+  }, [timerValue]);
+
+  const startTimer = () => {
+    setIsRunning(true);
+  };
+
+  const pauseTimer = () => {
+    setIsRunning(false);
+  };
+
+  const resetTimer = (valueInSec: number = initValue) => {
+    setTimerValue(valueInSec);
+  };
+
   const timeString = getTimerTimeString(timerValue);
-  const intervalRef = useRef(0);
-
-  if (timerValue < 0) {
-    clearInterval(intervalRef.current);
-  }
-
-  const startTimer = useCallback(() => {
-    clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      setTimerValue((prev) => prev - 1);
-    }, 1000);
-  }, []);
-
-  const pauseTimer = useCallback(() => {
-    clearInterval(intervalRef.current);
-  }, []);
-
-  const resetTimer = useCallback(
-    (valueInSec: number = initValue): void => {
-      setTimerValue(valueInSec);
-    },
-    [initValue]
-  );
+  console.log(timerValue);
 
   return {
     isFinished: timerValue < 0,
-    timeString,
+    timeString: timeString,
     startTimer,
     pauseTimer,
     resetTimer,
