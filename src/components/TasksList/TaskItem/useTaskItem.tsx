@@ -6,6 +6,7 @@ import DropDeleteSvg from "assets/drop-delete.svg?react";
 import DropEditSvg from "assets/drop-edit.svg?react";
 import DropLessSvg from "assets/drop-less.svg?react";
 import DropMoreSvg from "assets/drop-more.svg?react";
+
 import { generateId } from "@/utils";
 import { createPortal } from "react-dom";
 import { Modal } from "@/components/Modal";
@@ -40,10 +41,11 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
   };
 
   const handleLess = () => {
+    const newTomatoesCount = taskItem.tomatoesCount <= 1 ? 1 : taskItem.tomatoesCount - 1
     dispatchTasks({
       type: 'CHANGE_TASK',
       id: taskItem.id,
-      toChange: { tomatoesCount: taskItem.tomatoesCount - 1 }
+      toChange: { tomatoesCount: newTomatoesCount }
     })
   }
 

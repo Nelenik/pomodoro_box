@@ -223,6 +223,7 @@ li:has(> .TaskItem--done) {
 
     svg {
       margin-right: 10px;
+      fill: var(--pallete_accent2);
     }
 
     &:hover,

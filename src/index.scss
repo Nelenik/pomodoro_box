@@ -3,6 +3,13 @@
 :root {
   --font24: clamp(1rem, 2.8vw - 0.7rem, 1.5rem);
   --font64: clamp(2rem, 11.1vw - 4.9rem, 4rem);
+
+  --accent1_disabled: hsl(from var(--pallete_accent1) h s 70%);
+  --accent1_hover: hsl(from var(--pallete_accent1) h s 77%);
+  --accent1_click: hsl(from var(--pallete_accent1) h s 39%);
+
+  --accent2_effect: hsl(from var(--pallete_accent2) h 39% 42%);
+
 }
 
 :root[data-theme="default"] {
@@ -12,11 +19,11 @@
   --pallete_text: #333333;
   --pallete_blocks: #c4c4c4;
 
-  --accent1_disabled: hsl(from var(--pallete_accent1) h s 70%);
-  --accent1_hover: hsl(from var(--pallete_accent1) h s 77%);
-  --accent1_click: hsl(from var(--pallete_accent1) h s 39%);
+  // --accent1_disabled: hsl(from var(--pallete_accent1) h s 70%);
+  // --accent1_hover: hsl(from var(--pallete_accent1) h s 77%);
+  // --accent1_click: hsl(from var(--pallete_accent1) h s 39%);
 
-  --accent2_effect: hsl(from var(--pallete_accent2) h 39% 42%);
+  // --accent2_effect: hsl(from var(--pallete_accent2) h 39% 42%);
 
   --greyE5: #E5E5E5;
   --greyF4: #F4F4F4;

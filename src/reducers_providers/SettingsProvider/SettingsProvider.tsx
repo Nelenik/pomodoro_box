@@ -10,11 +10,13 @@ interface SettingsProviderProps {
   children: ReactNode,
 }
 
-const defaultSettings = {
+const defaultSettings: Settings = {
   theme: 'default',
   tomatoDuration: 10 * 60,
   longBreak: 2 * 60,
-  shortBreak: 1 * 60
+  shortBreak: 1 * 60,
+  turnOnNotifications: true,
+  workingPeriodsCount: 4
 }
 
 const jsonFromDefSets = JSON.stringify(defaultSettings)

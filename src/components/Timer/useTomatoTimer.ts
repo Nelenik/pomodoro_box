@@ -16,8 +16,8 @@ interface TimerState {
 type TimerType = "workTimer" | "shortBreakTimer" | "longBreakTimer";
 
 const INCREASE_VALUE = 5;
-const WORKING_PERIODS_COUNT = 4;
 const ONDONE_ANIM_TIME = 1600;
+// const WORKING_PERIODS_COUNT = 4;
 
 const timerReducer = (
   state: TimerState,
@@ -206,7 +206,7 @@ export const useTomatoTimer = (currentTask: Task) => {
               });
               //switch break timer depending on timer cycle
               ++timerCycleRef.current;
-              if (timerCycleRef.current >= WORKING_PERIODS_COUNT) {
+              if (timerCycleRef.current >= appSettings.workingPeriodsCount) {
                 switchTimerType("longBreakTimer", longBreak);
               } else {
                 switchTimerType("shortBreakTimer", shortBreak);

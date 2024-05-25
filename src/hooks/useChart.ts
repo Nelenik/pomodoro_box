@@ -50,7 +50,7 @@ export const useChart = (
     onClick: (_: unknown, activeElems: { index: number }[]): void => {
       if (!activeElems[0]) return;
       const { index } = activeElems[0];
-      let newActiveDay: number = index === 6 ? 0 : index + 1;
+      const newActiveDay: number = index === 6 ? 0 : index + 1;
       setActiveDay(newActiveDay);
     },
     maintainAspectRatio: false,
