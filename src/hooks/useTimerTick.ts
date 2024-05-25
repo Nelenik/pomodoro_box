@@ -1,5 +1,5 @@
 import { getTimerTimeString } from "@/utils/getTimeString";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useInterval } from "./useInterval/useInterval";
 
 export const useTimerTick = (initValue: number) => {
@@ -23,17 +23,20 @@ export const useTimerTick = (initValue: number) => {
     }
   }, [timerValue]);
 
-  const startTimer = () => {
+  const startTimer = useCallback(() => {
     setIsRunning(true);
-  };
+  }, []);
 
-  const pauseTimer = () => {
+  const pauseTimer = useCallback(() => {
     setIsRunning(false);
-  };
+  }, []);
 
-  const resetTimer = (valueInSec: number = initValue) => {
-    setTimerValue(valueInSec);
-  };
+  const resetTimer = useCallback(
+    (valueInSec: number = initValue) => {
+      setTimerValue(valueInSec);
+    },
+    [initValue]
+  );
 
   const timeString = getTimerTimeString(timerValue);
   console.log(timerValue);
