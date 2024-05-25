@@ -7,10 +7,8 @@ export const useTimerTick = (initValue: number) => {
 
   const [isRunning, setIsRunning] = useState(false);
   const delay = isRunning ? 1000 : null;
-  console.log(delay);
 
   const tickFunc = () => {
-    console.log("tick");
     setTimerValue((prev) => prev - 1);
   };
 
@@ -38,12 +36,9 @@ export const useTimerTick = (initValue: number) => {
     [initValue]
   );
 
-  const timeString = getTimerTimeString(timerValue);
-  console.log(timerValue);
-
   return {
     isFinished: timerValue < 0,
-    timeString: timeString,
+    timeString: getTimerTimeString(timerValue),
     startTimer,
     pauseTimer,
     resetTimer,

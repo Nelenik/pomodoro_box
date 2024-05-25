@@ -19,7 +19,6 @@ export const useWorkerInterval = (
       workerRef.current.terminate();
     }
     if (active && delay !== null) {
-      console.log("worker interval");
       const code = `
       setInterval(() => {
         postMessage("");
@@ -28,7 +27,13 @@ export const useWorkerInterval = (
       const blob = new Blob([code], { type: "application/javascript" });
       workerRef.current = new Worker(URL.createObjectURL(blob));
 
-      workerRef.current.addEventListener("message", savedCallback.current);
+      workerRef.current.addEventListener("message", () => {
+        try {
+          savedCallback.current();
+        } catch (error) {
+          console.error("Error in worker interval callback:", error);
+        }
+      });
       return () => {
         workerRef.current?.terminate();
         workerRef.current = undefined;

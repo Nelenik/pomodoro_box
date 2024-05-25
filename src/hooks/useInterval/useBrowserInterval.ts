@@ -14,11 +14,14 @@ export const useBrowserInterval = (
 
   useEffect(() => {
     function tick() {
-      savedCallback.current();
+      try {
+        savedCallback.current();
+      } catch (error) {
+        console.error("Error in browser interval callback:", error);
+      }
     }
 
     if (active && delay !== null) {
-      console.log("browser interval");
       const id = setInterval(tick, delay);
       return () => clearInterval(id);
     }
