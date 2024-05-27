@@ -43,7 +43,7 @@
 :root[data-theme="inverted"] {
   --pallete_accent1: #23c1dd;
   --pallete_accent2: #594cad;
-  --pallete_bg: #000000;
+  --pallete_bg: #171515;
   --pallete_text: #ffffff;
   --pallete_blocks: #3b3b3b;
 
@@ -60,8 +60,10 @@
 }
 
 
+
 html {
   box-sizing: border-box;
+  scrollbar-gutter: stable;
 }
 
 *,
@@ -88,6 +90,10 @@ body {
   font-family: "Noto Sans Display", sans-serif;
   font-weight: 400;
   background-color: var(--pallete_bg);
+}
+
+.body-lock {
+  overflow: hidden;
 }
 
 .mg-reset {

@@ -3,13 +3,17 @@
   padding: 60px 40px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 30px;
 
-  &__Theme {
+  &__Theme,
+  &__Notifications {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-bottom: 30px;
+  }
+
+  &__Notifications {
+    margin-bottom: 20px;
   }
 
   &__Name {
@@ -29,7 +33,7 @@
   }
 }
 
-.Theme {
+.Switcher {
   &__FieldWrap {
     position: relative;
     padding-left: 40px;

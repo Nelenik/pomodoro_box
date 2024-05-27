@@ -6,6 +6,12 @@ import { useTomatoMetriks } from "../../hooks/useTomatoMetriks";
 import { useDispatchTasks } from "@/reducers_providers/TasksListProvider";
 import { Task } from "@/types";
 import { getTimerTimeString } from "@/utils/getTimeString";
+//audio
+import WorkFinishSound from "assets/bell.mp3";
+import BreakFinishSound from "assets/bell-break-end.mp3";
+
+const workSound = new Audio(WorkFinishSound);
+const breakSound = new Audio(BreakFinishSound);
 
 //timer component
 interface TimerState {
@@ -39,7 +45,13 @@ export const useTomatoTimer = (currentTask: Task) => {
   const { todayMetriks, dispatchMetriks } = useTomatoMetriks();
   const dispatchTasks = useDispatchTasks();
   const { appSettings } = useSettings();
-  const { tomatoDuration, shortBreak, longBreak } = appSettings;
+  const {
+    tomatoDuration,
+    shortBreak,
+    longBreak,
+    audioSignal,
+    workingPeriodsCount,
+  } = appSettings;
 
   //tomato duration = workDurationRef.current, if it is changed, this value become default for the entire cycle(one cycle ends after a long break)
   const workDurationRef = useRef(tomatoDuration);
@@ -181,6 +193,8 @@ export const useTomatoTimer = (currentTask: Task) => {
       switch (timerType) {
         case "workTimer":
           {
+            audioSignal && workSound.play();
+
             const newTomatoesCount = currentTask.tomatoesCount - 1;
             const actualTomatoesCount =
               newTomatoesCount <= 0 ? 0 : newTomatoesCount;
@@ -206,7 +220,7 @@ export const useTomatoTimer = (currentTask: Task) => {
               });
               //switch break timer depending on timer cycle
               ++timerCycleRef.current;
-              if (timerCycleRef.current >= appSettings.workingPeriodsCount) {
+              if (timerCycleRef.current >= workingPeriodsCount) {
                 switchTimerType("longBreakTimer", longBreak);
               } else {
                 switchTimerType("shortBreakTimer", shortBreak);
@@ -217,12 +231,14 @@ export const useTomatoTimer = (currentTask: Task) => {
           break;
         case "shortBreakTimer":
           {
+            audioSignal && breakSound.play();
             switchTimerType("workTimer", workDurationRef.current);
             handleStart();
           }
           break;
         case "longBreakTimer":
           {
+            audioSignal && breakSound.play();
             handleResetToDefault();
           }
           break;

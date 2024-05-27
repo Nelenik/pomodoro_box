@@ -15,7 +15,7 @@ const defaultSettings: Settings = {
   tomatoDuration: 10 * 60,
   longBreak: 2 * 60,
   shortBreak: 1 * 60,
-  turnOnNotifications: true,
+  audioSignal: true,
   workingPeriodsCount: 4
 }
 

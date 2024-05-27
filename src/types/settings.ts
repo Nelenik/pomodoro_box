@@ -3,6 +3,6 @@ export interface Settings {
   tomatoDuration: number;
   longBreak: number;
   shortBreak: number;
-  turnOnNotifications: boolean;
+  audioSignal: boolean;
   workingPeriodsCount: number;
 }

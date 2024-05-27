@@ -36,7 +36,7 @@ export const Modal: FC<ModalProps> = ({ children, isOpen = false, onClose, block
         return () => {
             clearTimeout(timeout)
         }
-    }, [isOpen])
+    }, [isOpen, animTime, classes.open])
 
     //focus trap  with inert attribute
     useEffect(() => {
@@ -44,10 +44,13 @@ export const Modal: FC<ModalProps> = ({ children, isOpen = false, onClose, block
         const rootEl = document.getElementById('root')
         if (isOpen && rootEl) {
             rootEl.setAttribute('inert', '')
+            document.body.classList.add('body-lock')
         }
         return () => {
             if (rootEl) {
-                rootEl.removeAttribute('inert')
+                rootEl.removeAttribute('inert');
+                document.body.classList.remove('body-lock')
+
             }
         }
     }, [isOpen])

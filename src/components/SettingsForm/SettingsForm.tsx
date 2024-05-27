@@ -7,14 +7,16 @@ import { PlaceholderField } from '../PlaceholderField';
 export const SettingsForm = () => {
     const { appSettings, setAppSettings } = useSettings()
 
-    const { theme, tomatoDuration, longBreak, shortBreak } = appSettings
+    const { theme, tomatoDuration, longBreak, shortBreak, audioSignal, workingPeriodsCount } = appSettings
 
     const { register, errors, formState } = useFormValidation(
         {
             theme: theme,
             tomatoDuration: tomatoDuration / 60,
             longBreak: longBreak / 60,
-            shortBreak: shortBreak / 60
+            shortBreak: shortBreak / 60,
+            audioSignal: '',
+            workingPeriodsCount: workingPeriodsCount
         }, "blur change");
 
 
@@ -27,24 +29,36 @@ export const SettingsForm = () => {
             setAppSettings((prev) => ({ ...prev, theme: e.target.value }))
         }, 400)
     }
-
+    //notifications checkbox registration
+    const { name: audioName, onChange: onAudioChange } = register('audioSignal', {})
+    const handleAudioChange = (e: ChangeEvent<FieldType>) => {
+        if (e.target instanceof HTMLInputElement) {
+            const { checked } = e.target
+            onAudioChange(e);
+            setTimeout(() => {
+                setAppSettings((prev) => ({ ...prev, audioSignal: checked }))
+            })
+        }
+    }
+    // inputs with work and break duration
     const handleInputBlur = (e: ChangeEvent<FieldType>) => {
         const { name, value } = e.target
-        const valueToSec = parseInt(value) * 60
+        const newValue = name === 'workingPeriodsCount' ? parseInt(value) : parseInt(value) * 60
+        // const valueToSec = parseInt(value) * 60
         if (formState === 'valid') {
-            setAppSettings((prev) => ({ ...prev, [name]: valueToSec }))
+            setAppSettings((prev) => ({ ...prev, [name]: newValue }))
         }
     }
 
     return (
         <form className='SettingsForm' autoComplete='off'>
-            <div className="SettingsForm__Theme Theme">
+            <div className="SettingsForm__Theme Switcher">
                 <h3 className="SettingsForm__Name mg-reset">
                     Тема
                 </h3>
-                <label className='Theme__FieldWrap'>
+                <label className='Switcher__FieldWrap'>
                     <input
-                        className='Theme__Field'
+                        className='Switcher__Field'
                         type="radio"
                         checked={theme === 'default'}
                         value="default"
@@ -53,18 +67,47 @@ export const SettingsForm = () => {
                     />
                     <span>Светлая</span>
                 </label>
-                <label className='Theme__FieldWrap'>
+                <label className='Switcher__FieldWrap'>
                     <input
-                        className='Theme__Field'
+                        className='Switcher__Field'
                         type="radio"
                         checked={theme === 'inverted'}
                         value="inverted"
                         name={radioName}
                         onChange={handleRadioChange}
                     />
-                    <span>Темная</span>
+                    <span>Инверсия</span>
                 </label>
             </div>
+            <div className="SettingsForm__Notifications Switcher">
+                <h3 className="SettingsForm__Name mg-reset">
+                    Уведомления
+                </h3>
+                <label className='Switcher__FieldWrap'>
+                    <input
+                        className='Switcher__Field'
+                        type="checkbox"
+                        checked={audioSignal}
+                        name={audioName}
+                        onChange={handleAudioChange}
+                    />
+                    <span>Аудио-сигнал</span>
+                </label>
+            </div>
+            <PlaceholderField
+                label='Частота длинных перерывов'
+                errors={errors}
+                onBlurProp={handleInputBlur}
+                inputProps={{
+                    type: 'text',
+                    register,
+                    fieldName: 'workingPeriodsCount',
+                    rules: {
+                        required: { value: true, message: 'Обязательное поле' },
+                        pattern: { value: /^\d+$/g, message: "Введите цифры" },
+                        min: { value: 2, message: `Введите значение больше 2`, },
+                    }
+                }} />
             <PlaceholderField
                 label='Время одного помидора'
                 errors={errors}

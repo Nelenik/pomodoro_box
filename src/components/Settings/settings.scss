@@ -25,6 +25,7 @@
   width: 100vw;
   height: 100vh;
 
+
   &--closed {
     visibility: hidden;
     transition: visibility 0.5s linear;
@@ -48,6 +49,8 @@
     top: 0;
     right: 0;
     bottom: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
     width: min(100%, 500px);
     background-color: var(--pallete_bg);
 
