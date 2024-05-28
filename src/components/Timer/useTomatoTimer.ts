@@ -35,7 +35,7 @@ const timerReducer = (
     case "PAUSE":
       return { ...state, isStarted: true, isPaused: true };
     case "RESET":
-      return { isStarted: false, isPaused: false };
+      return { ...state, isStarted: false, isPaused: false };
     default:
       return state;
   }
@@ -184,6 +184,7 @@ export const useTomatoTimer = (currentTask: Task) => {
   //handle  work time increasing
   const handleIncreaseTime = () => {
     workDurationRef.current += INCREASE_VALUE;
+    console.log(workDurationRef.current);
     resetTimer(workDurationRef.current);
   };
 
