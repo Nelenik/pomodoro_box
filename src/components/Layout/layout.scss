@@ -11,14 +11,28 @@
   }
 
   &__Logo {
-    width: 205px;
-    height: 40px;
-    margin-right: auto;
+    margin-right: 20px;
+
+    svg {
+      width: 205px;
+      height: 40px;
+
+      @media (max-width: 576px) {
+        width: 150px;
+        height: 30px;
+      }
+    }
+
   }
 }
 
 .Nav {
+  margin-left: auto;
   margin-right: 60px;
+
+  @media (max-width:920px) {
+    margin-right: 15px;
+  }
 
   &__Link {
     display: inline-flex;
@@ -26,8 +40,22 @@
     gap: 5px;
     color: var(--pallete_accent1);
 
+    @media (max-width: 476px) {
+      font-size: 0;
+      padding: 5px;
+      gap: 0;
+    }
+
     &:not(:last-child) {
       margin-right: 25px;
+
+      @media (max-width:576px) {
+        margin-right: 10px;
+      }
+
+      @media (max-width: 476px) {
+        margin: 0;
+      }
     }
 
     svg {

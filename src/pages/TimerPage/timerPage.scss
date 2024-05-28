@@ -2,11 +2,20 @@
   padding-top: 100px;
   padding-bottom: 300px;
   display: grid;
-  grid-template-columns: 42.734375% 57.265625%;
+  grid-template-columns: calc(42.734375% - 9px) calc(57.265625% - 9px);
   row-gap: 25px;
   column-gap: 18px;
 
-  // &__Descr {}
+  @media (max-width: 920px) {
+    padding-top: 50px;
+    padding-bottom: 100px;
+  }
+
+  &__Descr {
+    @media (max-width:920px) {
+      grid-column: span 2;
+    }
+  }
 
   &__Timer {
     grid-row: 1/4;
@@ -15,6 +24,11 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+
+    @media (max-width:920px) {
+      grid-column: 1/3;
+      grid-row: 2/3;
+    }
 
     .SpeakingTomato {
       width: 70%;
@@ -25,12 +39,28 @@
   &__Form {
     grid-row: 2/3;
     grid-column: 1/2;
+
+    @media (max-width: 920px) {
+      grid-row: 3/4;
+    }
+
+    @media (max-width: 576px) {
+      grid-column: span 2;
+    }
   }
 
   &__Tasks {
     grid-row: 3/4;
     grid-column: 1/2;
 
+    @media (max-width:920px) {
+      grid-column: 2/3;
+    }
+
+    @media (max-width: 576px) {
+      grid-row: 4/5;
+      grid-column: span 2;
+    }
   }
 
   &__List {

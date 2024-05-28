@@ -10,6 +10,7 @@ import { getTimerTimeString } from "@/utils/getTimeString";
 import WorkFinishSound from "assets/bell.mp3";
 import BreakFinishSound from "assets/bell-break-end.mp3";
 
+// audio intstances
 const workSound = new Audio(WorkFinishSound);
 const breakSound = new Audio(BreakFinishSound);
 
@@ -23,7 +24,6 @@ type TimerType = "workTimer" | "shortBreakTimer" | "longBreakTimer";
 
 const INCREASE_VALUE = 5;
 const ONDONE_ANIM_TIME = 1600;
-// const WORKING_PERIODS_COUNT = 4;
 
 const timerReducer = (
   state: TimerState,

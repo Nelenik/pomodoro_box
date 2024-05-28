@@ -1,8 +1,10 @@
 @import '../node_modules/normalize.css/normalize.css';
 
 :root {
-  --font24: clamp(1rem, 2.8vw - 0.7rem, 1.5rem);
-  --font64: clamp(2rem, 11.1vw - 4.9rem, 4rem);
+  // --font24: clamp(1rem, 2.8vw - 0.7rem, 1.5rem);
+  --font24: 1.5rem;
+  --font64: clamp(2rem, -3.111rem + 8.889vw, 4rem);
+  ;
 
   --accent1_disabled: hsl(from var(--pallete_accent1) h s 70%);
   --accent1_hover: hsl(from var(--pallete_accent1) h s 77%);
@@ -70,6 +72,7 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
+
 }
 
 a {

@@ -5,12 +5,15 @@
   align-items: center;
   justify-content: center;
   min-height: 180px;
+  height: 100%;
   width: 100%;
   background-color: var(--greyF4);
   ;
 
   &__Pic {
-    margin-bottom: auto;
+    // margin-top: auto;
+    // margin-bottom: auto;
+    margin-block: auto;
     padding: 25px;
     display: flex;
     align-items: center;
@@ -19,12 +22,13 @@
     span {
       color: var(--grey99);
       font-weight: 700;
-      font-size: 1.5rem;
+      font-size: var(--font24);
       line-height: 1.375;
     }
   }
 
   &__Footer {
+    // --font24: clamp(1rem, 0.163rem + 2.326vw, 1.5rem);
     width: 100%;
     padding: 9px;
     color: var(--pallete_bg);

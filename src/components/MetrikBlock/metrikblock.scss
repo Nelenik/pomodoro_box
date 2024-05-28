@@ -23,8 +23,13 @@
   }
 
   &__Value {
+
     font-size: var(--font64);
     line-height: 100%;
+
+    @media (max-width:920px) {
+      --font64: clamp(2.5rem, -0.012rem + 6.977vw, 4rem);
+    }
   }
 
   &__Name {

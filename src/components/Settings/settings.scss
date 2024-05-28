@@ -9,6 +9,11 @@
     left: 50%;
     translate: -50% -50%;
     fill: var(--pallete_accent1);
+
+    @media (max-width:576px) {
+      width: 19px;
+      height: 19px;
+    }
   }
 
   &--active {

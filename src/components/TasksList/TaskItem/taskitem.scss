@@ -1,6 +1,6 @@
 .TaskItem {
   position: relative;
-  padding: 15px 10px;
+  padding: 15px 0 15px 10px;
   display: flex;
   align-items: center;
   opacity: 1;
@@ -192,6 +192,11 @@ li:has(> .TaskItem--done) {
       translate: -50%;
       width: 12px;
       height: var(--border-width);
+
+      @media (max-width:920px) {
+        left: 100%;
+        translate: -100%;
+      }
     }
 
     &::after {
@@ -207,6 +212,16 @@ li:has(> .TaskItem--done) {
       background-color: var(--pallete_bg);
       border: solid var(--pallete_blocks);
       border-width: var(--border-width) 0 0 var(--border-width);
+
+      @media (max-width:920px) {
+        left: 100%;
+        translate: -180% 50%;
+      }
+    }
+
+    @media (max-width: 920px) {
+      left: 100%;
+      translate: -100%;
     }
   }
 

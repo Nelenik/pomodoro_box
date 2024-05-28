@@ -7,6 +7,11 @@
   // background-color: var(--pallete_blocks);
   transition: background-color 0.4s ease;
 
+  @media (max-width:576px) {
+    width: clamp(1.875rem, 0.313rem + 7.813vw, 3.125rem);
+    height: clamp(1.875rem, 0.313rem + 7.813vw, 3.125rem);
+  }
+
   &--green {
     background-color: var(--pallete_accent2);
 

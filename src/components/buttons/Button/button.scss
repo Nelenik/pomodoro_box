@@ -6,6 +6,11 @@
   background-color: var(--pallete_bg);
   transition: color 0.4s ease, background-color 0.4s ease;
 
+  @media (max-width:576px) {
+    padding: 10px 25px;
+    font-size: 0.8rem;
+  }
+
   &--green {
     background-color: var(--pallete_accent2);
     border-color: var(--pallete_accent2);
