@@ -1,14 +1,14 @@
 .mainBtn {
   padding: 19px 50px;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: var(--font16);
   border: 1px solid;
   background-color: var(--pallete_bg);
   transition: color 0.4s ease, background-color 0.4s ease;
 
   @media (max-width:576px) {
     padding: 10px 25px;
-    font-size: 0.8rem;
+    // font-size: 0.8rem;
   }
 
   &--green {

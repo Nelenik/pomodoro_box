@@ -20,7 +20,7 @@
     background-color: var(--pallete_blocks);
     color: var(--pallete_bg);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: var(--font16);
     line-height: 100%;
 
     @media (max-width:576px) {

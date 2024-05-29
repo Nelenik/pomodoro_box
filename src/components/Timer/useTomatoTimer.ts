@@ -52,7 +52,7 @@ export const useTomatoTimer = (currentTask: Task) => {
     audioSignal,
     workingPeriodsCount,
   } = appSettings;
-
+  console.log("rerender");
   //tomato duration = workDurationRef.current, if it is changed, this value become default for the entire cycle(one cycle ends after a long break)
   const workDurationRef = useRef(tomatoDuration);
 

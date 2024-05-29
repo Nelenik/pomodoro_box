@@ -79,7 +79,7 @@
 
   &__Title {
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: var(--font24);
     line-height: 1.375;
   }
 
@@ -92,7 +92,7 @@
 
   &__Item {
     font-weight: 400;
-    font-size: 1rem;
+    font-size: var(--font16);
     line-height: 2.0625;
 
     &::marker {
