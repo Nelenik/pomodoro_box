@@ -12,9 +12,9 @@ interface SettingsProviderProps {
 
 const defaultSettings: Settings = {
   theme: 'default',
-  tomatoDuration: 10 * 60,
-  longBreak: 2 * 60,
-  shortBreak: 1 * 60,
+  tomatoDuration: 25 * 60,
+  longBreak: 15 * 60,
+  shortBreak: 5 * 60,
   audioSignal: true,
   workingPeriodsCount: 4
 }
