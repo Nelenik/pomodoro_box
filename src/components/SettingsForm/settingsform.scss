@@ -25,6 +25,7 @@
 
   .Field__Placeholder {
     font-weight: 600;
+    left: 0;
   }
 
   .Field__Error {
@@ -36,10 +37,12 @@
 .Switcher {
   &__FieldWrap {
     position: relative;
-    padding-left: 40px;
+    // padding-left: 40px;
     cursor: pointer;
 
     span {
+      display: inline-block;
+      width: 100%;
       position: relative;
       font-weight: 300;
       font-size: var(--font16);
@@ -49,7 +52,7 @@
       &::before,
       &::after {
         position: absolute;
-        right: 110%;
+        right: 0%;
         top: 50%;
 
         content: '';

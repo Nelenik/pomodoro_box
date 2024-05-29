@@ -22,7 +22,7 @@ interface TimerState {
 
 type TimerType = "workTimer" | "shortBreakTimer" | "longBreakTimer";
 
-const INCREASE_VALUE = 5;
+const INCREASE_VALUE = 60;
 const ONDONE_ANIM_TIME = 1600;
 
 const timerReducer = (
@@ -52,16 +52,13 @@ export const useTomatoTimer = (currentTask: Task) => {
     audioSignal,
     workingPeriodsCount,
   } = appSettings;
-  console.log("rerender");
-  //tomato duration = workDurationRef.current, if it is changed, this value become default for the entire cycle(one cycle ends after a long break)
-  const workDurationRef = useRef(tomatoDuration);
 
   const timerCycleRef = useRef<number>(0);
   //link to active task element
   const activeTaskElRef = useActiveTaskContext();
 
-  const { isFinished, timerValue, startTimer, pauseTimer, resetTimer } =
-    useTimerTick(workDurationRef.current);
+  const { timerValue, startTimer, pauseTimer, resetTimer } =
+    useTimerTick(tomatoDuration);
 
   const [timerType, setTimerType] = useState<TimerType>("workTimer");
 
@@ -69,14 +66,12 @@ export const useTomatoTimer = (currentTask: Task) => {
     isStarted: false,
     isPaused: false,
   });
-
-  // rewrite workDurationRef if settings changes
+  //restart timer on tomatoDuration changing
   useEffect(() => {
-    workDurationRef.current = tomatoDuration;
-    if (timerType === "workTimer") {
-      resetTimer(workDurationRef.current);
-    }
-  }, [tomatoDuration, resetTimer, timerType]);
+    resetTimer(tomatoDuration);
+  }, [tomatoDuration, resetTimer]);
+
+  const isFinished = timerValue < 0;
 
   //initial timestamps for time measuring
   const pauseInitTimestamp = useRef(0);
@@ -122,7 +117,7 @@ export const useTomatoTimer = (currentTask: Task) => {
   //handle skipping the break
   const handleSkip = () => {
     pauseTimer();
-    switchTimerType("workTimer", workDurationRef.current);
+    switchTimerType("workTimer", tomatoDuration);
     handleStart();
   };
 
@@ -137,7 +132,7 @@ export const useTomatoTimer = (currentTask: Task) => {
     });
     switchTimerType("workTimer", tomatoDuration);
     timerCycleRef.current = 0;
-    workDurationRef.current = tomatoDuration;
+    // workDurationRef.current = tomatoDuration;
   }, [switchTimerType, tomatoDuration, pauseTimer, dispatchMetriks]);
 
   //mark a task as done, handler
@@ -159,7 +154,7 @@ export const useTomatoTimer = (currentTask: Task) => {
         id: currentTask.id,
         toChange: {
           tomatoesCount: 0,
-          timeOnTask: currentTask.timeOnTask + workDurationRef.current,
+          timeOnTask: currentTask.timeOnTask + tomatoDuration,
         },
       });
     }, ONDONE_ANIM_TIME);
@@ -170,6 +165,7 @@ export const useTomatoTimer = (currentTask: Task) => {
     dispatchMetriks,
     currentTask,
     dispatchTasks,
+    tomatoDuration,
   ]);
 
   //handle timer stop
@@ -183,9 +179,7 @@ export const useTomatoTimer = (currentTask: Task) => {
 
   //handle  work time increasing
   const handleIncreaseTime = () => {
-    workDurationRef.current += INCREASE_VALUE;
-    console.log(workDurationRef.current);
-    resetTimer(workDurationRef.current);
+    resetTimer(timerValue + INCREASE_VALUE);
   };
 
   //switch timer type, effect
@@ -216,7 +210,7 @@ export const useTomatoTimer = (currentTask: Task) => {
                 id: currentTask.id,
                 toChange: {
                   tomatoesCount: actualTomatoesCount,
-                  timeOnTask: currentTask.timeOnTask + workDurationRef.current,
+                  timeOnTask: currentTask.timeOnTask + tomatoDuration,
                 },
               });
               //switch break timer depending on timer cycle
@@ -233,7 +227,7 @@ export const useTomatoTimer = (currentTask: Task) => {
         case "shortBreakTimer":
           {
             audioSignal && breakSound.play();
-            switchTimerType("workTimer", workDurationRef.current);
+            switchTimerType("workTimer", tomatoDuration);
             handleStart();
           }
           break;

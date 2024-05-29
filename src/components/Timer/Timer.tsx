@@ -125,7 +125,7 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
                     {timeString}
                 </div>
                 <RoundBtn
-                    {...isStarted && { view: 'inactive' }}
+                    // {...isStarted && { view: 'inactive' }}
                     handler={handleIncreaseTime}
                 />
             </div>

@@ -37,7 +37,7 @@ export const useTimerTick = (initValue: number) => {
   );
 
   return {
-    isFinished: timerValue < 0,
+    // isFinished: timerValue < 0,
     timerValue: timerValue,
     startTimer,
     pauseTimer,

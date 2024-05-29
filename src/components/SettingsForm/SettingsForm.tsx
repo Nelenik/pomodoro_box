@@ -76,7 +76,7 @@ export const SettingsForm = () => {
                         name={radioName}
                         onChange={handleRadioChange}
                     />
-                    <span>Инверсия</span>
+                    <span>Темная(инверсия)</span>
                 </label>
             </div>
             <div className="SettingsForm__Notifications Switcher">
