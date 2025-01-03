@@ -24,22 +24,22 @@ export const TimerPage = () => {
         <ActiveTaskProvider>
             <div className='container TimerPage'>
                 <div className="TimerPage__Descr Descr">
-                    <h1 className='mg-reset Descr__Title'>Ура! Теперь можно начать работать:</h1>
+                    <h1 className='mg-reset Descr__Title'>Hooray! Now you can start working:</h1>
                     <ul className='Descr__List'>
                         <li className='Descr__Item'>
-                            Выберите категорию и напишите название текущей задачи
+                            Write down the name of the current task
                         </li>
                         <li className='Descr__Item'>
-                            Запустите таймер («помидор»)
+                            Start the timer (“pomodoro”)
                         </li>
                         <li className='Descr__Item'>
-                            Работайте пока «помидор» не прозвонит
+                            Work until the “pomodoro” rings
                         </li>
                         <li className='Descr__Item'>
-                            Сделайте короткий перерыв (3-5 минут)
+                            Take a short break (3-5 minutes)
                         </li>
                         <li className='Descr__Item'>
-                            Продолжайте работать «помидор» за «помидором», пока задача не будут выполнена. Каждые 4 «помидора» делайте длинный перерыв (15-30 минут).
+                            Keep working “pomodoro” by “pomodoro” until the task is completed. Every 4 “pomodoros,” take a longer break (15-30 minutes)
                         </li>
                     </ul>
                 </div>

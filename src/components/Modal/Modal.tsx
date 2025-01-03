@@ -58,7 +58,7 @@ export const Modal: FC<ModalProps> = ({ children, isOpen = false, onClose, block
     const handleModalClose = useCallback(() => {
         modalRef.current?.classList.remove(classes.open);
         setTimeout(onClose, animTime)
-    }, [onClose])
+    }, [onClose, animTime, classes.open])
 
     //close on escape
     useEffect(() => {

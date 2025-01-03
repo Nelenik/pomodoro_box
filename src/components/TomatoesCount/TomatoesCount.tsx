@@ -20,7 +20,7 @@ export const TomatoesCount: FC<TomatoesCountProps> = ({ tomatoesCount }) => {
                         <span>x {tomatoesCount}</span>
                     </div>
                     <div className="TomatoesCount__Footer">
-                        {`${tomatoesCount} ${getWordEndigs(tomatoesCount, ['помидор', 'помидора', 'помидоров'])}`}
+                        {`${tomatoesCount} ${getWordEndigs(tomatoesCount, ['pomodoro', 'pomodoros', 'pomodoros'])}`}
                     </div>
                 </>}
         </div>

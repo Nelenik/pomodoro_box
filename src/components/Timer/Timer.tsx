@@ -60,44 +60,44 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
         switch (true) {
             case isWorkTimer && isPaused: {
                 return getBtns(
-                    { inner: 'Продолжить', handler: handleStart },
-                    { view: 'red', inner: 'Сделано', handler: handleDone }
+                    { inner: 'Resume', handler: handleStart },
+                    { view: 'red', inner: 'Done', handler: handleDone }
                 )
             }
             case isWorkTimer && isStarted: {
                 return getBtns(
-                    { inner: 'Пауза', handler: handlePause },
-                    { view: 'red', inner: "Стоп", handler: handleStop }
+                    { inner: 'Break', handler: handlePause },
+                    { view: 'red', inner: "Stop", handler: handleStop }
                 )
             }
             case isWorkTimer: {
                 return getBtns(
-                    { inner: 'Старт', handler: handleStart },
-                    { view: 'inactive', inner: 'Стоп' }
+                    { inner: 'Start', handler: handleStart },
+                    { view: 'inactive', inner: 'Stop' }
                 )
             }
             case isShortBreakTimer && isPaused: {
                 return getBtns(
-                    { inner: 'Продолжить', handler: handleStart },
-                    { view: 'red', inner: 'Пропустить', handler: handleSkip }
+                    { inner: 'Resume', handler: handleStart },
+                    { view: 'red', inner: 'Skip', handler: handleSkip }
                 )
             }
             case isShortBreakTimer && isStarted: {
                 return getBtns(
-                    { inner: 'Пауза', handler: handlePause },
-                    { view: 'red', inner: 'Пропустить', handler: handleSkip }
+                    { inner: 'Break', handler: handlePause },
+                    { view: 'red', inner: 'Skip', handler: handleSkip }
                 )
             }
             case isLongBreakTimer && isPaused: {
                 return getBtns(
-                    { inner: 'Продолжить', handler: handleStart },
-                    { view: 'red', inner: 'Пропустить', handler: handleResetToDefault }
+                    { inner: 'Resume', handler: handleStart },
+                    { view: 'red', inner: 'Skip', handler: handleResetToDefault }
                 )
             }
             case isLongBreakTimer && isStarted: {
                 return getBtns(
-                    { inner: 'Пауза', handler: handlePause },
-                    { view: 'red', inner: 'Пропустить', handler: handleResetToDefault }
+                    { inner: 'Pause', handler: handlePause },
+                    { view: 'red', inner: 'Skip', handler: handleResetToDefault }
                 )
             }
         }
@@ -117,7 +117,7 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
                     {currentTask.task}
                 </h2>
                 <span className="Timer__TomatoCounter">
-                    Помидор {getExecActionNumber(todayTomatoNumber)}
+                    Pomodoro {getExecActionNumber(todayTomatoNumber)}
                 </span>
             </div>
             <div className="Timer__TimeBlock">
@@ -130,7 +130,7 @@ export const Timer: FC<TimerProps> = ({ currentTask }) => {
                 />
             </div>
             <p className="Timer__Descr">
-                <span>Задача {getExecActionNumber(todayTaskNumber)} - </span>
+                <span>Task {getExecActionNumber(todayTaskNumber)} - </span>
                 {currentTask.task}
             </p>
             <div className="Timer__Controls">

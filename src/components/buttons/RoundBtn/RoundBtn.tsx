@@ -15,6 +15,6 @@ export const RoundBtn: FC<IRoundBtnProps> = ({ handler = NOOP, view = 'green' })
     return (
         <button
             onClick={handler}
-            className={`btn-reset roundBtn ${viewParams[view]}`} aria-label='Кнопка увеличить время помидорки'></button>
+            className={`btn-reset roundBtn ${viewParams[view]}`} aria-label='Increase pomodoro time button'></button>
     )
 }

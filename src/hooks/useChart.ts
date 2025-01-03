@@ -12,7 +12,7 @@ export const useChart = (
   activeDay: number,
   setActiveDay: React.Dispatch<React.SetStateAction<number>>
 ) => {
-  const labels = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+  const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   const colors = activeWeek.map(([day, dayData]) => {
     const { weekDay } = getDayNum(day);

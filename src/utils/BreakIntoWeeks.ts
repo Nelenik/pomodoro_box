@@ -30,7 +30,7 @@ class WeeksInterval {
   static intervals(weeksCount: number): Collection {
     const now: Date = new Date();
     let startPoint: Date = new Date(now.toDateString());
-    let monthDay: number = startPoint.getDate();
+    const monthDay: number = startPoint.getDate();
     let weekDay: number = startPoint.getDay();
     if (weekDay === 0) weekDay = 7;
     //move to next monday
@@ -85,13 +85,13 @@ export class BreakIntoWeeks {
 export const getDayName = (day: number): string => {
   if (day === 0) day = 7;
   const days = [
-    "Понедельник",
-    "Вторник",
-    "Среда",
-    "Четверг",
-    "Пятница",
-    "Суббота",
-    "Воскресенье",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursdayг",
+    "Friday",
+    "Saturday",
+    "Sunday",
   ];
   return days[day - 1];
 };

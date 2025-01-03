@@ -11,8 +11,12 @@ const getTimePartsFromSec = (
 
 export const getTasksTimeString = (seconds: number = 0): string => {
   const { hours, min } = getTimePartsFromSec(seconds);
-  const hourDefinition: string = getWordEndigs(hours, ["час", "часа", "часов"]);
-  return `${hours} ${hourDefinition} ${min} мин`;
+  const hourDefinition: string = getWordEndigs(hours, [
+    "hour",
+    "hours",
+    "hours",
+  ]);
+  return `${hours} ${hourDefinition} ${min} min`;
 };
 
 export const getTimerTimeString = (seconds: number): string => {
@@ -26,13 +30,17 @@ export const getTotalTimeString = (seconds: number): string => {
   const { hours, min } = getTimePartsFromSec(seconds);
   const areHours = hours > 0;
   const hoursPart = areHours
-    ? `${hours} ${getWordEndigs(hours, ["часа", "часов", "часов"])}`
+    ? `${hours} ${getWordEndigs(hours, ["hour", "hours", "hours"])}`
     : "";
-  const minPart = `${min} ${getWordEndigs(min, ["минуты", "минут", "минут"])}`;
+  const minPart = `${min} ${getWordEndigs(min, [
+    "minute",
+    "minutes",
+    "minutes",
+  ])}`;
   return hoursPart + " " + minPart;
 };
 
 export const getPauseTimeString = (seconds: number): string => {
   const { hours, min } = getTimePartsFromSec(seconds);
-  return `${hours > 0 ? `${hours}ч ` : ""}${min}м`;
+  return `${hours > 0 ? `${hours}h ` : ""}${min}m`;
 };

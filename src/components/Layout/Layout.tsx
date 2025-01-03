@@ -15,10 +15,10 @@ export const Layout = () => {
                     <Link to={'/'} className='Header__Logo'><LogoSvg /></Link>
                     <nav className='Nav'>
                         <NavLink className='Nav__Link' to={'/'}>
-                            <TimerSvg />Таймер
+                            <TimerSvg />Timer
                         </NavLink>
                         <NavLink className='Nav__Link' to={'statistics'}>
-                            <StatSvg />Статистика
+                            <StatSvg />Statistics
                         </NavLink>
                     </nav>
                     <div className='AppSettings'>

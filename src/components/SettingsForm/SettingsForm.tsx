@@ -54,7 +54,7 @@ export const SettingsForm = () => {
         <form className='SettingsForm' autoComplete='off'>
             <div className="SettingsForm__Theme Switcher">
                 <h3 className="SettingsForm__Name mg-reset">
-                    Тема
+                    Theme
                 </h3>
                 <label className='Switcher__FieldWrap'>
                     <input
@@ -65,7 +65,7 @@ export const SettingsForm = () => {
                         name={radioName}
                         onChange={handleRadioChange}
                     />
-                    <span>Светлая</span>
+                    <span>Light</span>
                 </label>
                 <label className='Switcher__FieldWrap'>
                     <input
@@ -76,12 +76,12 @@ export const SettingsForm = () => {
                         name={radioName}
                         onChange={handleRadioChange}
                     />
-                    <span>Темная(инверсия)</span>
+                    <span>Dark(inversion)</span>
                 </label>
             </div>
             <div className="SettingsForm__Notifications Switcher">
                 <h3 className="SettingsForm__Name mg-reset">
-                    Уведомления
+                    Notifications
                 </h3>
                 <label className='Switcher__FieldWrap'>
                     <input
@@ -91,11 +91,11 @@ export const SettingsForm = () => {
                         name={audioName}
                         onChange={handleAudioChange}
                     />
-                    <span>Аудио-сигнал</span>
+                    <span>Enable audio</span>
                 </label>
             </div>
             <PlaceholderField
-                label='Частота длинных перерывов'
+                label='Frequency of long breaks'
                 errors={errors}
                 onBlurProp={handleInputBlur}
                 inputProps={{
@@ -103,13 +103,13 @@ export const SettingsForm = () => {
                     register,
                     fieldName: 'workingPeriodsCount',
                     rules: {
-                        required: { value: true, message: 'Обязательное поле' },
-                        pattern: { value: /^\d+$/g, message: "Введите цифры" },
-                        min: { value: 2, message: `Введите значение больше 2`, },
+                        required: { value: true, message: 'Required field' },
+                        pattern: { value: /^\d+$/g, message: "Enter the numbers" },
+                        min: { value: 2, message: `Enter a value greater than 2`, },
                     }
                 }} />
             <PlaceholderField
-                label='Время одного помидора'
+                label='Pomodoro duration'
                 errors={errors}
                 onBlurProp={handleInputBlur}
                 inputProps={{
@@ -117,13 +117,13 @@ export const SettingsForm = () => {
                     register,
                     fieldName: 'tomatoDuration',
                     rules: {
-                        required: { value: true, message: 'Обязательное поле' },
-                        pattern: { value: /^\d+$/g, message: "Введите цифры" },
-                        min: { value: 1, message: `Введите значение больше 1`, },
+                        required: { value: true, message: 'Required field' },
+                        pattern: { value: /^\d+$/g, message: "Enter the numbers" },
+                        min: { value: 1, message: `Enter a value greater than 1`, },
                     }
                 }} />
             <PlaceholderField
-                label='Время короткого перерыва'
+                label='Short break duration'
                 errors={errors}
                 onBlurProp={handleInputBlur}
                 inputProps={{
@@ -131,13 +131,13 @@ export const SettingsForm = () => {
                     register,
                     fieldName: 'shortBreak',
                     rules: {
-                        required: { value: true, message: 'Обязательное поле' },
-                        pattern: { value: /^\d+$/g, message: "Введите цифры" },
-                        min: { value: 1, message: `Введите значение больше 1`, },
+                        required: { value: true, message: 'Required field' },
+                        pattern: { value: /^\d+$/g, message: "Enter the numbers" },
+                        min: { value: 1, message: `Enter a value greater than 1`, },
                     }
                 }} />
             <PlaceholderField
-                label='Время длинного перерыва'
+                label='Long break duration'
                 errors={errors}
                 onBlurProp={handleInputBlur}
                 inputProps={{
@@ -145,9 +145,9 @@ export const SettingsForm = () => {
                     register,
                     fieldName: 'longBreak',
                     rules: {
-                        required: { value: true, message: 'Обязательное поле' },
-                        pattern: { value: /^\d+$/g, message: "Введите цифры" },
-                        min: { value: 1, message: `Введите значение больше 1`, },
+                        required: { value: true, message: 'Required field' },
+                        pattern: { value: /^\d+$/g, message: "Enter the numbers" },
+                        min: { value: 1, message: `Enter a value greater than 1`, },
                     }
                 }} />
         </form>

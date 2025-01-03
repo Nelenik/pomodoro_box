@@ -60,7 +60,7 @@ export const Statistics = () => {
         <div className='container StatisticPage'>
             <div className="StatisticPage__Top">
                 <h1 className="mg-reset StatisticPage__Title">
-                    Ваша активность
+                    Your activity
                 </h1>
                 <div className="StatisticPage__Select">
                     <StatisitcSelect onSelect={handleSelect} />
@@ -84,19 +84,19 @@ export const Statistics = () => {
             </div>
             <div className="StatisticPage__Bottom">
                 <MetrikBlock
-                    name={'Фокус'}
+                    name={'Focus'}
                     value={`${getFocusString()}`}
                     pic={<FocusSvg className='Metrik__Svg' />}
                     cssModificator={activeDayData ? 'focus' : 'no-data'}
                 />
                 <MetrikBlock
-                    name={'Время на паузе'}
+                    name={'Time on pause'}
                     value={getPauseTimeString(activeDayData ? activeDayData.timeOnPause : 0)}
                     pic={<PauseSvg className='Metrik__Svg' />}
                     cssModificator={activeDayData ? 'pause' : 'no-data'}
                 />
                 <MetrikBlock
-                    name={'Остановки'}
+                    name={'Timer stopped'}
                     value={activeDayData ? activeDayData.stopCount.toString() : '0'}
                     pic={<StopSvg className='Metrik__Svg' />}
                     cssModificator={activeDayData ? 'stop' : 'no-data'}

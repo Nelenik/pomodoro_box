@@ -93,7 +93,7 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
       inner: (
         <>
           <DropMoreSvg />
-          <span>Увеличить</span>
+          <span>Increase</span>
         </>
       ),
       itemOnClick: handleMore,
@@ -102,7 +102,7 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
       inner: (
         <>
           <DropLessSvg />
-          <span>Уменьшить</span>
+          <span>Decrease</span>
         </>
       ),
       itemOnClick: handleLess,
@@ -111,7 +111,7 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
       inner: (
         <>
           <DropEditSvg />
-          <span>Редактировать</span>
+          <span>Edit</span>
         </>
       ),
       itemOnClick: handleEdit,
@@ -120,7 +120,7 @@ export const useTaskItem = (taskItem: Task, formState: FormState) => {
       inner: (
         <>
           <DropDeleteSvg />
-          <span>Удалить</span>
+          <span>Delete</span>
         </>
       ),
       itemOnClick: handleDelete,

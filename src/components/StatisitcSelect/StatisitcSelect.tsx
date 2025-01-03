@@ -24,11 +24,11 @@ export const StatisitcSelect: FC<StatisitcSelectProps> = ({ onSelect = NOOP }) =
     const getTriggerInner = (): string => {
         switch (selectedValue) {
             case 'weekAgo0':
-                return 'Эта неделя';
+                return 'This week';
             case 'weekAgo1':
-                return 'Прошедшая неделя';
+                return 'Last week';
             case 'weekAgo2':
-                return '2 недели назад';
+                return 'Two weeks ago';
             default:
                 return ''
         }
@@ -41,7 +41,7 @@ export const StatisitcSelect: FC<StatisitcSelectProps> = ({ onSelect = NOOP }) =
                 'data-selectvalue': 'weekAgo0',
                 'data-selected': selectedValue === 'weekAgo0'
             },
-            inner: <span>Эта неделя</span>,
+            inner: <span>This Week</span>,
             itemOnClick: handleChange
         },
         {
@@ -50,7 +50,7 @@ export const StatisitcSelect: FC<StatisitcSelectProps> = ({ onSelect = NOOP }) =
                 'data-selectvalue': 'weekAgo1',
                 'data-selected': selectedValue === 'weekAgo1'
             },
-            inner: <span>Прошедшая неделя</span>,
+            inner: <span>Last week</span>,
             itemOnClick: handleChange
         },
         {
@@ -59,7 +59,7 @@ export const StatisitcSelect: FC<StatisitcSelectProps> = ({ onSelect = NOOP }) =
                 'data-selectvalue': 'weekAgo2',
                 'data-selected': selectedValue === 'weekAgo2'
             },
-            inner: <span>2 недели назад</span>,
+            inner: <span>Two weeks ago</span>,
             itemOnClick: handleChange
         },
     ]

@@ -11,9 +11,9 @@ export const TotalTime: FC<TotalTimeProps> = ({ totalTime, dayName }) => {
             <h2 className="TotalTime__Title mg-reset">{dayName}</h2>
             {
                 totalTime && <p className="TotalTime__Descr mg-reset">
-                    Вы работали над задачами в течение <span>{totalTime}</span>
+                    You worked on tasks for <span>{totalTime}</span>
                 </p>
-                || <p className="TotalTime__Descr mg-reset">Нет данных</p>
+                || <p className="TotalTime__Descr mg-reset">No data</p>
             }
         </div>
     )

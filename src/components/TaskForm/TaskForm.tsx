@@ -35,7 +35,7 @@ export const TaskForm: FC<TaskFormProps> = ({ additCssClass = '' }) => {
             onSubmit={handleSubmit}
         >
             <PlaceholderField
-                label='Название задачи'
+                label='Task title'
                 errors={errors}
                 inputProps={{
                     type: 'text',
@@ -45,7 +45,7 @@ export const TaskForm: FC<TaskFormProps> = ({ additCssClass = '' }) => {
                 }}
             />
             <Button>
-                Добавить
+                Add task
             </Button>
         </form>
     )
